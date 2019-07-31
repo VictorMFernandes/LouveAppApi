@@ -1,5 +1,6 @@
-﻿using LouveApp.Compartilhado.Comandos;
-using LouveApp.Dominio.Entidades;
+﻿using System.Collections.Generic;
+using LouveApp.Compartilhado.Comandos;
+using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
 
 namespace LouveApp.Dominio.Comandos.AutenticacaoComandos.Saidas
 {
@@ -7,24 +8,12 @@ namespace LouveApp.Dominio.Comandos.AutenticacaoComandos.Saidas
     {
         #region Propriedades Api
 
-        public string Token { get; private set; }
+        public string Token { get; set; }
         public string Id { get; private set; }
         public string Nome { get; private set; }
         public string Email { get; private set; }
         public string Foto { get; private set; }
-
-        #endregion
-
-        #region Construtores
-
-        public AutenticarUsuarioComandoResultado(Usuario usuario, string token)
-        {
-            Id = usuario.Id;
-            Nome = usuario.Nome.ToString();
-            Email = usuario.Email.ToString();
-            Foto = usuario.Foto?.Url;
-            Token = token;
-        }
+        public IEnumerable<PegarMinisteriosComandoResultado> Ministerios { get; set; }
 
         #endregion
     }

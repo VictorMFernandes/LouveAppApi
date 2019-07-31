@@ -1,7 +1,12 @@
-﻿using LouveApp.Compartilhado.Entidades;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using LouveApp.Compartilhado.Entidades;
 using FluentValidator.Validation;
 using System.Text;
 using LouveApp.Compartilhado.Padroes;
+using Microsoft.IdentityModel.Tokens;
 
 namespace LouveApp.Dominio.ValueObjects
 {
@@ -34,16 +39,7 @@ namespace LouveApp.Dominio.ValueObjects
 
         #endregion
 
-        public bool Autenticar(string login, string senha)
-        {
-            if (Login == login && Senha == EncriptarSenha(senha))
-                return true;
-
-            AddNotification("Usuario", "Login ou senha inválidos");
-            return false;
-        }
-
-        private static string EncriptarSenha(string senha)
+        public static string EncriptarSenha(string senha)
         {
             if (string.IsNullOrEmpty(senha))
                 return string.Empty;
@@ -57,6 +53,35 @@ namespace LouveApp.Dominio.ValueObjects
                 sbString.Append(t.ToString("x2"));
 
             return sbString.ToString();
+        }
+
+        public static string GerarToken(string usuarioId, string login, string tokenSecreto, double prescricaoDias)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, usuarioId),
+                new Claim(ClaimTypes.Name, login),
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(tokenSecreto));
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime
+                    .Now
+                    .AddDays(prescricaoDias),
+                SigningCredentials = creds
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
         }
 
         #region Métodos de Sobrescrita

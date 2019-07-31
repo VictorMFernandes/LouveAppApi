@@ -27,6 +27,7 @@ namespace LouveApp.Infra.BancoDeDados.Mapeamentos
 
             builder.OwnsOne(u => u.Autenticacao, a =>
             {
+                a.HasIndex(au => au.Login).IsUnique();
                 a.Property(au => au.Login).IsRequired().HasMaxLength(PadroesTamanho.MaxLogin).HasColumnName("Login");
                 a.Property(au => au.Senha).IsRequired().HasMaxLength(32).IsFixedLength().HasColumnName("Senha");
                 a.Property(au => au.Ativo).HasColumnName("Ativo");
