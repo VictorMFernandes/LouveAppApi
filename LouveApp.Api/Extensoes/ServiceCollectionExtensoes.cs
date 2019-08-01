@@ -33,6 +33,7 @@ namespace LouveApp.Api.Extensoes
             // Repositórios
             services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
             services.AddTransient<IMinisterioRepositorio, MinisterioRepositorio>();
+            services.AddTransient<IInstrumentoRepositorio, InstrumentoRepositorio>();
             // Serviços
             services.AddTransient<IEmailServico, EmailServico>();
             services.AddTransient<IFotoServico, FotoServico>();

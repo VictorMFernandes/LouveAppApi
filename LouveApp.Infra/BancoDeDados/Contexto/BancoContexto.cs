@@ -10,6 +10,7 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
     {
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Ministerio> Ministerios { get; set; }
+        public DbSet<Instrumento> Instrumentos { get; set; }
 
         public BancoContexto(DbContextOptions options) : base(options)
         {
@@ -21,7 +22,10 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
             modelBuilder.Ignore<Notification>();
             modelBuilder.ApplyConfiguration(new UsuarioMap());
             modelBuilder.ApplyConfiguration(new UsuarioMinisterioMap());
+            modelBuilder.ApplyConfiguration(new UsuarioInstrumentoMap());
+
             modelBuilder.ApplyConfiguration(new MinisterioMap());
+            modelBuilder.ApplyConfiguration(new InstrumentoMap());
         }
     }
 }

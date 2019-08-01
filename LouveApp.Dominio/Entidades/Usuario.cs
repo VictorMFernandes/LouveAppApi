@@ -15,6 +15,7 @@ namespace LouveApp.Dominio.Entidades
         public Autenticacao Autenticacao { get; private set; }
         public Foto Foto { get; private set; }
         public ICollection<UsuarioMinisterio> Ministerios { get; private set; }
+        public ICollection<UsuarioInstrumento> Instrumentos { get; private set; }
         public DateTime DtCriacao { get; private set; }
         public DateTime DtUltimaAtividade { get; private set; }
 
@@ -49,6 +50,7 @@ namespace LouveApp.Dominio.Entidades
         protected override void InicializarColecoes()
         {
             Ministerios = new List<UsuarioMinisterio>();
+            Instrumentos = new List<UsuarioInstrumento>();
         }
 
         protected override void Validar()

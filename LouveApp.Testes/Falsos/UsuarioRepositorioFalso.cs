@@ -1,4 +1,5 @@
-﻿using LouveApp.Dominio.Entidades;
+﻿using LouveApp.Dominio.Comandos.AutenticacaoComandos.Saidas;
+using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.Repositorios;
 using System.Threading.Tasks;
 
@@ -16,6 +17,6 @@ namespace LouveApp.Testes.Falsos
 
         public Task<Usuario> PegarPorId(string id) => null;
 
-        public Task<Usuario> PegarPorLogin(string login) => null;
+        public Task<AutenticarUsuarioComandoResultado> PegarAutenticado(string login, string senhaEncriptada) => null;
     }
 }

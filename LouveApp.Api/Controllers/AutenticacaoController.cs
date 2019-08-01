@@ -25,7 +25,7 @@ namespace LouveApp.Api.Controllers
         /// </summary>
         /// <param name="comando">Comando para logar usuário no sistema</param>
         /// <response code="200">Login realizado com sucesso.</response>
-        [HttpPost("v1/logar")]
+        [HttpPost("v1/Logar")]
         [AllowAnonymous]
         [ProducesResponseType(typeof(AutenticarUsuarioComandoResultado), 200)]
         public async Task<IActionResult> Logar([FromBody]AutenticarUsuarioComando comando)
