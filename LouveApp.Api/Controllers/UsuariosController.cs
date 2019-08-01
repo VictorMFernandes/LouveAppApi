@@ -5,6 +5,7 @@ using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using LouveApp.Dominio.Entidades;
 
 namespace LouveApp.Api.Controllers
 {
@@ -30,6 +31,23 @@ namespace LouveApp.Api.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> RegistrarUsuario([FromBody]RegistrarUsuarioComando comando)
         {
+            var resultado = await _gerenciador.Executar(comando);
+            return await Resposta(resultado, _gerenciador.Notifications);
+        }
+
+        /// <summary>
+        /// Atualiza um usuário do sistema.
+        /// </summary>
+        /// <param name="comando">Comando para atualizar usuário no sistema</param>
+        /// <remarks>Ids de instrumentos devem ser únicos.</remarks>
+        /// <response code="200">Retorna as principais propriedades do usuário que acabou de ser atualizado.</response>
+        [ProducesResponseType(typeof(RegistrarUsuarioComandoResultado), 200)]
+        [HttpPut]
+        [Route("v1/[controller]")]
+        public async Task<IActionResult> AtualizarUsuario([FromBody]AtualizarUsuarioComando comando)
+        {
+            comando.PegarUsuarioLogadoId(UsuarioLogadoId);
+
             var resultado = await _gerenciador.Executar(comando);
             return await Resposta(resultado, _gerenciador.Notifications);
         }

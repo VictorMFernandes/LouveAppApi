@@ -26,6 +26,8 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
         {
             return await _contexto
                         .Usuarios
+                        .Include(u => u.Instrumentos)
+                        .ThenInclude(ui => ui.Instrumento)
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
 

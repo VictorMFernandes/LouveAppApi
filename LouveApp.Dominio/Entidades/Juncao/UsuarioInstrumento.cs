@@ -17,9 +17,9 @@ namespace LouveApp.Dominio.Entidades.Juncao
 
         private UsuarioInstrumento() { }
 
-        public UsuarioInstrumento(Instrumento instrumento)
+        public UsuarioInstrumento(string instrumentoId)
         {
-            Instrumento = instrumento;
+            InstrumentoId = instrumentoId;
         }
 
         #endregion

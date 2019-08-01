@@ -1,4 +1,5 @@
-﻿using LouveApp.Compartilhado.Comandos;
+﻿using System.Linq;
+using LouveApp.Compartilhado.Comandos;
 using LouveApp.Dominio.Comandos.UsuarioComandos.Entradas;
 using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
 using LouveApp.Dominio.Repositorios;
@@ -16,13 +17,16 @@ namespace LouveApp.Dominio.Gerenciadores
     {
         private readonly IUsuarioRepositorio _usuarioRepo;
         private readonly IMinisterioRepositorio _ministerioRepo;
+        private readonly IInstrumentoRepositorio _instrumentoRepo;
         private readonly IEmailServico _emailServico;
 
         public UsuarioGerenciador(IUsuarioRepositorio usuarioRepo
-            , IMinisterioRepositorio ministerioRepo, IEmailServico emailServico)
+            , IMinisterioRepositorio ministerioRepo
+            , IInstrumentoRepositorio instrumentoRepo, IEmailServico emailServico)
         {
             _usuarioRepo = usuarioRepo;
             _ministerioRepo = ministerioRepo;
+            _instrumentoRepo = instrumentoRepo;
             _emailServico = emailServico;
         }
 
@@ -61,15 +65,21 @@ namespace LouveApp.Dominio.Gerenciadores
                 return null;
 
             // Recupera usuário do banco
-            var usuario = await _usuarioRepo.PegarPorId(comando.Id);
+            var usuario = await _usuarioRepo.PegarPorId(comando.UsuarioLogadoId);
 
             // Caso o usuário não exista
             if (usuario == null)
-            {
                 return new NaoEncontradoResultado(PadroesMensagens.UsuarioNaoEncontrado);
+
+            var instrumentos = (await _instrumentoRepo.PegarVariosPorId(comando.InstrumentosIds))?.ToList();
+
+            if (instrumentos == null)
+            {
+                return new NaoEncontradoResultado("Não foi possível encontrar algum instrumento selecionado");
             }
 
             // Atualiza o usuário
+            usuario.Atualizar(comando.NomeVo, instrumentos.Select(i => i.Id));
 
             // Valida
             AddNotifications(usuario);
@@ -80,8 +90,7 @@ namespace LouveApp.Dominio.Gerenciadores
             // Persistir o usuário
             _usuarioRepo.Atualizar(usuario);
 
-            // TODO implementar retorno
-            return null;
+            return new AtualizarUsuarioComandoResultado(usuario.Nome.ToString(), instrumentos);
         }
 
         public async Task<IComandoResultado> Executar(EntrarMinisterioComando comando)

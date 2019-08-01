@@ -3,6 +3,7 @@ using LouveApp.Dominio.Entidades.Juncao;
 using LouveApp.Dominio.ValueObjects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LouveApp.Dominio.Entidades
 {
@@ -50,7 +51,7 @@ namespace LouveApp.Dominio.Entidades
         protected override void InicializarColecoes()
         {
             Ministerios = new List<UsuarioMinisterio>();
-            Instrumentos = new List<UsuarioInstrumento>();
+            Instrumentos = new HashSet<UsuarioInstrumento>();
         }
 
         protected override void Validar()
@@ -65,18 +66,27 @@ namespace LouveApp.Dominio.Entidades
 
         #endregion
 
-        #region Métodos de Crud
-
-        public void AtualizarDtUltimaAtividade()
+        public void Atualizar(Nome nome, IEnumerable<string> instrumentosIds)
         {
+            Nome = nome;
+            AtualizarInstrumentos(instrumentosIds);
             DtUltimaAtividade = DateTime.Now;
         }
 
         public void AtualizarFoto(Foto foto)
         {
             Foto = foto;
+            DtUltimaAtividade = DateTime.Now;
         }
 
-        #endregion
+        private void AtualizarInstrumentos(IEnumerable<string> instrumentosIds)
+        {
+            Instrumentos.Clear();
+
+            foreach (var instrumentoId in instrumentosIds)
+            {
+                Instrumentos.Add(new UsuarioInstrumento(instrumentoId));
+            }
+        }
     }
 }

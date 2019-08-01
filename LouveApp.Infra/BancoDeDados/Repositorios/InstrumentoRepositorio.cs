@@ -57,5 +57,10 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                 return await conn.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM {InstrumentoMap.Tabela}");
             }
         }
+
+        public async Task<IEnumerable<PegarInstrumentosComandoResultado>> PegarVariosPorId(IEnumerable<string> ids)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

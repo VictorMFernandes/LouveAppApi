@@ -2,7 +2,6 @@
 using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.ValueObjects;
 using FluentValidator;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace LouveApp.Dominio.Comandos.UsuarioComandos.Entradas
