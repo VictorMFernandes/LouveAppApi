@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LouveApp.Infra", "LouveApp.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LouveApp.Dominio.Testes", "LouveApp.Dominio.Testes\LouveApp.Dominio.Testes.csproj", "{225F1ED0-7CC9-4C3C-A60D-3D1D723F5687}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LouveApp.Infra.Testes", "LouveApp.Infra.Testes\LouveApp.Infra.Testes.csproj", "{9A0A27D7-8B57-4D7B-80E9-84A056EA87E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{225F1ED0-7CC9-4C3C-A60D-3D1D723F5687}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{225F1ED0-7CC9-4C3C-A60D-3D1D723F5687}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{225F1ED0-7CC9-4C3C-A60D-3D1D723F5687}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A0A27D7-8B57-4D7B-80E9-84A056EA87E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A0A27D7-8B57-4D7B-80E9-84A056EA87E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A0A27D7-8B57-4D7B-80E9-84A056EA87E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A0A27D7-8B57-4D7B-80E9-84A056EA87E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

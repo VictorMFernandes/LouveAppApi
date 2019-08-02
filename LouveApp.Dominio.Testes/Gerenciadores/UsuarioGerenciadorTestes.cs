@@ -1,4 +1,5 @@
-﻿using LouveApp.Dominio.Comandos.UsuarioComandos.Entradas;
+﻿using System.Threading.Tasks;
+using LouveApp.Dominio.Comandos.UsuarioComandos.Entradas;
 using LouveApp.Dominio.Gerenciadores;
 using LouveApp.Dominio.Sistema.Exemplos;
 using LouveApp.Dominio.Testes.Falsos;
@@ -33,7 +34,7 @@ namespace LouveApp.Dominio.Testes.Gerenciadores
         }
 
         [TestMethod]
-        public async void RetornarNullQuandoComandoInvalido()
+        public async Task RetornarNullQuandoComandoInvalido()
         {
             var resultado = await _gerenciador.Executar(_registrarUsuarioComandoInvalido);
 

@@ -18,6 +18,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LouveApp.Dominio\LouveApp.Dominio.csproj" />
+    <ProjectReference Include="..\LouveApp.Infra\LouveApp.Infra.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.EntityFrameworkCore">
+      <HintPath>..\..\..\..\..\Users\Desenvolvimento10\.nuget\packages\microsoft.entityframeworkcore\2.2.6\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,10 @@
-﻿namespace LouveApp.Dominio.Testes.Gerenciadores
+﻿using System.Threading.Tasks;
+
+namespace LouveApp.Dominio.Testes.Gerenciadores
 {
     internal interface IGerenciadorTestes
     {
         void ValidarComandosAoExecutalos();
-        void RetornarNullQuandoComandoInvalido();
+        Task RetornarNullQuandoComandoInvalido();
     }
 }
