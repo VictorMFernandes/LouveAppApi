@@ -75,7 +75,7 @@ namespace LouveApp.Dominio.Gerenciadores
 
             if (instrumentos == null)
             {
-                return new NaoEncontradoResultado("Não foi possível encontrar algum instrumento selecionado");
+                return new NaoEncontradoResultado(PadroesMensagens.InstrumentoNaoEncontrado);
             }
 
             // Atualiza o usuário

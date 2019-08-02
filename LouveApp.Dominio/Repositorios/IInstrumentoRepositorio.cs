@@ -7,7 +7,7 @@ namespace LouveApp.Dominio.Repositorios
 {
     public interface IInstrumentoRepositorio
     {
-        Task<Instrumento> PegarPorId(string id);
+        Task<PegarInstrumentosComandoResultado> PegarPorId(string id);
         Task<IEnumerable<PegarInstrumentosComandoResultado>> PegarTodos();
         void CriarVarios(IEnumerable<Instrumento> instrumentos);
         Task<int> Contar();

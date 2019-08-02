@@ -6,8 +6,8 @@ using LouveApp.Dominio.Sistema;
 using LouveApp.Infra.BancoDeDados.Contexto;
 using LouveApp.Infra.BancoDeDados.Mapeamentos;
 using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LouveApp.Infra.BancoDeDados.Repositorios
@@ -21,11 +21,16 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
             _contexto = contexto;
         }
 
-        public async Task<Instrumento> PegarPorId(string id)
+        public async Task<PegarInstrumentosComandoResultado> PegarPorId(string id)
         {
-            return await _contexto
-                        .Instrumentos
-                        .FirstOrDefaultAsync(x => x.Id == id);
+            var query = $"SELECT Id, Nome FROM {InstrumentoMap.Tabela} " +
+                        "WHERE Id = @id";
+
+            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            {
+                conn.Open();
+                return await conn.QueryFirstOrDefaultAsync<PegarInstrumentosComandoResultado>(query, new { id });
+            }
         }
 
         public async Task<IEnumerable<PegarInstrumentosComandoResultado>> PegarTodos()
@@ -60,7 +65,32 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
 
         public async Task<IEnumerable<PegarInstrumentosComandoResultado>> PegarVariosPorId(IEnumerable<string> ids)
         {
-            throw new System.NotImplementedException();
+            var idsLista = ids.ToList();
+
+            if (!idsLista.Any())
+                return null;
+
+            var query = $"SELECT Id, Nome FROM {InstrumentoMap.Tabela} " +
+                        "WHERE Id = @id";
+
+            var resultado = new List<PegarInstrumentosComandoResultado>();
+
+            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            {
+                conn.Open();
+
+                foreach (var id in idsLista)
+                {
+                    var instrumento = await conn.QueryFirstOrDefaultAsync<PegarInstrumentosComandoResultado>(query, new { id });
+
+                    if (instrumento == null)
+                        return null;
+
+                    resultado.Add(instrumento);
+                }
+
+                return resultado;
+            }
         }
     }
 }

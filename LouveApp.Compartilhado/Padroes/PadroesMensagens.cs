@@ -18,5 +18,8 @@
         /// {0} E-mail que está em uso
         /// </summary>
         public const string EmailEmUso = "O E-mail {0} já está em uso";
+
+        public const string InstrumentoNaoEncontrado = "Não foi possível encontrar algum(ns) " +
+                                                       "instrumento(s) selecionado(s)";
     }
 }
