@@ -67,6 +67,8 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
         {
             var idsLista = ids.ToList();
 
+            if (!idsLista.Any()) return new List<PegarInstrumentosComandoResultado>();
+
             if (!idsLista.Any())
                 return null;
 
