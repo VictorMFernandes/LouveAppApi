@@ -29,13 +29,8 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
             if (await _usuarioRepo.IdExiste(PadroesString.UsuarioId))
                 return;
 
-            var nome = new Nome(PadroesString.UsuarioNome);
-            var email = new Email(PadroesString.UsuarioEmail);
-            var autenticacao = new Autenticacao(PadroesString.UsuarioLogin
-                                                , PadroesString.UsuarioSenha
-                                                , PadroesString.UsuarioSenha);
+            var usuario = CriarUsuario();
 
-            var usuario = new Usuario(PadroesString.UsuarioId, nome, email, autenticacao);
             _usuarioRepo.Criar(usuario);
 
             var nomeMinisterio = new Nome(PadroesString.MinisterioNome);
@@ -64,6 +59,17 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
             if (instrumentos.Length == await _instrumentoRepo.Contar()) return;
 
             _instrumentoRepo.CriarVarios(instrumentos);
+        }
+
+        public static Usuario CriarUsuario()
+        {
+            var nome = new Nome(PadroesString.UsuarioNome);
+            var email = new Email(PadroesString.UsuarioEmail);
+            var autenticacao = new Autenticacao(PadroesString.UsuarioLogin
+                , PadroesString.UsuarioSenha
+                , PadroesString.UsuarioSenha);
+
+            return new Usuario(PadroesString.UsuarioId, nome, email, autenticacao);
         }
     }
 }
