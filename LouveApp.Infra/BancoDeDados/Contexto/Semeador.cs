@@ -14,6 +14,8 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
         private readonly IInstrumentoRepositorio _instrumentoRepo;
         private readonly IUow _uow;
 
+        private static Usuario _usuario;
+
         public SemeadorBd(IUsuarioRepositorio usuarioRepo
             , IMinisterioRepositorio ministerioRepo
             , IInstrumentoRepositorio instrumentoRepo, IUow uow)
@@ -29,25 +31,24 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
             if (await _usuarioRepo.IdExiste(PadroesString.UsuarioId))
                 return;
 
-            var usuario = CriarUsuario();
-
-            _usuarioRepo.Criar(usuario);
-
-            var nomeMinisterio = new Nome(PadroesString.MinisterioNome);
-            _ministerioRepo.Criar(new Ministerio(PadroesString.MinisterioId, nomeMinisterio, usuario));
-
             SemearInstrumentos();
+
+            _usuario = CriarUsuario();
+            _usuario.Instrumentos.Add(new Dominio.Entidades.Juncao.UsuarioInstrumento(PadroesString.InstrumentoId1));
+            _usuario.Instrumentos.Add(new Dominio.Entidades.Juncao.UsuarioInstrumento(PadroesString.InstrumentoId2));
+            _usuarioRepo.Criar(_usuario);
+
+            _ministerioRepo.Criar(CriarMinisterio());
 
             await _uow.Salvar();
         }
 
-        
         private async void SemearInstrumentos()
         {
             Instrumento[] instrumentos =
             {
-                new Instrumento(new Nome("Violão")),
-                new Instrumento(new Nome("Guitarra")),
+                new Instrumento(PadroesString.InstrumentoId1, new Nome(PadroesString.InstrumentoNome1)),
+                new Instrumento(PadroesString.InstrumentoId2, new Nome(PadroesString.InstrumentoNome2)),
                 new Instrumento(new Nome("Baixo Elétrico")),
                 new Instrumento(new Nome("Teclado")),
                 new Instrumento(new Nome("Violino")),
@@ -70,6 +71,12 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
                 , PadroesString.UsuarioSenha);
 
             return new Usuario(PadroesString.UsuarioId, nome, email, autenticacao);
+        }
+
+        public static Ministerio CriarMinisterio()
+        {
+            var nome = new Nome(PadroesString.MinisterioNome);
+            return new Ministerio(PadroesString.MinisterioId, nome, _usuario);
         }
     }
 }

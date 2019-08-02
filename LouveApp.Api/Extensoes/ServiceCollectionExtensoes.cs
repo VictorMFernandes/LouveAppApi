@@ -48,7 +48,7 @@ namespace LouveApp.Api.Extensoes
                     Title = nomeAplicacao,
                     Version = versao,
                     Description = $"UsuarioId Padrão: {PadroesString.UsuarioId}\n" +
-                                      $"MinisterioId Padrão: {PadroesString.MinisterioId}"
+                                  $"MinisterioId Padrão: {PadroesString.MinisterioId}"
                 }
                 );
 
