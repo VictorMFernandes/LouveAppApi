@@ -3,7 +3,6 @@ using LouveApp.Dominio.Entidades.Juncao;
 using LouveApp.Dominio.ValueObjects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace LouveApp.Dominio.Entidades
 {

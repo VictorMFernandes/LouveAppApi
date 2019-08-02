@@ -1,10 +1,10 @@
 ﻿using LouveApp.Dominio.Comandos.UsuarioComandos.Entradas;
 using LouveApp.Dominio.Gerenciadores;
 using LouveApp.Dominio.Sistema.Exemplos;
-using LouveApp.Testes.Falsos;
+using LouveApp.Dominio.Testes.Falsos;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace LouveApp.Testes.Gerenciadores
+namespace LouveApp.Dominio.Testes.Gerenciadores
 {
     [TestClass]
     public class UsuarioGerenciadorTestes : IGerenciadorTestes
@@ -17,7 +17,7 @@ namespace LouveApp.Testes.Gerenciadores
         public UsuarioGerenciadorTestes()
         {
             _gerenciador = new UsuarioGerenciador(new UsuarioRepositorioFalso()
-                , new MinisterioRepositorioFalso(), new EmailServicoFalso());
+                , new MinisterioRepositorioFalso(), new InstrumentoRepositorioFalso(), new EmailServicoFalso());
 
             _registrarUsuarioComandoValido = ExemplosComando.RegistrarUsuario;
             _registrarUsuarioComandoInvalido = new RegistrarUsuarioComando(

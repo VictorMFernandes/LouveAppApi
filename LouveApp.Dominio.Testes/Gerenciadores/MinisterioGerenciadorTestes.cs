@@ -1,10 +1,10 @@
 ﻿using LouveApp.Dominio.Comandos.MinisterioComandos.Entradas;
 using LouveApp.Dominio.Gerenciadores;
 using LouveApp.Dominio.Sistema.Exemplos;
-using LouveApp.Testes.Falsos;
+using LouveApp.Dominio.Testes.Falsos;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace LouveApp.Testes.Gerenciadores
+namespace LouveApp.Dominio.Testes.Gerenciadores
 {
     [TestClass]
     public class MinisterioGerenciadorTestes

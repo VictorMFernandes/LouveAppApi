@@ -1,4 +1,4 @@
-﻿namespace LouveApp.Testes.Gerenciadores
+﻿namespace LouveApp.Dominio.Testes.Gerenciadores
 {
     internal interface IGerenciadorTestes
     {

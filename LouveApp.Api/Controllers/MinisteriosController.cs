@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using LouveApp.Dominio.Gerenciadores;
 using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +44,7 @@ namespace LouveApp.Api.Controllers
         /// <param name="ministerioId">Id do ministério que terá o link ativado para compartilhamento.</param>
         /// <response code="200">Retorna o link de compartilhamento gerado.</response>
         [ProducesResponseType(typeof(AtivarLinkComandoResultado), 200)]
-        [HttpPost]
+        [HttpPatch]
         [Route("v1/[controller]/{ministerioId}/AtivarLinkCompartilhamento")]
         public async Task<IActionResult> AtivarLinkCompartilhamento(string ministerioId)
         {
@@ -60,7 +59,7 @@ namespace LouveApp.Api.Controllers
         /// </summary>
         /// <param name="ministerioId">Id do ministério que terá o link desativado.</param>
         /// <response code="200">Link desativado com sucesso.</response>
-        [HttpPost]
+        [HttpPatch]
         [Route("v1/[controller]/{ministerioId}/DesativarLinkConvite")]
         public async Task<IActionResult> DesativarLinkConvite(string ministerioId)
         {
@@ -73,14 +72,28 @@ namespace LouveApp.Api.Controllers
         /// <summary>
         /// Retorna ministérios do usuário logado.
         /// </summary>
-        /// <response code="200">Retorna ministérios do usuário logado.</response>
+        /// <response code="200">Retorna lista de ministérios do usuário logado.</response>
         [ProducesResponseType(typeof(IEnumerable<PegarMinisteriosComandoResultado>), 200)]
         [HttpGet]
         [Route("v1/[controller]")]
         public async Task<IActionResult> PegarMinisterios()
         {
-            var ministerios = await _ministerioRepo.PegarPorUsuario(UsuarioLogadoId);
-            return Ok(ministerios);
+            return RespostaDeConsulta(await _ministerioRepo.PegarPorUsuario(UsuarioLogadoId));
+        }
+
+        /// <summary>
+        /// Exclui um ministério do sistema.
+        /// </summary>
+        /// <param name="ministerioId">Id do ministério que será excluído.</param>
+        /// <response code="200">Ministério excluído com sucesso.</response>
+        [HttpDelete]
+        [Route("v1/[controller]/{ministerioId}")]
+        public async Task<IActionResult> ExcluirMinisterio(string ministerioId)
+        {
+            var comando = new ExcluirMinisterioComando(UsuarioLogadoId, ministerioId);
+
+            var resultado = await _gerenciador.Executar(comando);
+            return await Resposta(resultado, _gerenciador.Notifications);
         }
     }
 }

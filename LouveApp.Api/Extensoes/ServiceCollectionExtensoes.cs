@@ -44,12 +44,12 @@ namespace LouveApp.Api.Extensoes
             services.AddSwaggerGen(s =>
             {
                 s.SwaggerDoc(versao, new Info
-                    {
-                        Title = nomeAplicacao,
-                        Version = versao,
-                        Description = $"UsuarioId Padrão: {PadroesString.UsuarioId}\n" +
+                {
+                    Title = nomeAplicacao,
+                    Version = versao,
+                    Description = $"UsuarioId Padrão: {PadroesString.UsuarioId}\n" +
                                       $"MinisterioId Padrão: {PadroesString.MinisterioId}"
-                    }
+                }
                 );
 
                 s.ExampleFilters();

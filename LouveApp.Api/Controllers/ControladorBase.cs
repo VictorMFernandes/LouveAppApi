@@ -20,6 +20,15 @@ namespace LouveApp.Api.Controllers
             _uow = uow;
         }
 
+        protected IActionResult RespostaDeConsulta(object resultado)
+        {
+            return Ok(new
+            {
+                Sucesso = true,
+                Resultado = resultado
+            });
+        }
+
         protected async Task<IActionResult> Resposta(object resultado
             , IEnumerable<Notification> notificacoes)
         {
@@ -30,7 +39,7 @@ namespace LouveApp.Api.Controllers
                     , new
                     {
                         resultadoPadrao.Sucesso,
-                        Resultado = (object) resultadoPadrao.Resultado
+                        Resultado = (object)resultadoPadrao.Resultado
                     });
             }
 

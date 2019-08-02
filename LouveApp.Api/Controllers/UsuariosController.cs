@@ -6,17 +6,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using LouveApp.Dominio.Entidades;
+using LouveApp.Dominio.Repositorios;
 
 namespace LouveApp.Api.Controllers
 {
     public class UsuariosController : ControladorBase
     {
         private readonly UsuarioGerenciador _gerenciador;
+        private readonly IUsuarioRepositorio _usuarioRepo;
 
-        public UsuariosController(UsuarioGerenciador gerenciador, IUow uow)
+        public UsuariosController(UsuarioGerenciador gerenciador, IUsuarioRepositorio usuarioRepo,IUow uow)
             : base(uow)
         {
             _gerenciador = gerenciador;
+            _usuarioRepo = usuarioRepo;
         }
 
         /// <summary>
@@ -41,7 +44,7 @@ namespace LouveApp.Api.Controllers
         /// <param name="comando">Comando para atualizar usuário no sistema</param>
         /// <remarks>Ids de instrumentos devem ser únicos.</remarks>
         /// <response code="200">Retorna as principais propriedades do usuário que acabou de ser atualizado.</response>
-        [ProducesResponseType(typeof(RegistrarUsuarioComandoResultado), 200)]
+        [ProducesResponseType(typeof(AtualizarUsuarioComandoResultado), 200)]
         [HttpPut]
         [Route("v1/[controller]")]
         public async Task<IActionResult> AtualizarUsuario([FromBody]AtualizarUsuarioComando comando)
@@ -50,6 +53,19 @@ namespace LouveApp.Api.Controllers
 
             var resultado = await _gerenciador.Executar(comando);
             return await Resposta(resultado, _gerenciador.Notifications);
+        }
+
+        /// <summary>
+        /// Pega os dados do usuário que está logado.
+        /// </summary>
+        /// <param name="usuarioId">Id do usuário que se deseja pegar as informações</param>
+        /// <response code="200">Retorna as principais propriedades do usuário logado no sistema.</response>
+        [ProducesResponseType(typeof(AtualizarUsuarioComandoResultado), 200)]
+        [HttpGet]
+        [Route("v1/[controller]/{usuarioId}")]
+        public async Task<IActionResult> PegarUsuario(string usuarioId)
+        {
+            return RespostaDeConsulta(await _usuarioRepo.PegarPorIdSemRastrear(usuarioId));
         }
 
         /// <summary>

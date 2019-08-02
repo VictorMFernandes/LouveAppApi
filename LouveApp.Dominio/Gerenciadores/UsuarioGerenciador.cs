@@ -116,6 +116,11 @@ namespace LouveApp.Dominio.Gerenciadores
 
             ministerio.AdicionarUsuario(usuario);
 
+            // Validar entidade
+            AddNotifications(ministerio);
+
+            if (Invalid) return null;
+
             _ministerioRepo.Atualizar(ministerio);
 
             return new EntrarMinisterioComandoResultado(ministerio.Id, ministerio.ToString());

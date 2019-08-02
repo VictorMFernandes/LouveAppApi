@@ -13,6 +13,7 @@
 
         public const string MinisterioNaoEncontrado = "Ministério não encontrado";
         public const string LinkInvalido = "Link convite inválido";
+        public const string UsuariosDuplicadosMinisterio = "Ministério possui usuários duplicados";
 
         /// <summary>
         /// {0} E-mail que está em uso

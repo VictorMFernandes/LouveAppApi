@@ -14,5 +14,9 @@ namespace LouveApp.Dominio.Repositorios
         void Criar(Ministerio ministerio);
 
         void Atualizar(Ministerio ministerio);
+
+        void Remover(string id);
+
+        Task<bool> EAdministrador(string usuarioId, string ministerioId);
     }
 }

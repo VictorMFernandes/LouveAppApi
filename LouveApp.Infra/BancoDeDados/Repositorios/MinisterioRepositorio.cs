@@ -34,6 +34,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
         {
             return await _contexto
                 .Ministerios
+                .Include(m => m.Usuarios)
                 .FirstOrDefaultAsync(x => x.LinkConvite == linkConvite);
         }
 
@@ -41,12 +42,12 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
         {
             var query = $"SELECT m.Id, m.Nome, um.Administrador FROM {MinisterioMap.Tabela} AS m " +
                         $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON m.Id = um.MinisterioId " +
-                        $"WHERE um.UsuarioId = '{id}'";
+                        $"WHERE um.UsuarioId = @{nameof(id)}";
 
             using (var conn = new SqliteConnection(Configuracoes.ConnString))
             {
                 conn.Open();
-                return await conn.QueryAsync<PegarMinisteriosComandoResultado>(query);
+                return await conn.QueryAsync<PegarMinisteriosComandoResultado>(query, new { id });
             }
         }
 
@@ -58,6 +59,30 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
         public void Atualizar(Ministerio ministerio)
         {
             _contexto.Entry(ministerio).State = EntityState.Modified;
+        }
+
+        public async void Remover(string id)
+        {
+            var query = $"DELETE FROM {MinisterioMap.Tabela} " +
+                        $"WHERE Id = @{nameof(id)}";
+
+            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            {
+                conn.Open();
+                await conn.ExecuteAsync(query, new { id });
+            }
+        }
+
+        public async Task<bool> EAdministrador(string usuarioId, string ministerioId)
+        {
+            var query = $"SELECT Administrador FROM {UsuarioMinisterioMap.Tabela} " +
+                        $"WHERE UsuarioId = @{nameof(usuarioId)} AND MinisterioId = @{nameof(ministerioId)}";
+
+            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            {
+                conn.Open();
+                return await conn.ExecuteScalarAsync<bool>(query, new { usuarioId, ministerioId });
+            }
         }
     }
 }

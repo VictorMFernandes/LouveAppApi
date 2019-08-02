@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LouveApp.Dominio", "LouveAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LouveApp.Infra", "LouveApp.Infra\LouveApp.Infra.csproj", "{BE26EAB9-F5BF-4862-92E0-B8793D648AA8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LouveApp.Testes", "LouveApp.Testes\LouveApp.Testes.csproj", "{225F1ED0-7CC9-4C3C-A60D-3D1D723F5687}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LouveApp.Dominio.Testes", "LouveApp.Dominio.Testes\LouveApp.Dominio.Testes.csproj", "{225F1ED0-7CC9-4C3C-A60D-3D1D723F5687}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LouveApp.Infra.Testes", "LouveApp.Infra.Testes\LouveApp.Infra.Testes.csproj", "{B8077541-D52E-4648-8BCC-8545F544B4CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{225F1ED0-7CC9-4C3C-A60D-3D1D723F5687}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{225F1ED0-7CC9-4C3C-A60D-3D1D723F5687}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{225F1ED0-7CC9-4C3C-A60D-3D1D723F5687}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8077541-D52E-4648-8BCC-8545F544B4CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8077541-D52E-4648-8BCC-8545F544B4CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8077541-D52E-4648-8BCC-8545F544B4CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8077541-D52E-4648-8BCC-8545F544B4CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

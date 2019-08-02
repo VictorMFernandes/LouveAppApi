@@ -24,7 +24,7 @@ namespace LouveApp.Api.Controllers
         /// <param name="comando">Comando para alterar a foto de um usuário.</param>
         /// <response code="200">Retorna Url da foto que foi criada.</response>
         [ProducesResponseType(typeof(AlterarFotoComandoResultado), 200)]
-        [HttpPost]
+        [HttpPut]
         [Route("v1/Usuarios/{usuarioId}/[controller]")]
         public async Task<IActionResult> AlterarFotoUsuario(string usuarioId, [FromForm]AlterarFotoUsuarioComando comando)
         {
@@ -41,7 +41,7 @@ namespace LouveApp.Api.Controllers
         /// <param name="comando">Comando para alterar a foto de um ministério.</param>
         /// <response code="200">Retorna Url da foto que foi criada.</response>
         [ProducesResponseType(typeof(AlterarFotoComandoResultado), 200)]
-        [HttpPost]
+        [HttpPut]
         [Route("v1/Ministerios/{ministerioId}/[controller]")]
         public async Task<IActionResult> AlterarFotoMinisterio(string ministerioId, [FromForm]AlterarFotoMinisterioComando comando)
         {

@@ -1,9 +1,10 @@
-﻿using LouveApp.Dominio.Comandos.AutenticacaoComandos.Saidas;
+﻿using System.Threading.Tasks;
+using LouveApp.Dominio.Comandos.AutenticacaoComandos.Saidas;
+using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
 using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.Repositorios;
-using System.Threading.Tasks;
 
-namespace LouveApp.Testes.Falsos
+namespace LouveApp.Dominio.Testes.Falsos
 {
     internal class UsuarioRepositorioFalso : IUsuarioRepositorio
     {
@@ -16,6 +17,7 @@ namespace LouveApp.Testes.Falsos
         public Task<bool> EmailExiste(string email) => Task.Run(() => false);
 
         public Task<Usuario> PegarPorId(string id) => null;
+        public Task<PegarUsuarioComandoResultado> PegarPorIdSemRastrear(string id) => null;
 
         public Task<AutenticarUsuarioComandoResultado> PegarAutenticado(string login, string senhaEncriptada) => null;
     }

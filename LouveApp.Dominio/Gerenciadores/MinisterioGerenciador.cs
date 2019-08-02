@@ -13,6 +13,7 @@ namespace LouveApp.Dominio.Gerenciadores
         , IComandoGerenciador<RegistrarMinisterioComando>
         , IComandoGerenciador<AtivarLinkComando>
         , IComandoGerenciador<DesativarLinkComando>
+        , IComandoGerenciador<ExcluirMinisterioComando>
     {
         private readonly IMinisterioRepositorio _ministerioRepo;
         private readonly IUsuarioRepositorio _usuarioRepo;
@@ -100,6 +101,21 @@ namespace LouveApp.Dominio.Gerenciadores
             }
 
             _ministerioRepo.Atualizar(ministerio);
+
+            return null;
+        }
+
+        public async Task<IComandoResultado> Executar(ExcluirMinisterioComando comando)
+        {
+            if (!ValidarComando(comando))
+                return null;
+
+            //Checa se tem permissão
+            if (!await _ministerioRepo.EAdministrador(comando.UsuarioLogadoId, comando.MinisterioId))
+                return new NaoAutorizadoResultado(PadroesMensagens.UsuarioSemPermissao);
+            
+            // Realiza a ação
+            _ministerioRepo.Remover(comando.MinisterioId);
 
             return null;
         }

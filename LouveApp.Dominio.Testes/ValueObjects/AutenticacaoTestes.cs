@@ -1,7 +1,7 @@
 ﻿using LouveApp.Dominio.ValueObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace LouveApp.Testes.ValueObjects
+namespace LouveApp.Dominio.Testes.ValueObjects
 {
     [TestClass]
     public class AutenticacaoTestes

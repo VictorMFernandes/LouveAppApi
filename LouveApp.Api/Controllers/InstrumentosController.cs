@@ -24,10 +24,9 @@ namespace LouveApp.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<PegarInstrumentosComandoResultado>), 200)]
         [HttpGet]
         [Route("v1/[controller]")]
-        public async Task<IActionResult> PegarMinisterios()
+        public async Task<IActionResult> PegarInstrumentos()
         {
-            var ministerios = await _instrumentoRepo.PegarTodos();
-            return Ok(ministerios);
+            return RespostaDeConsulta(await _instrumentoRepo.PegarTodos());
         }
     }
 }

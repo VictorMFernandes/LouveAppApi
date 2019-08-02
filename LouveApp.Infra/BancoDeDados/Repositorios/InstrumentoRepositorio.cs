@@ -24,7 +24,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
         public async Task<PegarInstrumentosComandoResultado> PegarPorId(string id)
         {
             var query = $"SELECT Id, Nome FROM {InstrumentoMap.Tabela} " +
-                        "WHERE Id = @id";
+                        $"WHERE Id = @{nameof(id)}";
 
             using (var conn = new SqliteConnection(Configuracoes.ConnString))
             {

@@ -4,7 +4,8 @@ using LouveApp.Dominio.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LouveApp.Compartilhado.Extensoes;
+using FluentValidator;
+using LouveApp.Compartilhado.Padroes;
 
 namespace LouveApp.Dominio.Entidades
 {
@@ -55,6 +56,11 @@ namespace LouveApp.Dominio.Entidades
 
         protected override void Validar()
         {
+            if (Usuarios.GroupBy(um => um.Usuario.Id).Any(g => g.Count() > 1))
+            {
+                AddNotification(new Notification(nameof(Usuarios), PadroesMensagens.UsuariosDuplicadosMinisterio));
+            }
+
             AddNotifications(Nome);
         }
 
@@ -73,6 +79,8 @@ namespace LouveApp.Dominio.Entidades
         public void AdicionarUsuario(Usuario usuario)
         {
             Usuarios.Add(new UsuarioMinisterio(usuario, false));
+
+            Validar();
         }
 
         public void AdicionarAdministrador(Usuario usuario)

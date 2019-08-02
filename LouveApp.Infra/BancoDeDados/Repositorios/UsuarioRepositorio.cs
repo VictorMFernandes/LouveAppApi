@@ -1,11 +1,14 @@
-﻿using LouveApp.Dominio.Entidades;
+﻿using System.Linq;
+using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.Repositorios;
 using LouveApp.Infra.BancoDeDados.Contexto;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Dapper;
 using LouveApp.Dominio.Comandos.AutenticacaoComandos.Saidas;
+using LouveApp.Dominio.Comandos.InstrumentoComandos.Saidas;
 using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
+using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
 using LouveApp.Dominio.Sistema;
 using LouveApp.Infra.BancoDeDados.Mapeamentos;
 using LouveApp.Infra.BancoDeDados.Mapeamentos.Juncao;
@@ -31,15 +34,42 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<AutenticarUsuarioComandoResultado> PegarAutenticado(string login, string senhaEncriptada)
+        public async Task<PegarUsuarioComandoResultado> PegarPorIdSemRastrear(string id)
         {
-            var query = $"SELECT Id, Nome, Email, FotoUrl, Senha FROM {UsuarioMap.Tabela} " +
-                        $"WHERE Login = '{login}' AND Senha = '{senhaEncriptada}'";
+            var query = $"SELECT Id, Nome, Email, FotoUrl, DtCriacao FROM {UsuarioMap.Tabela} " +
+                        $"WHERE Id = @{nameof(id)}";
 
             using (var conn = new SqliteConnection(Configuracoes.ConnString))
             {
                 conn.Open();
-                var resultado = await conn.QueryFirstOrDefaultAsync<AutenticarUsuarioComandoResultado>(query);
+
+                var resultado = await conn.QueryFirstOrDefaultAsync<PegarUsuarioComandoResultado>(query, new { id });
+
+                if (resultado == null) return null;
+
+                query = $"SELECT i.Id, i.Nome FROM {InstrumentoMap.Tabela} AS i " +
+                        $"INNER JOIN {UsuarioInstrumentoMap.Tabela} AS ui ON ui.InstrumentoId = i.Id " +
+                        $"WHERE ui.UsuarioId = '{resultado.Id}'";
+
+                resultado.Instrumentos = await conn.QueryAsync<PegarInstrumentosComandoResultado>(query);
+
+                return resultado;
+            }
+        }
+
+        public async Task<AutenticarUsuarioComandoResultado> PegarAutenticado(string login, string senhaEncriptada)
+        {
+            var query = $"SELECT Id, Nome, Email, FotoUrl, Senha FROM {UsuarioMap.Tabela} " +
+                        $"WHERE Login = @{nameof(login)} AND Senha = @{nameof(senhaEncriptada)}";
+
+            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            {
+                conn.Open();
+                var resultado = await conn.QueryFirstOrDefaultAsync<AutenticarUsuarioComandoResultado>(query, new
+                {
+                    login,
+                    senhaEncriptada
+                });
 
                 if (resultado == null) return null;
 
@@ -57,6 +87,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
         {
             _contexto.Usuarios.Add(usuario);
         }
+
         public void Atualizar(Usuario usuario)
         {
             _contexto.Entry(usuario).State = EntityState.Modified;
@@ -64,16 +95,26 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
 
         public async Task<bool> IdExiste(string id)
         {
-            return await _contexto.Usuarios
-                                    .AsNoTracking()
-                                    .AnyAsync(x => x.Id == id);
+            var query = $"SELECT 1 FROM {UsuarioMap.Tabela} " +
+                        $"WHERE Id = @{nameof(id)}";
+
+            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            {
+                conn.Open();
+                return (await conn.QueryAsync<object>(query, new { id })).Any();
+            }
         }
 
         public async Task<bool> EmailExiste(string email)
         {
-            return await _contexto.Usuarios
-                                    .AsNoTracking()
-                                    .AnyAsync(x => x.Email.Endereco == email);
+            var query = $"SELECT 1 FROM {UsuarioMap.Tabela} " +
+                        $"WHERE Email = @{nameof(email)}";
+
+            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            {
+                conn.Open();
+                return (await conn.QueryAsync<object>(query, new { email })).Any();
+            }
         }
     }
 }

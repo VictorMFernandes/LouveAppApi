@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Primitives;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
 
-namespace LouveApp.Testes.Falsos
+namespace LouveApp.Dominio.Testes.Falsos
 {
     internal class ConfigurationFalso : IConfiguration
     {
