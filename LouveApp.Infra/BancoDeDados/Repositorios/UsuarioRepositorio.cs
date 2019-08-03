@@ -13,6 +13,7 @@ using LouveApp.Dominio.Sistema;
 using LouveApp.Infra.BancoDeDados.Mapeamentos;
 using LouveApp.Infra.BancoDeDados.Mapeamentos.Juncao;
 using Microsoft.Data.Sqlite;
+using System;
 
 namespace LouveApp.Infra.BancoDeDados.Repositorios
 {
@@ -57,6 +58,12 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="senhaEncriptada"></param>
+        /// <returns></returns>
         public async Task<AutenticarUsuarioComandoResultado> PegarAutenticado(string login, string senhaEncriptada)
         {
             var query = $"SELECT Id, Nome, Email, FotoUrl, Senha FROM {UsuarioMap.Tabela} " +
@@ -72,6 +79,11 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                 });
 
                 if (resultado == null) return null;
+
+                // Atualiza data da última atividade
+                query = $"UPDATE {UsuarioMap.Tabela} SET DtUltimaAtividade = '{DateTime.Now}' " +
+                        $"WHERE Id = '{resultado.Id}'";
+                await conn.ExecuteAsync(query);
 
                 query = $"SELECT m.Id, m.Nome, m.FotoUrl, um.Administrador FROM {MinisterioMap.Tabela} AS m " +
                         $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON m.Id = um.MinisterioId " +
