@@ -71,6 +71,8 @@ namespace LouveApp.Dominio.Entidades
 
             AtualizarInstrumentos(instrumentosIds);
             DtUltimaAtividade = DateTime.Now;
+
+            Validar();
         }
 
         public void AtualizarFoto(Foto foto)
@@ -81,6 +83,8 @@ namespace LouveApp.Dominio.Entidades
 
         private void AtualizarInstrumentos(IEnumerable<string> instrumentosIds)
         {
+            if (instrumentosIds == null) return;
+
             Instrumentos.Clear();
 
             foreach (var instrumentoId in instrumentosIds)
