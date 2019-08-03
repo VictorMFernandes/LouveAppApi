@@ -110,12 +110,14 @@ namespace LouveApp.Dominio.Gerenciadores
             if (!ValidarComando(comando))
                 return null;
 
+            var ministerio = await _ministerioRepo.PegarPorId(comando.MinisterioId);
+
             //Checa se tem permissão
-            if (!await _ministerioRepo.EAdministrador(comando.UsuarioLogadoId, comando.MinisterioId))
+            if (!ministerio.Administrador(comando.UsuarioLogadoId))
                 return new NaoAutorizadoResultado(PadroesMensagens.UsuarioSemPermissao);
-            
+
             // Realiza a ação
-            await _ministerioRepo.Remover(comando.MinisterioId);
+            _ministerioRepo.Remover(ministerio);
 
             return null;
         }

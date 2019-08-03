@@ -1,23 +1,11 @@
-﻿using LouveApp.Compartilhado.Entidades;
-using System;
+﻿using System;
 
 namespace LouveApp.Dominio.Entidades.Juncao
 {
-    public sealed class UsuarioMinisterio : EntidadeJuncao
+    public sealed class UsuarioMinisterio : EntidadeJuncaoComUsuario
     {
         #region Propriedades
 
-        public string UsuarioId { get; private set; }
-        private Usuario _usuario;
-        public Usuario Usuario
-        {
-            get => _usuario;
-            private set
-            {
-                if (value != null) UsuarioId = value.Id;
-                _usuario = value;
-            }
-        }
         public string MinisterioId { get; private set; }
         private Ministerio _ministerio;
         public Ministerio Ministerio

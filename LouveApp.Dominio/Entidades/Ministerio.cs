@@ -18,6 +18,7 @@ namespace LouveApp.Dominio.Entidades
         public string LinkConvite { get; private set; }
         public bool LinkConviteAtivado { get; private set; }
         public ICollection<UsuarioMinisterio> Usuarios { get; private set; }
+        public ICollection<Escala> Escalas { get; private set; }
         public DateTime DtCriacao { get; }
 
         #endregion
@@ -52,6 +53,7 @@ namespace LouveApp.Dominio.Entidades
         protected override void InicializarColecoes()
         {
             Usuarios = new List<UsuarioMinisterio>();
+            Escalas = new List<Escala>();
         }
 
         protected override void Validar()
@@ -59,6 +61,11 @@ namespace LouveApp.Dominio.Entidades
             if (Usuarios.GroupBy(um => um.Usuario.Id).Any(g => g.Count() > 1))
             {
                 AddNotification(new Notification(nameof(Usuarios), PadroesMensagens.UsuariosDuplicadosMinisterio));
+            }
+
+            if (!Usuarios.Any(um => um.Administrador))
+            {
+                AddNotification(new Notification(nameof(Usuarios), PadroesMensagens.MinisterioDeveTerAdministrador));
             }
 
             AddNotifications(Nome);
@@ -128,6 +135,28 @@ namespace LouveApp.Dominio.Entidades
             LinkConviteAtivado = false;
 
             return !LinkConviteAtivado;
+        }
+
+        public bool AdicionarEscala(string usuarioId, Escala escala)
+        {
+            if (!Administrador(usuarioId)) return false;
+
+            AddNotifications(escala);
+
+            Escalas.Add(escala);
+
+            return true;
+        }
+
+        public bool RemoverEscala(string usuarioId, string escalaId)
+        {
+            if (!Administrador(usuarioId)) return false;
+
+            var escala = Escalas.FirstOrDefault(e => e.Id == escalaId);
+            if (escala == null) return false;
+
+            Escalas.Remove(escala);
+            return true;
         }
     }
 }

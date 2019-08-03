@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using LouveApp.Dominio.Comandos.MinisterioComandos.Entradas;
 using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
 using LouveApp.Dominio.Repositorios;
+using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
 
 namespace LouveApp.Api.Controllers
 {
@@ -73,7 +74,7 @@ namespace LouveApp.Api.Controllers
         /// Retorna ministérios do usuário logado.
         /// </summary>
         /// <response code="200">Retorna lista de ministérios do usuário logado.</response>
-        [ProducesResponseType(typeof(IEnumerable<PegarMinisteriosComandoResultado>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<PegarMinisterioComandoResultado>), 200)]
         [HttpGet]
         [Route("v1/[controller]")]
         public async Task<IActionResult> PegarMinisterios()
@@ -94,6 +95,18 @@ namespace LouveApp.Api.Controllers
 
             var resultado = await _gerenciador.Executar(comando);
             return await Resposta(resultado, _gerenciador.Notifications);
+        }
+
+        /// <summary>
+        /// Pega os usuários vinculados a um ministério.
+        /// </summary>
+        /// <response code="200">Retorna lista de usuários do ministério.</response>
+        [ProducesResponseType(typeof(IEnumerable<PegarUsuarioComandoResultado>), 200)]
+        [HttpGet]
+        [Route("v1/[controller]/{ministerioId}/PegarUsuarios")]
+        public async Task<IActionResult> PegarUsuarios(string ministerioId)
+        {
+            return RespostaDeConsulta(await _ministerioRepo.PegarUsuarios(ministerioId));
         }
     }
 }

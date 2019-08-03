@@ -14,7 +14,7 @@ namespace LouveApp.Dominio.Testes.Falsos
 
         public Task<bool> EAdministrador(string usuarioId, string ministerioId) => Task.Run(() => false);
 
-        public Task<IEnumerable<PegarMinisteriosComandoResultado>> PegarPorUsuario(string id) => null;
+        public Task<IEnumerable<PegarMinisterioComandoResultado>> PegarPorUsuario(string id) => null;
 
         public void Criar(Ministerio ministerio) { }
 

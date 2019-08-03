@@ -2,7 +2,7 @@
 
 namespace LouveApp.Dominio.Comandos.MinisterioComandos.Saidas
 {
-    public class PegarMinisteriosComandoResultado : IComandoResultado
+    public class PegarMinisterioComandoResultado : IComandoResultado
     {
         #region Propriedades
 

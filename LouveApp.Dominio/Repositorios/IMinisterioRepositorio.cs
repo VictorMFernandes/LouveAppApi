@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
+using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
 
 namespace LouveApp.Dominio.Repositorios
 {
@@ -9,15 +10,12 @@ namespace LouveApp.Dominio.Repositorios
     {
         Task<Ministerio> PegarPorId(string ministerioId);
         Task<Ministerio> PegarPorLinkConvite(string linkConvite);
-        Task<IEnumerable<PegarMinisteriosComandoResultado>> PegarPorUsuario(string usuarioId);
+        Task<IEnumerable<PegarMinisterioComandoResultado>> PegarPorUsuario(string usuarioId);
         void Criar(Ministerio ministerio);
         void Atualizar(Ministerio ministerio);
-        /// <summary>
-        /// Remove um ministério do banco de dados sem a necessidade de salvar posteriormente.
-        /// </summary>
-        /// <param name="ministerioId">Id do ministério que será removido.</param>
-        Task Remover(string ministerioId);
+        void Remover(Ministerio ministerio);
         Task<bool> EAdministrador(string usuarioId, string ministerioId);
         Task<int> Contar();
+        Task<IEnumerable<PegarUsuarioComandoResultado>> PegarUsuarios(string ministerioId);
     }
 }

@@ -28,12 +28,14 @@ namespace LouveApp.Api.Extensoes
             // Gerenciadores
             services.AddTransient<UsuarioGerenciador, UsuarioGerenciador>();
             services.AddTransient<MinisterioGerenciador, MinisterioGerenciador>();
+            services.AddTransient<EscalaGerenciador, EscalaGerenciador>();
             services.AddTransient<FotoGerenciador, FotoGerenciador>();
             services.AddTransient<AutenticacaoGerenciador, AutenticacaoGerenciador>();
             // Repositórios
             services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
             services.AddTransient<IMinisterioRepositorio, MinisterioRepositorio>();
             services.AddTransient<IInstrumentoRepositorio, InstrumentoRepositorio>();
+            services.AddTransient<IEscalaRepositorio, EscalaRepositorio>();
             // Serviços
             services.AddTransient<IEmailServico, EmailServico>();
             services.AddTransient<IFotoServico, FotoServico>();
@@ -49,8 +51,7 @@ namespace LouveApp.Api.Extensoes
                     Version = versao,
                     Description = $"UsuarioId Padrão: {PadroesString.UsuarioId}\n" +
                                   $"MinisterioId Padrão: {PadroesString.MinisterioId}"
-                }
-                );
+                });
 
                 s.ExampleFilters();
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

@@ -10,6 +10,8 @@ using LouveApp.Dominio.Sistema;
 using LouveApp.Infra.BancoDeDados.Mapeamentos;
 using LouveApp.Infra.BancoDeDados.Mapeamentos.Juncao;
 using Microsoft.Data.Sqlite;
+using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
+using LouveApp.Dominio.Comandos.InstrumentoComandos.Saidas;
 
 namespace LouveApp.Infra.BancoDeDados.Repositorios
 {
@@ -28,6 +30,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                         .Ministerios
                         .Include(m => m.Usuarios)
                         .ThenInclude(um => um.Usuario)
+                        .Include(m => m.Escalas)
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
         public async Task<Ministerio> PegarPorLinkConvite(string linkConvite)
@@ -38,7 +41,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                 .FirstOrDefaultAsync(x => x.LinkConvite == linkConvite || x.LinkConviteAtivado);
         }
 
-        public async Task<IEnumerable<PegarMinisteriosComandoResultado>> PegarPorUsuario(string id)
+        public async Task<IEnumerable<PegarMinisterioComandoResultado>> PegarPorUsuario(string id)
         {
             var query = $"SELECT m.Id, m.Nome, um.Administrador FROM {MinisterioMap.Tabela} AS m " +
                         $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON m.Id = um.MinisterioId " +
@@ -47,7 +50,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
             using (var conn = new SqliteConnection(Configuracoes.ConnString))
             {
                 conn.Open();
-                return await conn.QueryAsync<PegarMinisteriosComandoResultado>(query, new { id });
+                return await conn.QueryAsync<PegarMinisterioComandoResultado>(query, new { id });
             }
         }
 
@@ -61,16 +64,9 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
             _contexto.Entry(ministerio).State = EntityState.Modified;
         }
 
-        public async Task Remover(string id)
+        public void Remover(Ministerio ministerio)
         {
-            var query = $"DELETE FROM {MinisterioMap.Tabela} " +
-                        $"WHERE Id = @{nameof(id)}";
-
-            using (var conn = new SqliteConnection(Configuracoes.ConnString))
-            {
-                conn.Open();
-                await conn.ExecuteAsync(query, new { id });
-            }
+            _contexto.Ministerios.Remove(ministerio);
         }
 
         public async Task<bool> EAdministrador(string usuarioId, string ministerioId)
@@ -91,6 +87,34 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
             {
                 conn.Open();
                 return await conn.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM {MinisterioMap.Tabela}");
+            }
+        }
+
+        public async Task<IEnumerable<PegarUsuarioComandoResultado>> PegarUsuarios(string ministerioId)
+        {
+            var query = $"SELECT u.Id, u.Nome, u.Email, u.FotoUrl, u.DtCriacao FROM {UsuarioMap.Tabela} AS u "+
+                        $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON um.UsuarioId = u.Id " +
+                        $"INNER JOIN {MinisterioMap.Tabela} AS m ON um.MinisterioId = m.Id " +
+                        $"WHERE m.Id = @{nameof(ministerioId)}";
+
+            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            {
+                conn.Open();
+
+                var resultado = await conn.QueryAsync<PegarUsuarioComandoResultado>(query, new { ministerioId });
+
+                if (resultado == null) return null;
+
+                foreach (var usuario in resultado)
+                {
+                    query = $"SELECT i.Id, i.Nome FROM {InstrumentoMap.Tabela} AS i " +
+                            $"INNER JOIN {UsuarioInstrumentoMap.Tabela} AS ui ON ui.InstrumentoId = i.Id " +
+                            $"WHERE ui.UsuarioId = '{usuario.Id}'";
+
+                    usuario.Instrumentos = await conn.QueryAsync<PegarInstrumentosComandoResultado>(query);
+                }
+
+                return resultado;
             }
         }
     }

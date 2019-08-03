@@ -13,7 +13,7 @@ namespace LouveApp.Dominio.Comandos.AutenticacaoComandos.Saidas
         public string Nome { get; private set; }
         public string Email { get; private set; }
         public string Foto { get; private set; }
-        public IEnumerable<PegarMinisteriosComandoResultado> Ministerios { get; set; }
+        public IEnumerable<PegarMinisterioComandoResultado> Ministerios { get; set; }
 
         #endregion
     }

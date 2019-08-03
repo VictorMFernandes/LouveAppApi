@@ -77,7 +77,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                         $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON m.Id = um.MinisterioId " +
                         $"WHERE um.UsuarioId = '{resultado.Id}'";
 
-                resultado.Ministerios = await conn.QueryAsync<PegarMinisteriosComandoResultado>(query);
+                resultado.Ministerios = await conn.QueryAsync<PegarMinisterioComandoResultado>(query);
 
                 return resultado;
             }

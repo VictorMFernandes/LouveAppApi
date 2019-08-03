@@ -31,10 +31,12 @@ namespace LouveApp.Dominio.Comandos.UsuarioComandos.Entradas
                 resultado = false;
             }
 
-            NomeVo = new Nome(Nome);
-            _notificacoes.AddRange(NomeVo.Notifications);
-
-            resultado &= NomeVo.Valid;
+            if (Nome != null)
+            {
+                NomeVo = new Nome(Nome);
+                _notificacoes.AddRange(NomeVo.Notifications);
+                resultado &= NomeVo.Valid;
+            }
 
             return resultado;
         }

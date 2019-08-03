@@ -1,7 +1,10 @@
 ﻿using LouveApp.Compartilhado.Padroes;
 using LouveApp.Dominio.Comandos.AutenticacaoComandos.Entradas;
+using LouveApp.Dominio.Comandos.EscalaComandos.Entradas;
 using LouveApp.Dominio.Comandos.MinisterioComandos.Entradas;
 using LouveApp.Dominio.Comandos.UsuarioComandos.Entradas;
+using System;
+using System.Collections.Generic;
 
 namespace LouveApp.Dominio.Sistema.Exemplos
 {
@@ -14,5 +17,7 @@ namespace LouveApp.Dominio.Sistema.Exemplos
             PadroesString.UsuarioSenha);
 
         public static RegistrarMinisterioComando RegistrarMinisterio = new RegistrarMinisterioComando("Ministério do Rock");
+
+        public static RegistrarEscalaComando RegistrarEscala = new RegistrarEscalaComando(DateTime.Now.AddDays(5), new List<string> { PadroesString.UsuarioId });
     }
 }

@@ -14,6 +14,7 @@
         public const string MinisterioNaoEncontrado = "Ministério não encontrado";
         public const string LinkInvalido = "Link convite inválido";
         public const string UsuariosDuplicadosMinisterio = "Ministério possui usuários duplicados";
+        public const string MinisterioDeveTerAdministrador = "Ministério deve possuir ao menos um administrador";
 
         /// <summary>
         /// {0} E-mail que está em uso
@@ -22,5 +23,7 @@
 
         public const string InstrumentoNaoEncontrado = "Não foi possível encontrar algum(ns) " +
                                                        "instrumento(s) selecionado(s)";
+
+        public const string EscalaNaoEncontrada = "Escala não encontrada";
     }
 }
