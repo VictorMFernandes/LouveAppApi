@@ -127,31 +127,20 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         #region Remover
 
         [TestMethod]
-        public async Task RemoveMinisterioQuandoIdValido()
+        public async Task RemoveMinisterioQuandoMinisterioValido()
         {
             var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
 
-            await repositorio.Remover(PadroesString.MinisterioId);
+            var ministerio = await repositorio.PegarPorId(PadroesString.MinisterioId);
+
+            repositorio.Remover(ministerio);
+            await BancoContextoFalso.St().SaveChangesAsync();
 
             var ministerioDeletado = await repositorio.PegarPorId(PadroesString.MinisterioId);
 
             Assert.IsNull(ministerioDeletado);
 
             BancoContextoFalso.St().RestaurarBanco();
-        }
-
-        [TestMethod]
-        public async Task NaoRemoveMinisterioQuandoIdInvalido()
-        {
-            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
-
-            var qtdOriginal = await repositorio.Contar();
-
-            await repositorio.Remover(Guid.NewGuid().ToString("N"));
-
-            var qtdAposRemover = await repositorio.Contar();
-
-            Assert.AreEqual(qtdOriginal, qtdAposRemover);
         }
 
         #endregion

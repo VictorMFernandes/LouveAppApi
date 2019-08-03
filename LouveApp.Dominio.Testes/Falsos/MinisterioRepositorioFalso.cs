@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
+using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
 using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.Repositorios;
 
@@ -23,5 +24,9 @@ namespace LouveApp.Dominio.Testes.Falsos
         public Task<Ministerio> PegarPorLinkConvite(string linkConvite) => null;
 
         public Task<int> Contar() => Task.Run(() => 0);
+
+        public void Remover(Ministerio ministerio) { }
+
+        public Task<IEnumerable<PegarUsuarioComandoResultado>> PegarUsuarios(string ministerioId) => null;
     }
 }
