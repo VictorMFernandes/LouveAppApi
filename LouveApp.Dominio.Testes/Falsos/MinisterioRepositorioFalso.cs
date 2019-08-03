@@ -10,7 +10,7 @@ namespace LouveApp.Dominio.Testes.Falsos
     {
         public void Atualizar(Ministerio ministerio) { }
 
-        public void Remover(string id) { }
+        public Task Remover(string ministerioId) => null;
 
         public Task<bool> EAdministrador(string usuarioId, string ministerioId) => Task.Run(() => false);
 
@@ -21,5 +21,7 @@ namespace LouveApp.Dominio.Testes.Falsos
         public Task<Ministerio> PegarPorId(string id) => null;
 
         public Task<Ministerio> PegarPorLinkConvite(string linkConvite) => null;
+
+        public Task<int> Contar() => Task.Run(() => 0);
     }
 }

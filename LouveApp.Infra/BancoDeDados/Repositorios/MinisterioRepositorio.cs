@@ -61,7 +61,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
             _contexto.Entry(ministerio).State = EntityState.Modified;
         }
 
-        public async void Remover(string id)
+        public async Task Remover(string id)
         {
             var query = $"DELETE FROM {MinisterioMap.Tabela} " +
                         $"WHERE Id = @{nameof(id)}";
@@ -82,6 +82,15 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
             {
                 conn.Open();
                 return await conn.ExecuteScalarAsync<bool>(query, new { usuarioId, ministerioId });
+            }
+        }
+
+        public async Task<int> Contar()
+        {
+            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            {
+                conn.Open();
+                return await conn.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM {MinisterioMap.Tabela}");
             }
         }
     }

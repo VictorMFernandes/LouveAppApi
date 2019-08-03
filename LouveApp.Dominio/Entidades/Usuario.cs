@@ -67,7 +67,8 @@ namespace LouveApp.Dominio.Entidades
 
         public void Atualizar(Nome nome, IEnumerable<string> instrumentosIds)
         {
-            Nome = nome;
+            Nome = nome?? Nome;
+
             AtualizarInstrumentos(instrumentosIds);
             DtUltimaAtividade = DateTime.Now;
         }

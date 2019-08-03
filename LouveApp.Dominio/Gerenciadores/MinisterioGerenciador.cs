@@ -115,7 +115,7 @@ namespace LouveApp.Dominio.Gerenciadores
                 return new NaoAutorizadoResultado(PadroesMensagens.UsuarioSemPermissao);
             
             // Realiza a ação
-            _ministerioRepo.Remover(comando.MinisterioId);
+            await _ministerioRepo.Remover(comando.MinisterioId);
 
             return null;
         }

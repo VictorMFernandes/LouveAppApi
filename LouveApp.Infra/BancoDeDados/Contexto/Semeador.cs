@@ -4,6 +4,7 @@ using LouveApp.Dominio.Servicos;
 using LouveApp.Dominio.ValueObjects;
 using LouveApp.Infra.BancoDeDados.Transacoes;
 using LouveApp.Compartilhado.Padroes;
+using System.Collections.Generic;
 
 namespace LouveApp.Infra.BancoDeDados.Contexto
 {
@@ -15,6 +16,8 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
         private readonly IUow _uow;
 
         private static Usuario _usuario;
+        private static Instrumento _instrumento1;
+        private static Instrumento _instrumento2;
 
         public SemeadorBd(IUsuarioRepositorio usuarioRepo
             , IMinisterioRepositorio ministerioRepo
@@ -34,9 +37,12 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
             SemearInstrumentos();
 
             _usuario = CriarUsuario();
-            _usuario.Instrumentos.Add(new Dominio.Entidades.Juncao.UsuarioInstrumento(PadroesString.InstrumentoId1));
-            _usuario.Instrumentos.Add(new Dominio.Entidades.Juncao.UsuarioInstrumento(PadroesString.InstrumentoId2));
+
+            _usuario.Atualizar(null, new List<string> { PadroesString.InstrumentoId1, PadroesString.InstrumentoId2 });
+
             _usuarioRepo.Criar(_usuario);
+
+            await _uow.Salvar();
 
             _ministerioRepo.Criar(CriarMinisterio());
 
@@ -45,10 +51,13 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
 
         private async void SemearInstrumentos()
         {
+            _instrumento1 = new Instrumento(PadroesString.InstrumentoId1, new Nome(PadroesString.InstrumentoNome1));
+            _instrumento2 = new Instrumento(PadroesString.InstrumentoId2, new Nome(PadroesString.InstrumentoNome2));
+
             Instrumento[] instrumentos =
             {
-                new Instrumento(PadroesString.InstrumentoId1, new Nome(PadroesString.InstrumentoNome1)),
-                new Instrumento(PadroesString.InstrumentoId2, new Nome(PadroesString.InstrumentoNome2)),
+                _instrumento1,
+                _instrumento2,
                 new Instrumento(new Nome("Baixo Elétrico")),
                 new Instrumento(new Nome("Teclado")),
                 new Instrumento(new Nome("Violino")),

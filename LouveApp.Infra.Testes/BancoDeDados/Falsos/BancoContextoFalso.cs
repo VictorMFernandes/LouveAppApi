@@ -3,6 +3,7 @@ using LouveApp.Infra.BancoDeDados.Contexto;
 using LouveApp.Infra.BancoDeDados.Repositorios;
 using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace LouveApp.Infra.Testes.BancoDeDados.Falsos
 {
@@ -40,5 +41,16 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Falsos
         }
 
         #endregion
+
+        /// <summary>
+        /// Reinicializa o banco com todas as entidades padrões.
+        /// Deve ser executada toda vez que alguma entidade padrão do banco for alterada/removida.
+        /// </summary>
+        public void RestaurarBanco()
+        {
+            File.Delete(Configuracoes.BancoTestesCaminho);
+            _instancia = null;
+            Dispose();
+        }
     }
 }
