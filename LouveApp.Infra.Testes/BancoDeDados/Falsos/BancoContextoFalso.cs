@@ -6,17 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LouveApp.Infra.Testes.BancoDeDados.Falsos
 {
-    internal class BancoContextoFalso
+    internal class BancoContextoFalso : BancoContexto
     {
-        public readonly DbContextOptions<BancoContexto> _opcoesDb;
+        public static readonly DbContextOptions<BancoContexto> _opcoesDb = new DbContextOptionsBuilder<BancoContexto>()
+                                                                            .UseSqlite(Configuracoes.ConnStringTestes)
+                                                                            .Options;
 
         private BancoContextoFalso()
+            : base(_opcoesDb)
         {
             Configuracoes.ConnString = Configuracoes.ConnStringTestes;
-
-            _opcoesDb = new DbContextOptionsBuilder<BancoContexto>()
-                .UseSqlite(Configuracoes.ConnString)
-                .Options;
 
             using (var context = new BancoContexto(_opcoesDb))
             {

@@ -109,7 +109,7 @@ namespace LouveApp.Dominio.Gerenciadores
             var ministerio = await _ministerioRepo.PegarPorLinkConvite(comando.LinkConvite);
 
             // Caso o usuário não exista
-            if (ministerio == null || !ministerio.LinkConviteAtivado)
+            if (ministerio == null)
             {
                 return new NaoEncontradoResultado(PadroesMensagens.LinkInvalido);
             }

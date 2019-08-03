@@ -64,6 +64,8 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
 
         public static Usuario CriarUsuario()
         {
+            if (_usuario != null) return _usuario;
+
             var nome = new Nome(PadroesString.UsuarioNome);
             var email = new Email(PadroesString.UsuarioEmail);
             var autenticacao = new Autenticacao(PadroesString.UsuarioLogin
@@ -75,6 +77,8 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
 
         public static Ministerio CriarMinisterio()
         {
+            _usuario = _usuario ?? CriarUsuario();
+
             var nome = new Nome(PadroesString.MinisterioNome);
             return new Ministerio(PadroesString.MinisterioId, nome, _usuario);
         }

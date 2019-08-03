@@ -8,9 +8,27 @@ namespace LouveApp.Dominio.Entidades.Juncao
         #region Propriedades
 
         public string UsuarioId { get; private set; }
-        public Usuario Usuario { get; set; }
+        private Usuario _usuario;
+        public Usuario Usuario
+        {
+            get => _usuario;
+            private set
+            {
+                if (value != null) UsuarioId = value.Id;
+                _usuario = value;
+            }
+        }
         public string MinisterioId { get; private set; }
-        public Ministerio Ministerio { get; private set; }
+        private Ministerio _ministerio;
+        public Ministerio Ministerio
+        {
+            get => _ministerio;
+            private set
+            {
+                if (value != null) MinisterioId = value.Id;
+                _ministerio = value;
+            }
+        }
         public bool Administrador { get; private set; }
         public DateTime DtIngresso { get; private set; }
 

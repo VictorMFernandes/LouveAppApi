@@ -83,7 +83,7 @@ namespace LouveApp.Dominio.Gerenciadores
                 return new NaoEncontradoResultado(PadroesMensagens.MinisterioNaoEncontrado);
             }
 
-            var autorizado = ministerio.AutorizadoTrocarFoto(comando.UsuarioLogadoId);
+            var autorizado = ministerio.Administrador(comando.UsuarioLogadoId);
 
             // Checa se o usuário está autorizado para fazer a ação
             if (!autorizado)

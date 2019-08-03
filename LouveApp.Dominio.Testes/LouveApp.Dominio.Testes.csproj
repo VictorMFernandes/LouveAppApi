@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entidades\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\LouveApp.Dominio\LouveApp.Dominio.csproj" />
     <ProjectReference Include="..\LouveApp.Infra\LouveApp.Infra.csproj" />
   </ItemGroup>

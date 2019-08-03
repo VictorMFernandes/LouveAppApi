@@ -35,7 +35,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
             return await _contexto
                 .Ministerios
                 .Include(m => m.Usuarios)
-                .FirstOrDefaultAsync(x => x.LinkConvite == linkConvite);
+                .FirstOrDefaultAsync(x => x.LinkConvite == linkConvite || x.LinkConviteAtivado);
         }
 
         public async Task<IEnumerable<PegarMinisteriosComandoResultado>> PegarPorUsuario(string id)

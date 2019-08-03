@@ -76,29 +76,35 @@ namespace LouveApp.Dominio.Entidades
             Foto = foto;
         }
 
-        public void AdicionarUsuario(Usuario usuario)
+        public void AdicionarUsuario(Usuario usuario, bool administrador = false)
         {
-            Usuarios.Add(new UsuarioMinisterio(usuario, false));
+            AddNotifications(usuario);
+
+            Usuarios.Add(new UsuarioMinisterio(usuario, administrador));
 
             Validar();
         }
 
         public void AdicionarAdministrador(Usuario usuario)
         {
-            Usuarios.Add(new UsuarioMinisterio(usuario, true));
+            AdicionarUsuario(usuario, true);
         }
 
-        public bool AutorizadoTrocarFoto(string usuarioId)
+        public bool Administrador(string usuarioId)
         {
             var usuarioMin = Usuarios.FirstOrDefault(um => um.Usuario.Id == usuarioId);
+
             return (usuarioMin?.Administrador == true);
         }
 
+        /// <summary>
+        /// Ativa e cria o link convite parar entrar no ministério.
+        /// </summary>
+        /// <param name="usuarioId">Id do usuário com permissão para ativar o link.</param>
+        /// <returns>True se a ativação foi bem sucedida.</returns>
         public bool AtivarLinkConvite(string usuarioId)
         {
-            var usuarioMin = Usuarios.FirstOrDefault(um => um.Usuario.Id == usuarioId);
-
-            if (usuarioMin?.Administrador != true)
+            if (!Administrador(usuarioId))
                 return false;
 
             LinkConvite = Guid.NewGuid().ToString("N");
@@ -107,11 +113,15 @@ namespace LouveApp.Dominio.Entidades
             return LinkConviteAtivado;
         }
 
+        /// <summary>
+        /// Desativa qualquer link convite do ministério.
+        /// </summary>
+        /// <remarks>Apaga qualquer link anteriormente gerado.</remarks>
+        /// <param name="usuarioId">Id do usuário com permissão para desativar o link.</param>
+        /// <returns>True se a desativação foi bem sucedida.</returns>
         public bool DesativarLinkConvite(string usuarioId)
         {
-            var usuarioMin = Usuarios.FirstOrDefault(um => um.Usuario.Id == usuarioId);
-
-            if (usuarioMin?.Administrador != true)
+            if (!Administrador(usuarioId))
                 return false;
 
             LinkConvite = string.Empty;
