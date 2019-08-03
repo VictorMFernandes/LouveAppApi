@@ -58,14 +58,13 @@ namespace LouveApp.Api.Controllers
         /// <summary>
         /// Pega os dados do usuário que está logado.
         /// </summary>
-        /// <param name="usuarioId">Id do usuário que se deseja pegar as informações</param>
         /// <response code="200">Retorna as principais propriedades do usuário logado no sistema.</response>
         [ProducesResponseType(typeof(AtualizarUsuarioComandoResultado), 200)]
         [HttpGet]
-        [Route("v1/[controller]/{usuarioId}")]
-        public async Task<IActionResult> PegarUsuario(string usuarioId)
+        [Route("v1/[controller]")]
+        public async Task<IActionResult> PegarUsuario()
         {
-            return RespostaDeConsulta(await _usuarioRepo.PegarPorIdSemRastrear(usuarioId));
+            return RespostaDeConsulta(await _usuarioRepo.PegarPorIdSemRastrear(UsuarioLogadoId));
         }
 
         /// <summary>
