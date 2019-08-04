@@ -5,6 +5,8 @@
         public const int MaxLogin = 100;
         public const int MinLogin = 6;
 
+        public const int MinSenha = 6;
+
         public const int MaxNome = 60;
         public const int MinNome = 3;
 

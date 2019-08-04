@@ -31,7 +31,10 @@ namespace LouveApp.Dominio.ValueObjects
             Ativo = true;
 
             AddNotifications(new ValidationContract()
-                .AreEquals(senha, confirmacaoSenha, "Senha", "As senhas não coincidem")
+                .AreEquals(senha, confirmacaoSenha
+                    , nameof(Senha), PadroesMensagens.SenhasNaoCoincidem)
+                .HasMinLen(senha, PadroesTamanho.MinSenha
+                    , nameof(Senha), string.Format(PadroesMensagens.SenhaMinTamanho, PadroesTamanho.MinSenha))
             );
 
             Validar();

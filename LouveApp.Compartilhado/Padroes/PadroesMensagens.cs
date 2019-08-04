@@ -4,6 +4,11 @@
     {
         public const string UsuarioNaoEncontrado = "Usuário não encontrado";
         public const string UsuarioOuSenhaInvalidos = "Usuário ou senha inválidos";
+        public const string SenhasNaoCoincidem = "As senhas não coincidem";
+        /// <summary>
+        /// {0} Tamanho mínimo das senhas
+        /// </summary>
+        public const string SenhaMinTamanho = "A senha deve conter no mínimo {0} caracteres";
         /// <summary>
         /// {0} Nome do ministério
         /// </summary>
