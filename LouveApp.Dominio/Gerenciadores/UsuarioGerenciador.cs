@@ -53,7 +53,7 @@ namespace LouveApp.Dominio.Gerenciadores
             _usuarioRepo.Criar(usuario);
 
             // Enviar um e-mail de boas vindas
-            _emailServico.Enviar(usuario.Email.Endereco, "victorfernandes92@gmail.com", "Bem Vindo", "Seja bem vindo ao CondoFácil!");
+            _emailServico.EnviarBoasVindas(usuario.Email.Endereco, usuario.ToString());
 
             // Retornar o resultado para tela
             return new RegistrarUsuarioComandoResultado(usuario.Id, usuario.ToString(), usuario.Email.Endereco);

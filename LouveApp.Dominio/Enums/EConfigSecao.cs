@@ -13,6 +13,8 @@ namespace LouveApp.Dominio.Enums
         [EnumTextos("AppSettings:Versao")]
         Versao,
         [EnumTextos("ConexaoBd")]
-        ConexaoBd
+        ConexaoBd,
+        [EnumTextos("SendGrid:ApiKey")]
+        SendGridApiKey
     }
 }

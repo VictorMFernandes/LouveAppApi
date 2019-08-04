@@ -4,7 +4,6 @@ using LouveApp.Compartilhado.Extensoes;
 using LouveApp.Dominio.Enums;
 using LouveApp.Dominio.Servicos;
 using LouveApp.Infra.BancoDeDados.Contexto;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,11 +11,9 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Text;
 using LouveApp.Dominio.Sistema;
 using Newtonsoft.Json;
+using LouveApp.Infra.Servicos.Email.Extensoes;
 
 namespace LouveApp.Api
 {
@@ -61,26 +58,14 @@ namespace LouveApp.Api
 
             services.AddCors();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
-                        .GetBytes(Configuration.GetSection(EConfigSecao.TokenSecreto.EnumTextos().Nome).Value)),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero,
-                    RequireExpirationTime = true,
-                };
-            });
+            services.ConfigurarAutenticacao(Configuration);
 
             services.AddResponseCompression();
 
             services.ConfigurarIoC();
+            services.ConfigurarServicoEmail(Configuration);
 
-            services.AdicionarDocumentacaoSwagger(_nomeAplicacao, _versao);
+            services.ConfigurarSwagger(_nomeAplicacao, _versao);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ISemeadorBd semeadorBd)

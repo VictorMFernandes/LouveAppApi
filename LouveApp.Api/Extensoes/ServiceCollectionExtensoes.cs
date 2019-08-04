@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using LouveApp.Api.Documentacao.Exemplos;
 using LouveApp.Api.Documentacao.Filtros;
+using LouveApp.Compartilhado.Extensoes;
 using LouveApp.Compartilhado.Padroes;
+using LouveApp.Dominio.Enums;
 using LouveApp.Dominio.Gerenciadores;
 using LouveApp.Dominio.Repositorios;
 using LouveApp.Dominio.Servicos;
@@ -12,7 +15,10 @@ using LouveApp.Infra.BancoDeDados.Contexto;
 using LouveApp.Infra.BancoDeDados.Repositorios;
 using LouveApp.Infra.BancoDeDados.Transacoes;
 using LouveApp.Infra.Servicos;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -39,11 +45,10 @@ namespace LouveApp.Api.Extensoes
             services.AddTransient<IEscalaRepositorio, EscalaRepositorio>();
             services.AddTransient<IMusicaRepositorio, MusicaRepositorio>();
             // Serviços
-            services.AddTransient<IEmailServico, EmailServico>();
             services.AddTransient<IFotoServico, FotoServico>();
         }
 
-        public static IServiceCollection AdicionarDocumentacaoSwagger(this IServiceCollection services, string nomeAplicacao, string versao)
+        public static void ConfigurarSwagger(this IServiceCollection services, string nomeAplicacao, string versao)
         {
             services.AddSwaggerGen(s =>
             {
@@ -78,8 +83,26 @@ namespace LouveApp.Api.Extensoes
             });
 
             services.AddSwaggerExamplesFromAssemblyOf<RegistrarUsuarioComandoExemplo>();
+        }
 
-            return services;
+        public static void ConfigurarAutenticacao(this IServiceCollection services, IConfiguration config)
+        {
+            var tokenSecreto = config.GetSection(EConfigSecao.TokenSecreto.EnumTextos().Nome).Value;
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                        .GetBytes(tokenSecreto)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero,
+                    RequireExpirationTime = true,
+                };
+            });
         }
     }
 }

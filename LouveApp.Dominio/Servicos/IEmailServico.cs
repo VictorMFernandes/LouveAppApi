@@ -2,6 +2,6 @@
 {
     public interface IEmailServico
     {
-        void Enviar(string para, string de, string assunto, string corpo);
+        void EnviarBoasVindas(string emailDestino, string nomeDestino);
     }
 }
