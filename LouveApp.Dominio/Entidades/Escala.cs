@@ -13,6 +13,7 @@ namespace LouveApp.Dominio.Entidades
         public string MinisterioId { get; private set; }
         public Ministerio Ministerio { get; private set; }
         public ICollection<UsuarioEscala> Usuarios { get; private set; }
+        public ICollection<EscalaMusica> Musicas { get; private set; }
 
         #endregion
 
@@ -20,11 +21,12 @@ namespace LouveApp.Dominio.Entidades
 
         private Escala() { }
 
-        public Escala(DateTime data, IEnumerable<string> usuariosIds)
+        public Escala(DateTime data, IEnumerable<string> usuariosIds, IEnumerable<string> musicasIds)
         {
             Data = data;
 
             AdicionarUsuarios(usuariosIds);
+            AdicionarMusicas(musicasIds);
 
             Validar();
         }
@@ -41,6 +43,7 @@ namespace LouveApp.Dominio.Entidades
         protected override void InicializarColecoes()
         {
             Usuarios = new List<UsuarioEscala>();
+            Musicas = new List<EscalaMusica>();
         }
 
         protected override void Validar() { }
@@ -49,11 +52,25 @@ namespace LouveApp.Dominio.Entidades
 
         private void AdicionarUsuarios(IEnumerable<string> usuariosIds)
         {
+            if (usuariosIds == null) return;
+
             Usuarios.Clear();
 
             foreach (var usuarioId in usuariosIds)
             {
                 Usuarios.Add(new UsuarioEscala(usuarioId));
+            }
+        }
+
+        private void AdicionarMusicas(IEnumerable<string> musicasIds)
+        {
+            if (musicasIds == null) return;
+
+            Musicas.Clear();
+
+            foreach (var musicaId in musicasIds)
+            {
+                Musicas.Add(new EscalaMusica(musicaId));
             }
         }
     }

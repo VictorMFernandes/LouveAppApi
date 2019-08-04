@@ -31,7 +31,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
 
-            var retorno = await repositorio.PegarPorId(PadroesString.MinisterioId);
+            var retorno = await repositorio.PegarPorId(PadroesString.MinisterioId1);
             Assert.IsNotNull(retorno);
         }
 
@@ -54,8 +54,8 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
             var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
 
             // Ativa o link para testar
-            var ministerio = await repositorio.PegarPorId(PadroesString.MinisterioId);
-            ministerio.AtivarLinkConvite(PadroesString.UsuarioId);
+            var ministerio = await repositorio.PegarPorId(PadroesString.MinisterioId1);
+            ministerio.AtivarLinkConvite(PadroesString.UsuarioId1);
             repositorio.Atualizar(ministerio);
             await BancoContextoFalso.St().SaveChangesAsync();
 
@@ -64,7 +64,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
             Assert.IsNotNull(retorno);
 
             // Desativa o link que foi gerado
-            ministerio.DesativarLinkConvite(PadroesString.UsuarioId);
+            ministerio.DesativarLinkConvite(PadroesString.UsuarioId1);
             repositorio.Atualizar(ministerio);
             await BancoContextoFalso.St().SaveChangesAsync();
         }
@@ -75,8 +75,8 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
             var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
 
             // Ativa o link para testar
-            var ministerio = await repositorio.PegarPorId(PadroesString.MinisterioId);
-            ministerio.AtivarLinkConvite(PadroesString.UsuarioId);
+            var ministerio = await repositorio.PegarPorId(PadroesString.MinisterioId1);
+            ministerio.AtivarLinkConvite(PadroesString.UsuarioId1);
             repositorio.Atualizar(ministerio);
             await BancoContextoFalso.St().SaveChangesAsync();
 
@@ -85,7 +85,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
             Assert.IsNotNull(retorno.Usuarios);
 
             // Desativa o link que foi gerado
-            ministerio.DesativarLinkConvite(PadroesString.UsuarioId);
+            ministerio.DesativarLinkConvite(PadroesString.UsuarioId1);
             repositorio.Atualizar(ministerio);
             await BancoContextoFalso.St().SaveChangesAsync();
         }
@@ -109,7 +109,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
 
-            var retorno = await repositorio.PegarPorUsuario(PadroesString.UsuarioId);
+            var retorno = await repositorio.PegarPorUsuario(PadroesString.UsuarioId1);
             Assert.AreNotEqual(0, retorno.Count());
         }
 
@@ -131,12 +131,12 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
 
-            var ministerio = await repositorio.PegarPorId(PadroesString.MinisterioId);
+            var ministerio = await repositorio.PegarPorId(PadroesString.MinisterioId1);
 
             repositorio.Remover(ministerio);
             await BancoContextoFalso.St().SaveChangesAsync();
 
-            var ministerioDeletado = await repositorio.PegarPorId(PadroesString.MinisterioId);
+            var ministerioDeletado = await repositorio.PegarPorId(PadroesString.MinisterioId1);
 
             Assert.IsNull(ministerioDeletado);
 
@@ -152,7 +152,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
 
-            var eAdministrador = await repositorio.EAdministrador(PadroesString.UsuarioId, PadroesString.MinisterioId);
+            var eAdministrador = await repositorio.EAdministrador(PadroesString.UsuarioId1, PadroesString.MinisterioId1);
 
             Assert.IsTrue(eAdministrador);
         }
@@ -162,12 +162,12 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
 
-            var ministerio = await repositorio.PegarPorId(PadroesString.MinisterioId);
+            var ministerio = await repositorio.PegarPorId(PadroesString.MinisterioId1);
             ministerio.AdicionarUsuario(_usuarioNovo);
 
             await BancoContextoFalso.St().SaveChangesAsync();
 
-            var eAdministrador = await repositorio.EAdministrador(_usuarioNovo.Id, PadroesString.MinisterioId);
+            var eAdministrador = await repositorio.EAdministrador(_usuarioNovo.Id, PadroesString.MinisterioId1);
 
             Assert.IsFalse(eAdministrador);
 
@@ -179,7 +179,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
 
-            var eAdministrador = await repositorio.EAdministrador(Guid.NewGuid().ToString("N"), PadroesString.MinisterioId);
+            var eAdministrador = await repositorio.EAdministrador(Guid.NewGuid().ToString("N"), PadroesString.MinisterioId1);
 
             Assert.IsFalse(eAdministrador);
         }

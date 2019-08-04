@@ -19,7 +19,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
 
-            var retorno = await repositorio.PegarPorId(PadroesString.UsuarioId);
+            var retorno = await repositorio.PegarPorId(PadroesString.UsuarioId1);
             Assert.IsNotNull(retorno);
         }
 
@@ -41,7 +41,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
 
-            var retorno = await repositorio.PegarPorIdSemRastrear(PadroesString.UsuarioId);
+            var retorno = await repositorio.PegarPorIdSemRastrear(PadroesString.UsuarioId1);
             Assert.IsNotNull(retorno);
         }
 
@@ -59,7 +59,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
 
-            var retorno = await repositorio.PegarPorIdSemRastrear(PadroesString.UsuarioId);
+            var retorno = await repositorio.PegarPorIdSemRastrear(PadroesString.UsuarioId1);
 
             Assert.IsTrue(retorno.Instrumentos.Any());
         }
@@ -73,7 +73,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
 
-            var retorno = await repositorio.PegarAutenticado(PadroesString.UsuarioLogin, Autenticacao.EncriptarSenha(PadroesString.UsuarioSenha));
+            var retorno = await repositorio.PegarAutenticado(PadroesString.UsuarioLogin1, Autenticacao.EncriptarSenha(PadroesString.SenhaValida));
             Assert.IsNotNull(retorno);
         }
 
@@ -82,7 +82,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
 
-            var retorno = await repositorio.PegarAutenticado("loginincorreto", Autenticacao.EncriptarSenha(PadroesString.UsuarioSenha));
+            var retorno = await repositorio.PegarAutenticado("loginincorreto", Autenticacao.EncriptarSenha(PadroesString.SenhaValida));
             Assert.IsNull(retorno);
         }
 
@@ -91,7 +91,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
 
-            var retorno = await repositorio.PegarAutenticado(PadroesString.UsuarioLogin, "senhaincorreta");
+            var retorno = await repositorio.PegarAutenticado(PadroesString.UsuarioLogin1, "senhaincorreta");
             Assert.IsNull(retorno);
         }
 
@@ -100,7 +100,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
 
-            var retorno = await repositorio.PegarAutenticado(PadroesString.UsuarioLogin, Autenticacao.EncriptarSenha(PadroesString.UsuarioSenha));
+            var retorno = await repositorio.PegarAutenticado(PadroesString.UsuarioLogin1, Autenticacao.EncriptarSenha(PadroesString.SenhaValida));
 
             Assert.IsTrue(retorno.Ministerios.Any());
         }
@@ -114,7 +114,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
 
-            var retorno = await repositorio.IdExiste(PadroesString.UsuarioId);
+            var retorno = await repositorio.IdExiste(PadroesString.UsuarioId1);
             Assert.IsTrue(retorno);
         }
 
@@ -136,7 +136,7 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         {
             var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
 
-            var retorno = await repositorio.EmailExiste(PadroesString.UsuarioEmail);
+            var retorno = await repositorio.EmailExiste(PadroesString.UsuarioEmail1);
             Assert.IsTrue(retorno);
         }
 

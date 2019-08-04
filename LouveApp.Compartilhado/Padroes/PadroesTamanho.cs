@@ -21,5 +21,8 @@
 
         public const int MaxTelefone = 15;
         public const int MinTelefone = 8;
+
+        public const int MaxUrl = 200;
+        public const int MinUrl = 5;
     }
 }

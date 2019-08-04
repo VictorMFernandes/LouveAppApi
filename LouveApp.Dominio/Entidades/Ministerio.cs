@@ -19,6 +19,7 @@ namespace LouveApp.Dominio.Entidades
         public bool LinkConviteAtivado { get; private set; }
         public ICollection<UsuarioMinisterio> Usuarios { get; private set; }
         public ICollection<Escala> Escalas { get; private set; }
+        public ICollection<Musica> Musicas { get; private set; }
         public DateTime DtCriacao { get; }
 
         #endregion
@@ -54,6 +55,7 @@ namespace LouveApp.Dominio.Entidades
         {
             Usuarios = new List<UsuarioMinisterio>();
             Escalas = new List<Escala>();
+            Musicas = new List<Musica>();
         }
 
         protected override void Validar()
@@ -137,15 +139,25 @@ namespace LouveApp.Dominio.Entidades
             return !LinkConviteAtivado;
         }
 
-        public bool AdicionarEscala(string usuarioId, Escala escala)
+        public Escala CriarEscala(string usuarioId, DateTime data, IEnumerable<string> usuariosIds, IEnumerable<string> musicasIds)
         {
-            if (!Administrador(usuarioId)) return false;
+            if (!Administrador(usuarioId)) return null;
+
+            if (usuariosIds != null 
+                && !usuariosIds.All(usuIds => Usuarios.Select(u => u.UsuarioId).Contains(usuIds)))
+                return null;
+
+            if (musicasIds != null 
+                && !musicasIds.All(musIds => Musicas.Select(m => m.Id).Contains(musIds)))
+                return null;
+
+            var escala = new Escala(data, usuariosIds, musicasIds);
 
             AddNotifications(escala);
 
             Escalas.Add(escala);
 
-            return true;
+            return escala;
         }
 
         public bool RemoverEscala(string usuarioId, string escalaId)
@@ -156,6 +168,28 @@ namespace LouveApp.Dominio.Entidades
             if (escala == null) return false;
 
             Escalas.Remove(escala);
+            return true;
+        }
+
+        public bool AdicionarMusica(string usuarioId, Musica musica)
+        {
+            if (!Administrador(usuarioId)) return false;
+
+            AddNotifications(musica);
+
+            Musicas.Add(musica);
+
+            return true;
+        }
+
+        public bool RemoverMusica(string usuarioId, string musicaId)
+        {
+            if (!Administrador(usuarioId)) return false;
+
+            var musica = Musicas.FirstOrDefault(m => m.Id == musicaId);
+            if (musica == null) return false;
+
+            Musicas.Remove(musica);
             return true;
         }
     }

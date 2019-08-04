@@ -1,4 +1,4 @@
-﻿using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
+﻿using LouveApp.Dominio.Comandos.EscalaComandos.Saidas;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

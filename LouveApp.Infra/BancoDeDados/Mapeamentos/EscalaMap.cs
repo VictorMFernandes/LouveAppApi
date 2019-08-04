@@ -23,8 +23,6 @@ namespace LouveApp.Infra.BancoDeDados.Mapeamentos
         /// <summary>
         /// Ignora todos os VOs da entidade, deve ser o primeiro elemento a ser mapeado
         /// </summary>
-        private static void IgnorarVos(EntityTypeBuilder<Escala> builder)
-        {
-        }
+        private static void IgnorarVos(EntityTypeBuilder<Escala> builder) { }
     }
 }

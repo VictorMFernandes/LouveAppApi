@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="LouveApp.Dominio.Entidades.Escala">
+    <Position X="9.5" Y="5" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Usuarios" Type="LouveApp.Dominio.Entidades.Juncao.UsuarioEscala">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.527" Y="0.06" Height="0.182" Width="0.923" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Musicas" Type="LouveApp.Dominio.Entidades.Juncao.EscalaMusica">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.047" Y="-0.284" Height="0.182" Width="1.326" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAEgAACAAAAAAAAARAAAAAAAAAAAoA=</HashCode>
+      <FileName>Entidades\Escala.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Usuarios" />
+      <Property Name="Musicas" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="LouveApp.Dominio.Entidades.Instrumento">
+    <Position X="0.5" Y="0.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAQAAAAAAAAEAAoA=</HashCode>
+      <FileName>Entidades\Instrumento.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Usuarios" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="LouveApp.Dominio.Entidades.Ministerio">
+    <Position X="8.25" Y="0.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Escalas" Type="LouveApp.Dominio.Entidades.Escala">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.079" Y="1.987" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Usuarios" Type="LouveApp.Dominio.Entidades.Juncao.UsuarioMinisterio">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-3.18" Y="1.11" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Musicas" Type="LouveApp.Dominio.Entidades.Musica">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.725" Y="0.06" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>EAAoAAAAAAAAAAAEBAASQDEAAACAAQAEAAAAQAEBAoA=</HashCode>
+      <FileName>Entidades\Ministerio.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Escalas" />
+      <Property Name="Usuarios" />
+      <Property Name="Musicas" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="LouveApp.Dominio.Entidades.Musica">
+    <Position X="13.25" Y="0.5" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Escalas" Type="LouveApp.Dominio.Entidades.Juncao.EscalaMusica" FixedFromPoint="true">
+      <Path>
+        <Point X="14.5" Y="2.569" />
+        <Point X="14.5" Y="3.5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-2.232" Y="0.693" Height="0.182" Width="2.139" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAEAAAQAAAAAAAAAQQAAAAAAAEAAIA=</HashCode>
+      <FileName>Entidades\Musica.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Escalas" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="LouveApp.Dominio.Entidades.Usuario">
+    <Position X="0.75" Y="6" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Ministerios" Type="LouveApp.Dominio.Entidades.Juncao.UsuarioMinisterio" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3" Y="6.625" />
+        <Point X="4.812" Y="6.625" />
+        <Point X="4.812" Y="4.636" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.013" Y="1.673" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Escalas" Type="LouveApp.Dominio.Entidades.Juncao.UsuarioEscala">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="1.183" Y="0.07" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAoAAAAACABAAAEAAAYAAAAAAAACQAAAAAgQAMAgIA=</HashCode>
+      <FileName>Entidades\Usuario.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Ministerios" />
+      <Property Name="Instrumentos" />
+      <Property Name="Escalas" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="LouveApp.Dominio.Entidades.Juncao.EscalaMusica">
+    <Position X="13.75" Y="3.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>BAAAACkAAAAAAAAACAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entidades\Juncao\EscalaMusica.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LouveApp.Dominio.Entidades.Juncao.UsuarioEscala">
+    <Position X="6.5" Y="6" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>BAAAAAgCABABAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entidades\Juncao\UsuarioEscala.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LouveApp.Dominio.Entidades.Juncao.UsuarioInstrumento">
+    <Position X="1" Y="3" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAACABABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entidades\Juncao\UsuarioInstrumento.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LouveApp.Dominio.Entidades.Juncao.UsuarioMinisterio">
+    <Position X="4" Y="2.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAAAAAAAABAIA=</HashCode>
+      <FileName>Entidades\Juncao\UsuarioMinisterio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -33,11 +33,11 @@ namespace LouveApp.Dominio.ValueObjects
         {
             AddNotifications(new ValidationContract()
                 .HasMinLen(Texto, PadroesTamanho.MinNome
-                    , "Nome"
-                    , $"O nome deve conter no mínimo {PadroesTamanho.MinNome} caracteres")
+                    , nameof(Nome)
+                    , string.Format(PadroesMensagens.NomeMinTamanho, PadroesTamanho.MinNome))
                 .HasMaxLen(Texto, PadroesTamanho.MaxNome
-                    , "Nome"
-                    , $"O nome deve conter no máximo {PadroesTamanho.MaxNome} caracteres")
+                    , nameof(Nome)
+                    , string.Format(PadroesMensagens.NomeMaxTamanho, PadroesTamanho.MaxNome))
             );
         }
 

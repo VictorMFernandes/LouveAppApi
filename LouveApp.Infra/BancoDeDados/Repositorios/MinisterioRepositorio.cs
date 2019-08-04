@@ -33,6 +33,17 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                         .Include(m => m.Escalas)
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task<Ministerio> PegarPorIdComMusicas(string ministerioId)
+        {
+            return await _contexto
+                        .Ministerios
+                        .Include(m => m.Usuarios)
+                        .ThenInclude(um => um.Usuario)
+                        .Include(m => m.Musicas)
+                        .FirstOrDefaultAsync(x => x.Id == ministerioId);
+        }
+
         public async Task<Ministerio> PegarPorLinkConvite(string linkConvite)
         {
             return await _contexto

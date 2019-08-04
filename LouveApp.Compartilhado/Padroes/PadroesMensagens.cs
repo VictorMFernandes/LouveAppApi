@@ -25,5 +25,24 @@
                                                        "instrumento(s) selecionado(s)";
 
         public const string EscalaNaoEncontrada = "Escala não encontrada";
+        public const string MusicaNaoEncontrada = "Música não encontrada";
+
+        /// <summary>
+        /// {0} Tamanho mínimo das url's
+        /// </summary>
+        public const string UrlMinTamanho = "A url deve conter no mínimo {0} caracteres";
+        /// <summary>
+        /// {0} Tamanho máximo das url's
+        /// </summary>
+        public const string UrlMaxTamanho = "A url deve conter no máximo {0} caracteres";
+
+        /// <summary>
+        /// {0} Tamanho mínimo dos nomes
+        /// </summary>
+        public const string NomeMinTamanho = "O nome deve conter no mínimo {0} caracteres";
+        /// <summary>
+        /// {0} Tamanho máximo dos nomes
+        /// </summary>
+        public const string NomeMaxTamanho = "O nome deve conter no máximo {0} caracteres";
     }
 }

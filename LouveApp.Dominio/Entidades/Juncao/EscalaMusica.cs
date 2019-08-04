@@ -1,6 +1,6 @@
 ﻿namespace LouveApp.Dominio.Entidades.Juncao
 {
-    public sealed class UsuarioEscala : EntidadeJuncaoComUsuario
+    public sealed class EscalaMusica
     {
         #region Propriedades
 
@@ -15,15 +15,16 @@
                 _escala = value;
             }
         }
-        public string InstrumentoId { get; private set; }
-        private Instrumento _instrumento;
-        public Instrumento Instrumento
+
+        public string MusicaId { get; private set; }
+        private Musica _musica;
+        public Musica Musica
         {
-            get => _instrumento;
+            get => _musica;
             private set
             {
-                if (value != null) InstrumentoId = value.Id;
-                _instrumento = value;
+                if (value != null) MusicaId = value.Id;
+                _musica = value;
             }
         }
 
@@ -31,11 +32,11 @@
 
         #region Construtores
 
-        private UsuarioEscala() { }
+        private EscalaMusica() { }
 
-        public UsuarioEscala(string usuarioId)
+        public EscalaMusica(string musicaId)
         {
-            UsuarioId = usuarioId;
+            MusicaId = musicaId;
         }
 
         #endregion

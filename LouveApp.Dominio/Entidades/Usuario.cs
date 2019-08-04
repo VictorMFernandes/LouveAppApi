@@ -16,6 +16,7 @@ namespace LouveApp.Dominio.Entidades
         public Foto Foto { get; private set; }
         public ICollection<UsuarioMinisterio> Ministerios { get; private set; }
         public ICollection<UsuarioInstrumento> Instrumentos { get; private set; }
+        public ICollection<UsuarioEscala> Escalas { get; private set; }
         public DateTime DtCriacao { get; private set; }
         public DateTime DtUltimaAtividade { get; private set; }
 
@@ -51,6 +52,7 @@ namespace LouveApp.Dominio.Entidades
         {
             Ministerios = new List<UsuarioMinisterio>();
             Instrumentos = new HashSet<UsuarioInstrumento>();
+            Escalas = new HashSet<UsuarioEscala>();
         }
 
         protected override void Validar()

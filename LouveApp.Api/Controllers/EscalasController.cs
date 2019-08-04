@@ -3,12 +3,9 @@ using LouveApp.Dominio.Gerenciadores;
 using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using LouveApp.Dominio.Comandos.MinisterioComandos.Entradas;
-using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
 using LouveApp.Dominio.Repositorios;
 using LouveApp.Dominio.Comandos.EscalaComandos.Saidas;
 using LouveApp.Dominio.Comandos.EscalaComandos.Entradas;
-using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
 
 namespace LouveApp.Api.Controllers
 {
@@ -34,7 +31,7 @@ namespace LouveApp.Api.Controllers
         [ProducesResponseType(typeof(RegistrarEscalaComandoResultado), 200)]
         [HttpPost]
         [Route("v1/Ministerios/{ministerioId}/[controller]")]
-        public async Task<IActionResult> RegistrarMinisterio(string ministerioId, [FromBody]RegistrarEscalaComando comando)
+        public async Task<IActionResult> RegistrarEscala(string ministerioId, [FromBody]RegistrarEscalaComando comando)
         {
             comando.PegarIds(UsuarioLogadoId, ministerioId);
 
@@ -49,7 +46,7 @@ namespace LouveApp.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<PegarEscalaComandoResultado>), 200)]
         [HttpGet]
         [Route("v1/Ministerios/{ministerioId}/[controller]")]
-        public async Task<IActionResult> PegarUsuarios(string ministerioId)
+        public async Task<IActionResult> PegarEscalas(string ministerioId)
         {
             return RespostaDeConsulta(await _escalaRepo.PegarPorMinisterio(ministerioId));
         }
@@ -62,7 +59,7 @@ namespace LouveApp.Api.Controllers
         /// <response code="200">Escala excluída com sucesso.</response>
         [HttpDelete]
         [Route("v1/Ministerios/{ministerioId}/[controller]/{escalaId}")]
-        public async Task<IActionResult> ExcluirMinisterio(string ministerioId, string escalaId)
+        public async Task<IActionResult> ExcluirEscala(string ministerioId, string escalaId)
         {
             var comando = new ExcluirEscalaComando(UsuarioLogadoId, ministerioId, escalaId);
 

@@ -27,7 +27,11 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
 
             modelBuilder.ApplyConfiguration(new MinisterioMap());
             modelBuilder.ApplyConfiguration(new InstrumentoMap());
+
             modelBuilder.ApplyConfiguration(new EscalaMap());
+            modelBuilder.ApplyConfiguration(new EscalaMusicaMap());
+
+            modelBuilder.ApplyConfiguration(new MusicaMap());
         }
     }
 }

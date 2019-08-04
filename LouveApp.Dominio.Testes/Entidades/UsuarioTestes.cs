@@ -14,7 +14,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void AtualizaNomeAoAtualizarUsuario()
         {
-            var usuario = SemeadorBd.CriarUsuario();
+            var usuario = SemeadorBd.CriarUsuario1();
 
             var nomeOriginal = usuario.Nome;
             usuario.Atualizar(new Nome("Novo Nome"), null);
@@ -25,7 +25,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void NaoAtualizaNomeQuandoNomeForNull()
         {
-            var usuario = SemeadorBd.CriarUsuario();
+            var usuario = SemeadorBd.CriarUsuario1();
 
             var nomeOriginal = usuario.Nome;
             usuario.Atualizar(null, null);
@@ -36,7 +36,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void InvalidaUsuarioQuandoNomeAtualizadoForInvalido()
         {
-            var usuario = SemeadorBd.CriarUsuario();
+            var usuario = SemeadorBd.CriarUsuario1();
 
             usuario.Atualizar(new Nome(string.Empty), null);
 
@@ -47,7 +47,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void AtualizaInstrumentoAoAtualizarUsuario()
         {
-            var usuario = SemeadorBd.CriarUsuario();
+            var usuario = SemeadorBd.CriarUsuario1();
 
             var listaInstrumentosIds = new string[] { "idvalido", "idvalido1" };
             usuario.Atualizar(null, listaInstrumentosIds);
@@ -58,7 +58,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void NaoAtualizaInstrumentosQuandoInstrumentosForNull()
         {
-            var usuario = SemeadorBd.CriarUsuario();
+            var usuario = SemeadorBd.CriarUsuario1();
             usuario.Instrumentos.Add(new UsuarioInstrumento("idvalido"));
 
             usuario.Atualizar(null, null);

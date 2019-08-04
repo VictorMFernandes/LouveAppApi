@@ -7,6 +7,8 @@ using LouveApp.Infra.BancoDeDados.Mapeamentos;
 using Microsoft.Data.Sqlite;
 using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
 using LouveApp.Infra.BancoDeDados.Mapeamentos.Juncao;
+using LouveApp.Dominio.Comandos.EscalaComandos.Saidas;
+using LouveApp.Dominio.Comandos.MusicaComandos.Saidas;
 
 namespace LouveApp.Infra.BancoDeDados.Repositorios
 {
@@ -29,6 +31,12 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                             $"WHERE ue.EscalaId = '{escala.Id}'";
 
                     escala.Usuarios = await conn.QueryAsync<PegarUsuarioComandoResultado>(query);
+
+                    query = $"SELECT m.Id, m.Nome, m.Referencia FROM {MusicaMap.Tabela} AS m " +
+                            $"INNER JOIN {EscalaMusicaMap.Tabela} AS em ON em.MusicaId = m.Id "+
+                            $"WHERE em.EscalaId = '{escala.Id}'";
+
+                    escala.Musicas = await conn.QueryAsync<PegarMusicaComandoResultado>(query);
                 }
 
                 return resultado;

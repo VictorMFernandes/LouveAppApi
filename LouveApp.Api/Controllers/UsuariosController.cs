@@ -5,7 +5,6 @@ using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.Repositorios;
 
 namespace LouveApp.Api.Controllers

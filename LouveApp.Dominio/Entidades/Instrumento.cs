@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace LouveApp.Dominio.Entidades
 {
-    public class Instrumento : Entidade
+    public sealed class Instrumento : Entidade
     {
         #region Propriedades
 

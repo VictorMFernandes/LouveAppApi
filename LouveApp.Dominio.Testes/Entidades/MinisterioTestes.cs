@@ -31,7 +31,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void MinisterioValidoAoAdicionarUsuarioNovo()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
             ministerio.AdicionarUsuario(_usuarioNovo);
 
@@ -42,7 +42,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void UsuarioNaoAdministradorQuandoAdicionadoComoUsuario()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
             ministerio.AdicionarUsuario(_usuarioNovo);
 
@@ -52,7 +52,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void MinisterioInvalidoAoAdicionarUsuarioNovoInvalido()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
             ministerio.AdicionarUsuario(_usuarioNovoInvalido);
 
@@ -62,9 +62,9 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void InvalidarMinisterioQuandoMesmoUsuarioAdicionadoMaisDeUmaVez()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
-            ministerio.AdicionarUsuario(SemeadorBd.CriarUsuario());
+            ministerio.AdicionarUsuario(SemeadorBd.CriarUsuario1());
 
             Assert.IsTrue(ministerio.Invalid);
         }
@@ -76,7 +76,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void MinisterioValidoAoAdicionarAdministradorNovo()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
             ministerio.AdicionarAdministrador(_usuarioNovo);
 
@@ -87,7 +87,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void UsuarioAdministradorQuandoAdicionadoComoAdministrador()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
             ministerio.AdicionarAdministrador(_usuarioNovo);
 
@@ -97,7 +97,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void MinisterioInvalidoAoAdicionarAdministradorNovoInvalido()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
             ministerio.AdicionarAdministrador(_usuarioNovoInvalido);
 
@@ -107,9 +107,9 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void InvalidarMinisterioQuandoMesmoAdministradorAdicionadoMaisDeUmaVez()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
-            ministerio.AdicionarAdministrador(SemeadorBd.CriarUsuario());
+            ministerio.AdicionarAdministrador(SemeadorBd.CriarUsuario1());
 
             Assert.IsTrue(ministerio.Invalid);
         }
@@ -121,15 +121,15 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void RetornaTrueQuandoUsuarioAdministrador()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
-            Assert.IsTrue(ministerio.Administrador(PadroesString.UsuarioId));
+            Assert.IsTrue(ministerio.Administrador(PadroesString.UsuarioId1));
         }
 
         [TestMethod]
         public void RetornaFalseQuandoUsuarioNaoForAdministrador()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
             ministerio.AdicionarUsuario(_usuarioNovo);
 
@@ -139,7 +139,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void RetornaFalseQuandoIdInvalidoAdministrador()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
             Assert.IsFalse(ministerio.Administrador(Guid.NewGuid().ToString("N")));
         }
@@ -151,9 +151,9 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void GeraLinkConviteAtivoQuandoUsuarioAutorizado()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
-            var autorizado = ministerio.AtivarLinkConvite(PadroesString.UsuarioId);
+            var autorizado = ministerio.AtivarLinkConvite(PadroesString.UsuarioId1);
 
             Assert.IsTrue(autorizado);
             Assert.IsTrue(ministerio.LinkConviteAtivado);
@@ -163,7 +163,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void NaoGeraLinkConviteAtivoQuandoUsuarioNaoAutorizado()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
             ministerio.AdicionarUsuario(_usuarioNovo);
 
@@ -177,7 +177,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void NaoGeraLinkConviteAtivoQuandoIdDesconhecido()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
             var autorizado = ministerio.AtivarLinkConvite(Guid.NewGuid().ToString("N"));
 
@@ -193,10 +193,10 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void DesativaLinkConviteQuandoUsuarioAutorizado()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
-            ministerio.AtivarLinkConvite(PadroesString.UsuarioId);
+            var ministerio = SemeadorBd.CriarMinisterio1();
+            ministerio.AtivarLinkConvite(PadroesString.UsuarioId1);
 
-            var autorizado = ministerio.DesativarLinkConvite(PadroesString.UsuarioId);
+            var autorizado = ministerio.DesativarLinkConvite(PadroesString.UsuarioId1);
 
             Assert.IsTrue(autorizado);
             Assert.IsFalse(ministerio.LinkConviteAtivado);
@@ -206,9 +206,9 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void DesativaLinkConviteQuandoUsuarioAutorizadoMesmoComLinkInexistente()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
+            var ministerio = SemeadorBd.CriarMinisterio1();
 
-            var autorizado = ministerio.DesativarLinkConvite(PadroesString.UsuarioId);
+            var autorizado = ministerio.DesativarLinkConvite(PadroesString.UsuarioId1);
 
             Assert.IsTrue(autorizado);
             Assert.IsFalse(ministerio.LinkConviteAtivado);
@@ -218,8 +218,8 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void NaoDesativaLinkConviteQuandoUsuarioNaoAutorizado()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
-            ministerio.AtivarLinkConvite(PadroesString.UsuarioId);
+            var ministerio = SemeadorBd.CriarMinisterio1();
+            ministerio.AtivarLinkConvite(PadroesString.UsuarioId1);
 
             ministerio.AdicionarUsuario(_usuarioNovo);
 
@@ -233,8 +233,8 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void NaoDesativaLinkConviteQuandoIdDesconhecido()
         {
-            var ministerio = SemeadorBd.CriarMinisterio();
-            ministerio.AtivarLinkConvite(PadroesString.UsuarioId);
+            var ministerio = SemeadorBd.CriarMinisterio1();
+            ministerio.AtivarLinkConvite(PadroesString.UsuarioId1);
 
             var autorizado = ministerio.AtivarLinkConvite(Guid.NewGuid().ToString("N"));
 
