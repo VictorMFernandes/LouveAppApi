@@ -18,7 +18,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         {
             var nome = new Nome("Novo Nome");
             var email = new Email("novo@email.com");
-            var autenticacao = new Autenticacao("novo@email.com", "senha", "senha");
+            var autenticacao = new Autenticacao("novo@email.com", PadroesString.SenhaValida, PadroesString.SenhaValida);
 
             _usuarioNovo = new Usuario(nome, email, autenticacao);
 
@@ -32,11 +32,12 @@ namespace LouveApp.Dominio.Testes.Entidades
         public void MinisterioValidoAoAdicionarUsuarioNovo()
         {
             var ministerio = SemeadorBd.CriarMinisterio1();
+            var qtdOriginal = ministerio.Usuarios.Count;
 
             ministerio.AdicionarUsuario(_usuarioNovo);
 
             Assert.IsTrue(ministerio.Valid);
-            Assert.AreEqual(2, ministerio.Usuarios.Count);
+            Assert.AreEqual(++qtdOriginal, ministerio.Usuarios.Count);
         }
 
         [TestMethod]
@@ -77,11 +78,12 @@ namespace LouveApp.Dominio.Testes.Entidades
         public void MinisterioValidoAoAdicionarAdministradorNovo()
         {
             var ministerio = SemeadorBd.CriarMinisterio1();
+            var qtdOriginal = ministerio.Usuarios.Count;
 
             ministerio.AdicionarAdministrador(_usuarioNovo);
 
             Assert.IsTrue(ministerio.Valid);
-            Assert.AreEqual(2, ministerio.Usuarios.Count);
+            Assert.AreEqual(++qtdOriginal, ministerio.Usuarios.Count);
         }
 
         [TestMethod]

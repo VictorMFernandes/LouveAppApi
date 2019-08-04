@@ -166,8 +166,6 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
 
         public static Ministerio CriarMinisterio1()
         {
-            if (_ministerio1 != null) return _ministerio1;
-
             var usuarioAdm = CriarUsuario1();
             var nome = new Nome(PadroesString.MinisterioNome1);
             _ministerio1 = new Ministerio(PadroesString.MinisterioId1, nome, usuarioAdm);
@@ -198,8 +196,6 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
 
         public static Ministerio CriarMinisterio2()
         {
-            if (_ministerio2 != null) return _ministerio2;
-
             var usuarioAdm = CriarUsuario1();
             var nome = new Nome(PadroesString.MinisterioNome2);
             _ministerio2 = new Ministerio(PadroesString.MinisterioId2, nome, usuarioAdm);
@@ -215,8 +211,6 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
 
         public static Ministerio CriarMinisterio3()
         {
-            if (_ministerio3 != null) return _ministerio3;
-
             var usuarioAdm = CriarUsuario3();
             var nome = new Nome(PadroesString.MinisterioNome3);
             _ministerio3 = new Ministerio(PadroesString.MinisterioId3, nome, usuarioAdm);

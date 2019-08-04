@@ -189,11 +189,11 @@ namespace LouveApp.Infra.Testes.BancoDeDados.Repositorios
         #region Contar
 
         [TestMethod]
-        public async Task Retornar1QuandoContarMinisterios()
+        public async Task Retornar3QuandoContarMinisterios()
         {
             var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
 
-            Assert.AreEqual(1, await repositorio.Contar());
+            Assert.AreEqual(3, await repositorio.Contar());
         }
 
         #endregion
