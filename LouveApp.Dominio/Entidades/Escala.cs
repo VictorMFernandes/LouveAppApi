@@ -2,6 +2,8 @@
 using LouveApp.Dominio.Entidades.Juncao;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace LouveApp.Dominio.Entidades
 {
@@ -25,8 +27,8 @@ namespace LouveApp.Dominio.Entidades
         {
             Data = data;
 
-            AdicionarUsuarios(usuariosIds);
-            AdicionarMusicas(musicasIds);
+            DefinirUsuarios(usuariosIds);
+            DefinirMusicas(musicasIds);
 
             Validar();
         }
@@ -37,7 +39,7 @@ namespace LouveApp.Dominio.Entidades
 
         public override string ToString()
         {
-            return Data.ToString();
+            return Data.ToString(CultureInfo.InvariantCulture);
         }
 
         protected override void InicializarColecoes()
@@ -50,25 +52,25 @@ namespace LouveApp.Dominio.Entidades
 
         #endregion
 
-        private void AdicionarUsuarios(IEnumerable<string> usuariosIds)
+        private void DefinirUsuarios(IEnumerable<string> usuariosIds)
         {
             if (usuariosIds == null) return;
 
             Usuarios.Clear();
 
-            foreach (var usuarioId in usuariosIds)
+            foreach (var usuarioId in usuariosIds.Distinct())
             {
                 Usuarios.Add(new UsuarioEscala(usuarioId));
             }
         }
 
-        private void AdicionarMusicas(IEnumerable<string> musicasIds)
+        private void DefinirMusicas(IEnumerable<string> musicasIds)
         {
             if (musicasIds == null) return;
 
             Musicas.Clear();
 
-            foreach (var musicaId in musicasIds)
+            foreach (var musicaId in musicasIds.Distinct())
             {
                 Musicas.Add(new EscalaMusica(musicaId));
             }

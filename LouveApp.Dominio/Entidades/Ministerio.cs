@@ -62,15 +62,21 @@ namespace LouveApp.Dominio.Entidades
         {
             if (Usuarios.GroupBy(um => um.Usuario.Id).Any(g => g.Count() > 1))
             {
-                AddNotification(new Notification(nameof(Usuarios), PadroesMensagens.UsuariosDuplicadosMinisterio));
+                AddNotification(new Notification(nameof(Usuarios)
+                    , PadroesMensagens.UsuariosDuplicadosMinisterio));
             }
 
             if (!Usuarios.Any(um => um.Administrador))
             {
-                AddNotification(new Notification(nameof(Usuarios), PadroesMensagens.MinisterioDeveTerAdministrador));
+                AddNotification(new Notification(nameof(Usuarios)
+                    , PadroesMensagens.MinisterioDeveTerAdministrador));
             }
 
-            AddNotifications(Nome);
+            if (Nome != null)
+                AddNotifications(Nome);
+            else
+                AddNotification(new Notification(nameof(Nome)
+                    , PadroesMensagens.PropriedadeNaoPodeSerNula));
         }
 
         public override string ToString()

@@ -2,6 +2,8 @@
 using LouveApp.Dominio.Entidades.Juncao;
 using LouveApp.Dominio.ValueObjects;
 using System.Collections.Generic;
+using FluentValidator;
+using LouveApp.Compartilhado.Padroes;
 
 namespace LouveApp.Dominio.Entidades
 {
@@ -51,7 +53,14 @@ namespace LouveApp.Dominio.Entidades
 
         protected override void Validar()
         {
-            AddNotifications(Nome, Referencia);
+            if (Referencia != null)
+                AddNotifications(Referencia);
+
+            if (Nome != null)
+                AddNotifications(Nome);
+            else 
+                AddNotification(new Notification(nameof(Nome)
+                    , PadroesMensagens.PropriedadeNaoPodeSerNula));
         }
 
         #endregion

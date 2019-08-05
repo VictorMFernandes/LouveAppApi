@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Comandos\InstrumentosComandos\Entradas\" />
+    <Folder Include="Comandos\InstrumentoComandos\Entradas\" />
   </ItemGroup>
 
 </Project>

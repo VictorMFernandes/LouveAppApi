@@ -5,11 +5,12 @@ using LouveApp.Infra.BancoDeDados.Contexto;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using LouveApp.Compartilhado.Extensoes;
 
 namespace LouveApp.Dominio.Testes.Entidades
 {
     [TestClass]
-    public class MinisterioTestes
+    public class MinisterioTestes : IEntidadeTestes
     {
         private readonly Usuario _usuarioNovo;
         private readonly Usuario _usuarioNovoInvalido;
@@ -25,6 +26,20 @@ namespace LouveApp.Dominio.Testes.Entidades
             var nomeInvalido = new Nome(string.Empty);
             _usuarioNovoInvalido = new Usuario(nomeInvalido, email, autenticacao);
         }
+
+        #region Construtores
+
+        public void InicializaColecoesAoConstruir()
+        {
+            var ministerio = SemeadorBd.CriarMinisterio1();
+
+            foreach (var prop in ministerio.PegarColecoes())
+            {
+                Assert.IsNotNull(prop.GetValue(ministerio));
+            }
+        }
+
+        #endregion
 
         #region AdicionarUsuario
 

@@ -180,15 +180,15 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
 
             _ministerio1.CriarEscala(usuarioAdm.Id
                 , DateTime.Now.AddDays(3)
-                , new string[] { usuarioAdm.Id, usuarioAdm2.Id }
-                , new string[] { _musica1.Id, _musica2.Id });
+                , new[] { usuarioAdm.Id, usuarioAdm2.Id }
+                , new[] { _musica1.Id, _musica2.Id });
             _ministerio1.CriarEscala(usuarioAdm.Id
                 , DateTime.Now.AddDays(7)
-                , new string[] { usuarioAdm.Id, usuarioAdm2.Id, usuario.Id }
-                , new string[] { _musica2.Id });
+                , new[] { usuarioAdm.Id, usuarioAdm2.Id, usuario.Id }
+                , new[] { _musica2.Id });
             _ministerio1.CriarEscala(usuarioAdm2.Id
                 , DateTime.Now.AddDays(6)
-                , new string[] { usuarioAdm2.Id }
+                , new[] { usuarioAdm2.Id }
                 , null);
 
             return _ministerio1;
@@ -204,7 +204,7 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
             _ministerio2.AdicionarUsuario(usuario);
 
             _ministerio2.CriarEscala(usuarioAdm.Id
-                , DateTime.Now.AddDays(3), new string[] { usuarioAdm.Id, usuario.Id }, null);
+                , DateTime.Now.AddDays(3), new[] { usuarioAdm.Id, usuario.Id }, null);
 
             return _ministerio2;
         }
@@ -219,15 +219,13 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
             _ministerio3.AdicionarUsuario(usuario);
 
             _ministerio3.CriarEscala(usuarioAdm.Id
-                , DateTime.Now.AddDays(10), new string[] { usuario.Id }, null);
+                , DateTime.Now.AddDays(10), new[] { usuario.Id }, null);
 
             return _ministerio3;
         }
 
         public static Musica CriarMusica1()
         {
-            if (_musica1 != null) return _musica1;
-
             var nome = new Nome(PadroesString.MusicaNome1);
             var referencia = new Link(PadroesString.MusicaReferencia1);
 
@@ -238,8 +236,6 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
 
         public static Musica CriarMusica2()
         {
-            if (_musica2 != null) return _musica2;
-
             var nome = new Nome(PadroesString.MusicaNome2);
             var referencia = new Link(PadroesString.MusicaReferencia2);
 

@@ -49,5 +49,7 @@
         /// {0} Tamanho máximo dos nomes
         /// </summary>
         public const string NomeMaxTamanho = "O nome deve conter no máximo {0} caracteres";
+
+        public const string PropriedadeNaoPodeSerNula = "A propriedade não pode ser nula";
     }
 }

@@ -6,8 +6,8 @@ namespace LouveApp.Infra.Servicos.Email
 {
     public class EmailServico : IEmailServico
     {
-        public readonly SendGridClient _cliente;
-        public readonly EmailAddress _emailOrigem;
+        private readonly SendGridClient _cliente;
+        private readonly EmailAddress _emailOrigem;
 
         public EmailServico(string apiKey, string emailOrigem, string nomeOrigem)
         {
@@ -17,8 +17,8 @@ namespace LouveApp.Infra.Servicos.Email
 
         public async void EnviarBoasVindas(string enderecoEmailDestino, string nomeUsuarioDestino)
         {
+            return;
             var emailDestino = new EmailAddress(enderecoEmailDestino, nomeUsuarioDestino);
-
             var subject = "Hello world email from Sendgrid ";
             var plainTextContent = "Plain text content";
             var htmlContent = "<strong>Hello world with HTML content</strong>";

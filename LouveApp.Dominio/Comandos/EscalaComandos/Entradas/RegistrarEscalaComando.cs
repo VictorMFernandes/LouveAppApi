@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using FluentValidator;
 using LouveApp.Compartilhado.Comandos;
-using LouveApp.Dominio.Entidades;
 
 namespace LouveApp.Dominio.Comandos.EscalaComandos.Entradas
 {

@@ -3,12 +3,28 @@ using LouveApp.Dominio.ValueObjects;
 using LouveApp.Infra.BancoDeDados.Contexto;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using LouveApp.Compartilhado.Extensoes;
 
 namespace LouveApp.Dominio.Testes.Entidades
 {
     [TestClass]
-    public class UsuarioTestes
+    public class UsuarioTestes : IEntidadeTestes
     {
+        #region Construtores
+
+        [TestMethod]
+        public void InicializaColecoesAoConstruir()
+        {
+            var usuario = SemeadorBd.CriarUsuario1();
+
+            foreach (var prop in usuario.PegarColecoes())
+            {
+                Assert.IsNotNull(prop.GetValue(usuario));
+            }
+        }
+
+        #endregion
+
         #region Atualizar
 
         [TestMethod]
@@ -49,7 +65,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         {
             var usuario = SemeadorBd.CriarUsuario1();
 
-            var listaInstrumentosIds = new string[] { "idvalido", "idvalido1" };
+            var listaInstrumentosIds = new[] { "idvalido", "idvalido1" };
             usuario.Atualizar(null, listaInstrumentosIds);
 
             Assert.AreEqual(listaInstrumentosIds.Length, usuario.Instrumentos.Count);

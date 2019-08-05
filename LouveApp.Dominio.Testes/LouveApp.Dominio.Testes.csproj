@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LouveApp.Compartilhado\LouveApp.Compartilhado.csproj" />
     <ProjectReference Include="..\LouveApp.Dominio\LouveApp.Dominio.csproj" />
     <ProjectReference Include="..\LouveApp.Infra\LouveApp.Infra.csproj" />
   </ItemGroup>
