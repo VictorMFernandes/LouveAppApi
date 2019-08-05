@@ -46,9 +46,21 @@ namespace LouveApp.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<PegarEscalaComandoResultado>), 200)]
         [HttpGet]
         [Route("v1/Ministerios/{ministerioId}/[controller]")]
-        public async Task<IActionResult> PegarEscalas(string ministerioId)
+        public async Task<IActionResult> PegarEscalasPorMinisterio(string ministerioId)
         {
             return RespostaDeConsulta(await _escalaRepo.PegarPorMinisterio(ministerioId));
+        }
+
+        /// <summary>
+        /// Pega as escalas de um usuário.
+        /// </summary>
+        /// <response code="200">Retorna lista de escalas do usuário.</response>
+        [ProducesResponseType(typeof(IEnumerable<PegarEscalaComandoResultado>), 200)]
+        [HttpGet]
+        [Route("v1/Usuarios/{usuarioId}/[controller]")]
+        public async Task<IActionResult> PegarEscalasPorUsuario(string usuarioId)
+        {
+            return RespostaDeConsulta(await _escalaRepo.PegarPorUsuario(usuarioId));
         }
 
         /// <summary>
