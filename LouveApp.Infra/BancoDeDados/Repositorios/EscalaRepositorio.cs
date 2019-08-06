@@ -50,7 +50,8 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
             var query = $"SELECT e.Id, e.Data, m.Id, m.Nome, um.Administrador FROM {EscalaMap.Tabela} AS e " +
                         $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON um.MinisterioId = e.MinisterioId " +
                         $"INNER JOIN {MinisterioMap.Tabela} AS m ON m.Id = um.MinisterioId " +
-                        $"WHERE um.UsuarioId = @{nameof(usuarioId)}";
+                        $"WHERE um.UsuarioId = @{nameof(usuarioId)} " +
+                        "ORDER BY e.Data";
 
             using (var conn = new SqliteConnection(Configuracoes.ConnString))
             {
