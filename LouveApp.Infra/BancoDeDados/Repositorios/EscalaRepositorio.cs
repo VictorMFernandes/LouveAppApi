@@ -10,6 +10,7 @@ using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
 using LouveApp.Infra.BancoDeDados.Mapeamentos.Juncao;
 using LouveApp.Dominio.Comandos.EscalaComandos.Saidas;
 using LouveApp.Dominio.Comandos.MusicaComandos.Saidas;
+using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
 
 namespace LouveApp.Infra.BancoDeDados.Repositorios
 {
@@ -46,7 +47,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
 
         public async Task<IEnumerable<PegarEscalaComandoResultado>> PegarPorUsuario(string usuarioId)
         {
-            var query = $"SELECT Id, Data FROM {EscalaMap.Tabela} AS e " +
+            var query = $"SELECT Id, Data, MinisterioId FROM {EscalaMap.Tabela} AS e " +
                         $"INNER JOIN {UsuarioEscalaMap.Tabela} AS ue ON ue.EscalaId = e.Id " +
                         $"WHERE ue.UsuarioId = @{nameof(usuarioId)}";
 
@@ -68,6 +69,13 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                             $"WHERE em.EscalaId = '{escala.Id}'";
 
                     escala.Musicas = await conn.QueryAsync<PegarMusicaComandoResultado>(query);
+
+                    query = $"SELECT m.Nome, um.Administrador FROM {MinisterioMap.Tabela} AS m " +
+                            $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON um.MinisterioId = m.Id " +
+                            $"WHERE m.Id = '{escala.MinisterioId}'";
+
+                    escala.Ministerio = await conn.QueryFirstOrDefaultAsync<PegarMinisterioComandoResultado>(query);
+                    escala.Ministerio.Id = escala.MinisterioId;
                 }
 
                 return resultado;

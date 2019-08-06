@@ -114,7 +114,7 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
                 , PadroesString.SenhaValida);
 
             _usuario1 = new Usuario(PadroesString.UsuarioId1, nome, email, autenticacao);
-
+            _usuario1.AtualizarFoto(new Foto("https://res.cloudinary.com/appinova/image/upload/v1565027192/wxk7y6nazbkrn7o3z3zk.jpg", "wxk7y6nazbkrn7o3z3zk"));
             _usuario1.Atualizar(null, new List<string>
             {
                 PadroesString.InstrumentoId3,
