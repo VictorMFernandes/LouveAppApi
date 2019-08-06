@@ -9,7 +9,6 @@ using Microsoft.Data.Sqlite;
 using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
 using LouveApp.Infra.BancoDeDados.Mapeamentos.Juncao;
 using LouveApp.Dominio.Comandos.EscalaComandos.Saidas;
-using LouveApp.Dominio.Comandos.MusicaComandos.Saidas;
 using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
 
 namespace LouveApp.Infra.BancoDeDados.Repositorios
@@ -34,11 +33,11 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
 
                     escala.Usuarios = await conn.QueryAsync<PegarUsuarioComandoResultado>(query);
 
-                    query = $"SELECT m.Id, m.Nome, m.Referencia FROM {MusicaMap.Tabela} AS m " +
+                    query = $"SELECT COUNT(*) FROM {MusicaMap.Tabela} AS m " +
                             $"INNER JOIN {EscalaMusicaMap.Tabela} AS em ON em.MusicaId = m.Id "+
                             $"WHERE em.EscalaId = '{escala.Id}'";
 
-                    escala.Musicas = await conn.QueryAsync<PegarMusicaComandoResultado>(query);
+                    escala.QtdMusicas = await conn.ExecuteScalarAsync<int>(query);
                 }
 
                 return resultado;
@@ -47,10 +46,11 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
 
         public async Task<IEnumerable<PegarEscalaComandoResultado>> PegarPorUsuario(string usuarioId)
         {
-            var query = $"SELECT e.Id, e.Data, m.Id, m.Nome, um.Administrador FROM {EscalaMap.Tabela} AS e " +
-                        $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON um.MinisterioId = e.MinisterioId " +
+            var query = $"SELECT * FROM {EscalaMap.Tabela} AS e " +
+                        $"INNER JOIN {UsuarioEscalaMap.Tabela} AS ue ON ue.EscalaId = e.Id " +
+                        $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON(um.MinisterioId = e.MinisterioId and um.UsuarioId = ue.UsuarioId) " +
                         $"INNER JOIN {MinisterioMap.Tabela} AS m ON m.Id = um.MinisterioId " +
-                        $"WHERE um.UsuarioId = @{nameof(usuarioId)} " +
+                        $"WHERE ue.UsuarioId = @{nameof(usuarioId)} " +
                         "ORDER BY e.Data";
 
             using (var conn = new SqliteConnection(Configuracoes.ConnString))
@@ -73,14 +73,15 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                     query = $"SELECT u.Id, u.Nome, u.Email, u.FotoUrl, u.DtCriacao FROM {UsuarioMap.Tabela} AS u " +
                             $"INNER JOIN {UsuarioEscalaMap.Tabela} AS ue ON ue.UsuarioId = u.Id " +
                             $"WHERE ue.EscalaId = '{escala.Id}'; " +
-                            $"SELECT m.Id, m.Nome, m.Referencia FROM {MusicaMap.Tabela} AS m " +
+                            $"SELECT COUNT(*) FROM {MusicaMap.Tabela} AS m " +
                             $"INNER JOIN {EscalaMusicaMap.Tabela} AS em ON em.MusicaId = m.Id " +
                             $"WHERE em.EscalaId = '{escala.Id}'";
 
-                    var results = await conn.QueryMultipleAsync(query);
-
-                    escala.Usuarios = await results.ReadAsync<PegarUsuarioComandoResultado>();
-                    escala.Musicas = await results.ReadAsync<PegarMusicaComandoResultado>();
+                    using (var res = await conn.QueryMultipleAsync(query))
+                    {
+                        escala.Usuarios = await res.ReadAsync<PegarUsuarioComandoResultado>();
+                        escala.QtdMusicas = (await res.ReadAsync<long>()).FirstOrDefault();
+                    }
                 }
 
                 return resultado;

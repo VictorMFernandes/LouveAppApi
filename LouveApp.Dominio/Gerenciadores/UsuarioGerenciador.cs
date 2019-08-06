@@ -7,6 +7,7 @@ using LouveApp.Dominio.Servicos;
 using System.Threading.Tasks;
 using LouveApp.Compartilhado.Comandos.Genericos;
 using LouveApp.Compartilhado.Padroes;
+using LouveApp.Dominio.Entidades;
 
 namespace LouveApp.Dominio.Gerenciadores
 {
@@ -42,7 +43,7 @@ namespace LouveApp.Dominio.Gerenciadores
                 AddNotification("Email", string.Format(PadroesMensagens.EmailEmUso, comando.Email));
 
             // Criar a entidade
-            var usuario = comando.GerarUsuario();
+            var usuario = new Usuario(comando.NomeVo, comando.EmailVo, comando.AutenticacaoVo);
 
             // Validar entidade
             AddNotifications(usuario);
