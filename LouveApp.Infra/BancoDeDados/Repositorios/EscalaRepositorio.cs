@@ -72,15 +72,15 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                 {
                     query = $"SELECT u.Id, u.Nome, u.Email, u.FotoUrl, u.DtCriacao FROM {UsuarioMap.Tabela} AS u " +
                             $"INNER JOIN {UsuarioEscalaMap.Tabela} AS ue ON ue.UsuarioId = u.Id " +
-                            $"WHERE ue.EscalaId = '{escala.Id}'";
-
-                    escala.Usuarios = await conn.QueryAsync<PegarUsuarioComandoResultado>(query);
-
-                    query = $"SELECT m.Id, m.Nome, m.Referencia FROM {MusicaMap.Tabela} AS m " +
+                            $"WHERE ue.EscalaId = '{escala.Id}'; " +
+                            $"SELECT m.Id, m.Nome, m.Referencia FROM {MusicaMap.Tabela} AS m " +
                             $"INNER JOIN {EscalaMusicaMap.Tabela} AS em ON em.MusicaId = m.Id " +
                             $"WHERE em.EscalaId = '{escala.Id}'";
 
-                    escala.Musicas = await conn.QueryAsync<PegarMusicaComandoResultado>(query);
+                    var results = await conn.QueryMultipleAsync(query);
+
+                    escala.Usuarios = await results.ReadAsync<PegarUsuarioComandoResultado>();
+                    escala.Musicas = await results.ReadAsync<PegarMusicaComandoResultado>();
                 }
 
                 return resultado;
