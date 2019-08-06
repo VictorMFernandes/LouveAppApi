@@ -47,14 +47,25 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
 
         public async Task<IEnumerable<PegarEscalaComandoResultado>> PegarPorUsuario(string usuarioId)
         {
-            var query = $"SELECT Id, Data, MinisterioId FROM {EscalaMap.Tabela} AS e " +
-                        $"INNER JOIN {UsuarioEscalaMap.Tabela} AS ue ON ue.EscalaId = e.Id " +
-                        $"WHERE ue.UsuarioId = @{nameof(usuarioId)}";
+            var query = $"SELECT e.Id, e.Data, m.Id, m.Nome, um.Administrador FROM {EscalaMap.Tabela} AS e " +
+                        $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON um.MinisterioId = e.MinisterioId " +
+                        $"INNER JOIN {MinisterioMap.Tabela} AS m ON m.Id = um.MinisterioId " +
+                        $"WHERE um.UsuarioId = @{nameof(usuarioId)}";
 
             using (var conn = new SqliteConnection(Configuracoes.ConnString))
             {
                 conn.Open();
-                var resultado = (await conn.QueryAsync<PegarEscalaComandoResultado>(query, new { usuarioId })).ToList();
+                var resultado = (await conn.QueryAsync<PegarEscalaComandoResultado
+                    , PegarMinisterioComandoResultado
+                    , PegarEscalaComandoResultado>(
+                    query
+                    , (e, mi) =>
+                    {
+                        e.Ministerio = mi;
+
+                        return e;
+                    }
+                    , splitOn: "Id",  param:new {usuarioId})).ToList();
 
                 foreach (var escala in resultado)
                 {
@@ -69,13 +80,6 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                             $"WHERE em.EscalaId = '{escala.Id}'";
 
                     escala.Musicas = await conn.QueryAsync<PegarMusicaComandoResultado>(query);
-
-                    query = $"SELECT m.Nome, um.Administrador FROM {MinisterioMap.Tabela} AS m " +
-                            $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON um.MinisterioId = m.Id " +
-                            $"WHERE m.Id = '{escala.MinisterioId}'";
-
-                    escala.Ministerio = await conn.QueryFirstOrDefaultAsync<PegarMinisterioComandoResultado>(query);
-                    escala.Ministerio.Id = escala.MinisterioId;
                 }
 
                 return resultado;
