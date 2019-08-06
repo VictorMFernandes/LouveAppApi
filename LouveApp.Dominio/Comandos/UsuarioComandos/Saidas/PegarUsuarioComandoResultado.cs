@@ -7,6 +7,7 @@ namespace LouveApp.Dominio.Comandos.UsuarioComandos.Saidas
     public class PegarUsuarioComandoResultado : IComandoResultado
     {
         #region Propriedades
+
         public string Id { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }

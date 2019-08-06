@@ -7,6 +7,7 @@ namespace LouveApp.Dominio.Comandos.UsuarioComandos.Saidas
     public class AtualizarUsuarioComandoResultado : IComandoResultado
     {
         #region Propriedades Api
+
         public string Nome { get; }
         public IEnumerable<PegarInstrumentosComandoResultado> Instrumentos { get; }
 

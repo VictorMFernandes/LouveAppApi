@@ -1,5 +1,4 @@
 ﻿using LouveApp.Compartilhado.Comandos;
-using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.ValueObjects;
 using FluentValidator;
 using System.Collections.Generic;
@@ -35,22 +34,22 @@ namespace LouveApp.Dominio.Comandos.UsuarioComandos.Entradas
 
         public bool Validar()
         {
-            _nome = new Nome(Nome);
-            _email = new Email(Email);
-            _autenticacao = new Autenticacao(Email, Senha, ConfirmacaoSenha);
+            NomeVo = new Nome(Nome);
+            EmailVo = new Email(Email);
+            AutenticacaoVo = new Autenticacao(Email, Senha, ConfirmacaoSenha);
 
             FoiValidado = true;
 
-            return _nome.Valid && _email.Valid && _autenticacao.Valid;
+            return NomeVo.Valid && EmailVo.Valid && AutenticacaoVo.Valid;
         }
 
         public IReadOnlyCollection<Notification> PegarNotificacoes()
         {
             var resultado = new List<Notification>();
 
-            resultado.AddRange(_nome.Notifications);
-            resultado.AddRange(_email.Notifications);
-            resultado.AddRange(_autenticacao.Notifications);
+            resultado.AddRange(NomeVo.Notifications);
+            resultado.AddRange(EmailVo.Notifications);
+            resultado.AddRange(AutenticacaoVo.Notifications);
 
             return resultado;
         }
@@ -59,15 +58,10 @@ namespace LouveApp.Dominio.Comandos.UsuarioComandos.Entradas
 
         #region Value Objects
 
-        private Nome _nome;
-        private Email _email;
-        private Autenticacao _autenticacao;
+        internal Nome NomeVo { get; set; }
+        internal Email EmailVo { get; set; }
+        internal Autenticacao AutenticacaoVo { get; set; }
 
         #endregion
-
-        public Usuario GerarUsuario()
-        {
-            return new Usuario(_nome, _email, _autenticacao);
-        }
     }
 }

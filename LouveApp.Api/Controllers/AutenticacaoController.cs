@@ -4,19 +4,16 @@ using LouveApp.Dominio.Gerenciadores;
 using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
 namespace LouveApp.Api.Controllers
 {
     public class AutenticacaoController : ControladorBase
     {
-        private readonly IConfiguration _config;
         private readonly AutenticacaoGerenciador _gerenciador;
 
-        public AutenticacaoController(IUow uow, IConfiguration config, AutenticacaoGerenciador gerenciador) : base(uow)
+        public AutenticacaoController(IUow uow, AutenticacaoGerenciador gerenciador) : base(uow)
         {
-            _config = config;
             _gerenciador = gerenciador;
         }
 

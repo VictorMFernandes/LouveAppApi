@@ -1,7 +1,6 @@
 ﻿using LouveApp.Compartilhado.Comandos;
 using FluentValidator;
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
 
 namespace LouveApp.Dominio.Comandos.FotoComandos.Entradas
