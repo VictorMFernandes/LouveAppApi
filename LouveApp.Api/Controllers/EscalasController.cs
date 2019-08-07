@@ -78,5 +78,18 @@ namespace LouveApp.Api.Controllers
             var resultado = await _gerenciador.Executar(comando);
             return await Resposta(resultado, _gerenciador.Notifications);
         }
+
+        /// <summary>
+        /// Pega uma escala por Id.
+        /// </summary>
+        /// <remarks>Só é possível pegar uma escala que o usuário logado faça parte.</remarks>
+        /// <response code="200">Retorna a escala.</response>
+        [ProducesResponseType(typeof(PegarEscalaComMusicasComandoResultado), 200)]
+        [HttpGet]
+        [Route("v1/Usuarios/{usuarioId}/[controller]/{escalaId}")]
+        public async Task<IActionResult> PegarEscalaPorId(string usuarioId, string escalaId)
+        {
+            return RespostaDeConsulta(await _escalaRepo.PegarPorId(escalaId, usuarioId));
+        }
     }
 }
