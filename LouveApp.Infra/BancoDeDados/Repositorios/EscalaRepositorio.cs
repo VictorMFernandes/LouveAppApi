@@ -1,8 +1,11 @@
 ﻿using LouveApp.Dominio.Repositorios;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using LouveApp.Compartilhado.PaginacaoFiltragem;
+using LouveApp.Dominio.Comandos.EscalaComandos.Entradas;
 using LouveApp.Dominio.Sistema;
 using LouveApp.Infra.BancoDeDados.Mapeamentos;
 using Microsoft.Data.Sqlite;
@@ -11,11 +14,21 @@ using LouveApp.Infra.BancoDeDados.Mapeamentos.Juncao;
 using LouveApp.Dominio.Comandos.EscalaComandos.Saidas;
 using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
 using LouveApp.Dominio.Comandos.MusicaComandos.Saidas;
+using LouveApp.Dominio.Entidades;
+using LouveApp.Infra.BancoDeDados.Contexto;
+using Microsoft.EntityFrameworkCore;
 
 namespace LouveApp.Infra.BancoDeDados.Repositorios
 {
     public class EscalaRepositorio : IEscalaRepositorio
     {
+        private readonly BancoContexto _contexto;
+
+        public EscalaRepositorio(BancoContexto contexto)
+        {
+            _contexto = contexto;
+        }
+
         public async Task<PegarEscalaComMusicasComandoResultado> PegarPorId(string escalaId, string usuarioId)
         {
             var query = $"SELECT e.Id, e.Data, m.Id, m.Nome, um.Administrador FROM {EscalaMap.Tabela} AS e " +
@@ -40,6 +53,8 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                     }
                     , splitOn: "Id", param: new { usuarioId, escalaId })).FirstOrDefault();
 
+                if (escala == null) return null;
+
                 query = $"SELECT u.Id, u.Nome, u.Email, u.FotoUrl, u.DtCriacao FROM {UsuarioMap.Tabela} AS u " +
                         $"INNER JOIN {UsuarioEscalaMap.Tabela} AS ue ON ue.UsuarioId = u.Id " +
                         $"WHERE ue.EscalaId = '{escala.Id}'; " +
@@ -57,15 +72,27 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
             }
         }
 
-        public async Task<IEnumerable<PegarEscalaComandoResultado>> PegarPorMinisterio(string ministerioId)
+        public async Task<ListaPaginada<PegarEscalaComandoResultado>> PegarPorMinisterio(string ministerioId, EscalaFiltro filtro)
         {
             var query = $"SELECT Id, Data FROM {EscalaMap.Tabela} " +
-                        $"WHERE MinisterioId = @{nameof(ministerioId)}";
+                        $"WHERE MinisterioId = @{nameof(ministerioId)} AND Data >= @dataMinima " +
+                        "ORDER BY Data";
 
             using (var conn = new SqliteConnection(Configuracoes.ConnString))
             {
                 conn.Open();
-                var resultado = (await conn.QueryAsync<PegarEscalaComandoResultado>(query, new { ministerioId })).ToList();
+
+                var escalas = await conn.QueryAsync<PegarEscalaComandoResultado>(query, new
+                {
+                    ministerioId,
+                    dataMinima = filtro.DataMinima
+                });
+
+                var escalasQ = escalas.AsQueryable();
+
+                var resultado = ListaPaginada<PegarEscalaComandoResultado>.Criar(escalasQ
+                    , filtro.Pagina
+                    , filtro.TamanhoPagina);
 
                 foreach (var escala in resultado)
                 {

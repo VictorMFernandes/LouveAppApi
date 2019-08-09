@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LouveApp.Dominio.Gerenciadores;
 using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using LouveApp.Compartilhado.Comandos.Genericos;
+using LouveApp.Compartilhado.PaginacaoFiltragem;
 using LouveApp.Dominio.Repositorios;
 using LouveApp.Dominio.Comandos.EscalaComandos.Saidas;
 using LouveApp.Dominio.Comandos.EscalaComandos.Entradas;
+using LouveApp.Dominio.Entidades;
 
 namespace LouveApp.Api.Controllers
 {
@@ -43,12 +47,30 @@ namespace LouveApp.Api.Controllers
         /// Pega as escalas de um ministério.
         /// </summary>
         /// <response code="200">Retorna lista de escalas do ministério.</response>
-        [ProducesResponseType(typeof(IEnumerable<PegarEscalaComandoResultado>), 200)]
-        [HttpGet]
-        [Route("v1/Ministerios/{ministerioId}/[controller]")]
-        public async Task<IActionResult> PegarEscalasPorMinisterio(string ministerioId)
+        [ProducesResponseType(typeof(ColecaoPaginadaResultado<PegarEscalaComandoResultado>), 200)]
+        [HttpGet("v1/Ministerios/{ministerioId}/[controller]", Name = nameof(PegarEscalasPorMinisterio))]
+        public async Task<IActionResult> PegarEscalasPorMinisterio(string ministerioId, [FromQuery]EscalaFiltro filtro)
         {
-            return RespostaDeConsulta(await _escalaRepo.PegarPorMinisterio(ministerioId));
+            var escalas = await _escalaRepo.PegarPorMinisterio(ministerioId, filtro);
+
+            string uriProx = null, uriAnte = null;
+
+            if (!escalas.EstaNaUltimaPagina())
+            {
+                filtro.Pagina++;
+                uriProx = Url.Link(nameof(PegarEscalasPorMinisterio), filtro);
+                filtro.Pagina--;
+            }
+
+            if (!escalas.EstaNaPrimeiraPagina())
+            {
+                filtro.Pagina--;
+                uriAnte = Url.Link(nameof(PegarEscalasPorMinisterio), filtro);
+            }
+
+            var resultado = new ColecaoPaginadaResultado<PegarEscalaComandoResultado>(escalas, uriProx, uriAnte);
+
+            return RespostaDeConsulta(resultado);
         }
 
         /// <summary>
