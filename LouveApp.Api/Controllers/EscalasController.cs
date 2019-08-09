@@ -51,7 +51,7 @@ namespace LouveApp.Api.Controllers
         [HttpGet("v1/Ministerios/{ministerioId}/[controller]", Name = nameof(PegarEscalasPorMinisterio))]
         public async Task<IActionResult> PegarEscalasPorMinisterio(string ministerioId, [FromQuery]EscalaFiltro filtro)
         {
-            var escalas = await _escalaRepo.PegarPorMinisterio(ministerioId, filtro);
+            var escalas = await _escalaRepo.PegarPorMinisterio(ministerioId, UsuarioLogadoId, filtro);
 
             string uriProx = null, uriAnte = null;
 

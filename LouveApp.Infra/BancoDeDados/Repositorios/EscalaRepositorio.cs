@@ -72,21 +72,34 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
             }
         }
 
-        public async Task<ListaPaginada<PegarEscalaComandoResultado>> PegarPorMinisterio(string ministerioId, EscalaFiltro filtro)
+        public async Task<ListaPaginada<PegarEscalaComandoResultado>> PegarPorMinisterio(
+            string ministerioId, string usuarioId, EscalaFiltro filtro)
         {
-            var query = $"SELECT Id, Data FROM {EscalaMap.Tabela} " +
-                        $"WHERE MinisterioId = @{nameof(ministerioId)} AND Data >= @dataMinima " +
+            var query = $"SELECT e.Id, e.Data, m.Id, m.Nome, um.Administrador FROM {EscalaMap.Tabela} AS e " +
+                        $"INNER JOIN {MinisterioMap.Tabela} AS m ON m.Id = e.MinisterioId " +
+                        $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON(um.MinisterioId = m.Id and um.UsuarioId = @{nameof(usuarioId)}) " +
+                        $"WHERE e.MinisterioId = @{nameof(ministerioId)} " +
                         "ORDER BY Data";
 
             using (var conn = new SqliteConnection(Configuracoes.ConnString))
             {
                 conn.Open();
 
-                var escalas = await conn.QueryAsync<PegarEscalaComandoResultado>(query, new
-                {
-                    ministerioId,
-                    dataMinima = filtro.DataMinima
-                });
+                var escalas = await conn.QueryAsync<PegarEscalaComandoResultado
+                    , PegarMinisterioComandoResultado
+                    , PegarEscalaComandoResultado>(
+                    query
+                    , (e, mi) =>
+                    {
+                        e.Ministerio = mi;
+                        return e;
+                    }
+                    , splitOn: "Id", param: new
+                    {
+                        ministerioId,
+                        usuarioId,
+                        dataMinima = filtro.DataMinima
+                    });
 
                 var escalasQ = escalas.AsQueryable();
 
