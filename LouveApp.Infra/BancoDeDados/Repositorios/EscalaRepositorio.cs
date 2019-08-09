@@ -88,7 +88,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
 
         public async Task<IEnumerable<PegarEscalaComandoResultado>> PegarPorUsuario(string usuarioId)
         {
-            var query = $"SELECT * FROM {EscalaMap.Tabela} AS e " +
+            var query = $"SELECT e.Id, e.Data, m.Id, m.Nome, um.Administrador FROM {EscalaMap.Tabela} AS e " +
                         $"INNER JOIN {UsuarioEscalaMap.Tabela} AS ue ON ue.EscalaId = e.Id " +
                         $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON(um.MinisterioId = e.MinisterioId and um.UsuarioId = ue.UsuarioId) " +
                         $"INNER JOIN {MinisterioMap.Tabela} AS m ON m.Id = um.MinisterioId " +
