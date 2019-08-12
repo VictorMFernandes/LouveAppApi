@@ -73,22 +73,29 @@ namespace LouveApp.Dominio.Entidades
                 AddNotification(new Notification(nameof(Nome)
                     , PadroesMensagens.PropriedadeNaoPodeSerNula));
 
-            if (Artista != null)
+            if (!string.IsNullOrEmpty(Artista?.ToString()))
                 AddNotifications(Artista);
 
-            AddNotifications(new ValidationContract()
+            var contrato = new ValidationContract()
                 .HasMaxLen(Tom
                     , PadroesTamanho.MaxTom
                     , nameof(Tom)
                     , string.Format(PadroesMensagens.TomMaxTamanho, PadroesTamanho.MaxTom))
-                .HasMaxLen(Bpm.ToString()
-                    , PadroesTamanho.MaxBpm
-                    , nameof(Bpm)
-                    , string.Format(PadroesMensagens.BpmMaxTamanho, PadroesTamanho.MaxBpm))
+                
                 .HasMaxLen(Classificacao
                     , PadroesTamanho.MaxMusicaClassificacao
                     , nameof(Classificacao)
-                    , string.Format(PadroesMensagens.ClassificacaoMaxTamanho, PadroesTamanho.MaxMusicaClassificacao)));
+                    , string.Format(PadroesMensagens.ClassificacaoMaxTamanho, PadroesTamanho.MaxMusicaClassificacao));
+
+            if (Bpm != null)
+            {
+                contrato.HasMaxLen(Bpm.ToString()
+                    , PadroesTamanho.MaxBpm
+                    , nameof(Bpm)
+                    , string.Format(PadroesMensagens.BpmMaxTamanho, PadroesTamanho.MaxBpm));
+            }
+
+            AddNotifications(contrato);
         }
 
         #endregion
