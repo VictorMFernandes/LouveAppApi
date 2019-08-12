@@ -3,6 +3,7 @@ using LouveApp.Dominio.Entidades.Juncao;
 using LouveApp.Dominio.ValueObjects;
 using System.Collections.Generic;
 using FluentValidator;
+using FluentValidator.Validation;
 using LouveApp.Compartilhado.Padroes;
 
 namespace LouveApp.Dominio.Entidades
@@ -16,6 +17,10 @@ namespace LouveApp.Dominio.Entidades
         public string MinisterioId { get; private set; }
         public Ministerio Ministerio { get; private set; }
         public ICollection<EscalaMusica> Escalas { get; private set; }
+        public Nome Artista { get; private set; }
+        public string Tom { get; private set; }
+        public int? Bpm { get; private set; }
+        public string Classificacao { get; private set; }
 
         #endregion
 
@@ -23,16 +28,22 @@ namespace LouveApp.Dominio.Entidades
 
         private Musica() { }
 
-        public Musica(Nome nome, Link referencia)
+        public Musica(Nome nome, Link referencia, Nome artista
+            , string tom, int? bpm, string classificacao)
         {
             Nome = nome;
             Referencia = referencia;
+            Artista = artista?? new Nome(string.Empty);
+            Tom = tom;
+            Bpm = bpm;
+            Classificacao = classificacao;
 
             Validar();
         }
 
-        public Musica(string id, Nome nome, Link referencia)
-            : this(nome, referencia)
+        public Musica(string id, Nome nome, Link referencia, Nome artista
+            , string tom, int? bpm, string classificacao)
+            : this(nome, referencia, artista, tom, bpm, classificacao)
         {
             Id = id;
         }
@@ -61,6 +72,23 @@ namespace LouveApp.Dominio.Entidades
             else 
                 AddNotification(new Notification(nameof(Nome)
                     , PadroesMensagens.PropriedadeNaoPodeSerNula));
+
+            if (Artista != null)
+                AddNotifications(Artista);
+
+            AddNotifications(new ValidationContract()
+                .HasMaxLen(Tom
+                    , PadroesTamanho.MaxTom
+                    , nameof(Tom)
+                    , string.Format(PadroesMensagens.TomMaxTamanho, PadroesTamanho.MaxTom))
+                .HasMaxLen(Bpm.ToString()
+                    , PadroesTamanho.MaxBpm
+                    , nameof(Bpm)
+                    , string.Format(PadroesMensagens.BpmMaxTamanho, PadroesTamanho.MaxBpm))
+                .HasMaxLen(Classificacao
+                    , PadroesTamanho.MaxMusicaClassificacao
+                    , nameof(Classificacao)
+                    , string.Format(PadroesMensagens.ClassificacaoMaxTamanho, PadroesTamanho.MaxMusicaClassificacao)));
         }
 
         #endregion

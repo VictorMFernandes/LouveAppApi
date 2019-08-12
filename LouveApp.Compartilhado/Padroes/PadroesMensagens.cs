@@ -51,5 +51,17 @@
         public const string NomeMaxTamanho = "O nome deve conter no máximo {0} caracteres";
 
         public const string PropriedadeNaoPodeSerNula = "A propriedade não pode ser nula";
+        /// <summary>
+        /// {0} Tamanho máximo dos tons
+        /// </summary>
+        public const string TomMaxTamanho = "O tom deve conter no máximo {0} caracteres";
+        /// <summary>
+        /// {0} Tamanho máximo dos bpms
+        /// </summary>
+        public const string BpmMaxTamanho = "O bpm deve conter no máximo {0} caracteres";
+        /// <summary>
+        /// {0} Tamanho máximo das classificações
+        /// </summary>
+        public const string ClassificacaoMaxTamanho = "A classificação deve conter no máximo {0} caracteres";
     }
 }

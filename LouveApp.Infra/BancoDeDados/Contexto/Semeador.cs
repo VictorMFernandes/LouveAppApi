@@ -229,7 +229,8 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
             var nome = new Nome(PadroesString.MusicaNome1);
             var referencia = new Link(PadroesString.MusicaReferencia1);
 
-            _musica1 = new Musica(PadroesString.MusicaId1, nome, referencia);
+            _musica1 = new Musica(PadroesString.MusicaId1, nome, referencia
+                , null, string.Empty, null, string.Empty);
 
             return _musica1;
         }
@@ -239,7 +240,8 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
             var nome = new Nome(PadroesString.MusicaNome2);
             var referencia = new Link(PadroesString.MusicaReferencia2);
 
-            _musica2 = new Musica(PadroesString.MusicaId2, nome, referencia);
+            _musica2 = new Musica(PadroesString.MusicaId2, nome, referencia
+                , null, string.Empty, null, string.Empty);
 
             return _musica2;
         }

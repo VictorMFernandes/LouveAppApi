@@ -3,7 +3,6 @@ using LouveApp.Compartilhado.Comandos.Genericos;
 using LouveApp.Compartilhado.Padroes;
 using LouveApp.Dominio.Comandos.MusicaComandos.Entradas;
 using LouveApp.Dominio.Comandos.MusicaComandos.Saidas;
-using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.Repositorios;
 using System.Threading.Tasks;
 
@@ -32,7 +31,7 @@ namespace LouveApp.Dominio.Gerenciadores
                 return new NaoEncontradoResultado(PadroesMensagens.MinisterioNaoEncontrado);
             }
 
-            var musica = new Musica(comando.NomeVo, comando.ReferenciaVo);
+            var musica = comando.Musica;
 
             // Realiza a ação
             var acaoRealizada = ministerio.AdicionarMusica(comando.UsuarioLogadoId, musica);

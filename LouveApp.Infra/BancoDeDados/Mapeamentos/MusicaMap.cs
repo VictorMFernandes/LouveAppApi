@@ -26,6 +26,15 @@ namespace LouveApp.Infra.BancoDeDados.Mapeamentos
                 r.Property(re => re.Url).HasMaxLength(PadroesTamanho.MaxUrl).HasColumnName("Referencia");
             });
 
+            builder.OwnsOne(m => m.Artista, a =>
+            {
+                a.Property(ar => ar.Texto).IsRequired().HasMaxLength(PadroesTamanho.MaxNome).HasColumnName(nameof(Musica.Artista));
+            });
+
+            builder.Property(m => m.Tom).HasMaxLength(PadroesTamanho.MaxTom);
+            builder.Property(m => m.Bpm).HasMaxLength(PadroesTamanho.MaxBpm);
+            builder.Property(m => m.Classificacao).HasMaxLength(PadroesTamanho.MaxMusicaClassificacao);
+
             builder.HasOne(m => m.Ministerio)
                     .WithMany(m => m.Musicas)
                     .IsRequired();

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FluentValidator;
 using LouveApp.Compartilhado.Comandos;
+using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.ValueObjects;
 
 namespace LouveApp.Dominio.Comandos.MusicaComandos.Entradas
@@ -13,15 +15,24 @@ namespace LouveApp.Dominio.Comandos.MusicaComandos.Entradas
         public string Referencia { get; set; }
         internal string UsuarioLogadoId { get; private set; }
         internal string MinisterioId { get; private set; }
+        public string Artista { get; set; }
+        public string Tom { get; set; }
+        public int? Bpm { get; set; }
+        public string Classificacao { get; set; }
 
         #endregion
 
         #region Construtores
 
-        public RegistrarMusicaComando(string nome, string referencia)
+        public RegistrarMusicaComando(string nome, string referencia, string artista
+            , string tom, int bpm, string classificacao)
         {
             Nome = nome;
             Referencia = referencia;
+            Artista = artista;
+            Tom = tom;
+            Bpm = bpm;
+            Classificacao = classificacao;
         }
 
         #endregion
@@ -32,30 +43,26 @@ namespace LouveApp.Dominio.Comandos.MusicaComandos.Entradas
 
         public bool Validar()
         {
-            NomeVo = new Nome(Nome);
-            ReferenciaVo = new Link(Referencia);
+            var nome = new Nome(Nome);
+            var referencia = new Link(Referencia);
+            var artista = new Nome(Artista);
 
+            Musica = new Musica(nome, referencia, artista, Tom, Bpm, Classificacao);
+            _notificacoes.AddRange(Musica.Notifications);
             FoiValidado = true;
 
-            return NomeVo.Valid && ReferenciaVo.Valid;
+            return !_notificacoes.Any();
         }
 
-        public IReadOnlyCollection<Notification> PegarNotificacoes()
-        {
-            var resultado = new List<Notification>();
+        private readonly List<Notification> _notificacoes = new List<Notification>();
 
-            resultado.AddRange(NomeVo.Notifications);
-            resultado.AddRange(ReferenciaVo.Notifications);
-
-            return resultado;
-        }
+        public IReadOnlyCollection<Notification> PegarNotificacoes() => _notificacoes;
 
         #endregion
 
-        #region Value Objects
+        #region Entidade
 
-        internal Nome NomeVo { get; set; }
-        internal Link ReferenciaVo { get; set; }
+        internal Musica Musica { get; private set; }
 
         #endregion
 

@@ -26,5 +26,9 @@
 
         public const int MaxUrl = 200;
         public const int MinUrl = 5;
+
+        public const int MaxTom = 10;
+        public const int MaxBpm = 3;
+        public const int MaxMusicaClassificacao = 60;
     }
 }

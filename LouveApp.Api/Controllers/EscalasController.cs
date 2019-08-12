@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using LouveApp.Dominio.Gerenciadores;
 using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using LouveApp.Compartilhado.Comandos.Genericos;
 using LouveApp.Compartilhado.PaginacaoFiltragem;
 using LouveApp.Dominio.Repositorios;
 using LouveApp.Dominio.Comandos.EscalaComandos.Saidas;
 using LouveApp.Dominio.Comandos.EscalaComandos.Entradas;
-using LouveApp.Dominio.Entidades;
 
 namespace LouveApp.Api.Controllers
 {
