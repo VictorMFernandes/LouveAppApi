@@ -31,6 +31,9 @@ namespace LouveApp.Dominio.ValueObjects
 
         protected override void Validar()
         {
+            if (Url == null)
+                return;
+
             AddNotifications(new ValidationContract()
                 .HasMinLen(Url, PadroesTamanho.MinUrl
                     , nameof(Url)

@@ -227,9 +227,11 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
         public static Musica CriarMusica1()
         {
             var nome = new Nome(PadroesString.MusicaNome1);
-            var referencia = new Link(PadroesString.MusicaReferencia1);
+            var letra = new Link(PadroesString.MusicaLetraReferencia1);
+            var cifra = new Link(PadroesString.MusicaCifraReferencia1);
+            var video = new Link(PadroesString.MusicaVideoReferencia1);
 
-            _musica1 = new Musica(PadroesString.MusicaId1, nome, referencia
+            _musica1 = new Musica(PadroesString.MusicaId1, nome, letra, cifra, video
                 , null, string.Empty, null, string.Empty);
 
             return _musica1;
@@ -238,9 +240,11 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
         public static Musica CriarMusica2()
         {
             var nome = new Nome(PadroesString.MusicaNome2);
-            var referencia = new Link(PadroesString.MusicaReferencia2);
+            var letra = new Link(PadroesString.MusicaLetraReferencia2);
+            var cifra = new Link(PadroesString.MusicaCifraReferencia2);
+            var video = new Link(PadroesString.MusicaVideoReferencia2);
 
-            _musica2 = new Musica(PadroesString.MusicaId2, nome, referencia
+            _musica2 = new Musica(PadroesString.MusicaId2, nome, letra, cifra, video
                 , null, string.Empty, null, string.Empty);
 
             return _musica2;

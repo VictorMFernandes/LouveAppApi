@@ -21,9 +21,19 @@ namespace LouveApp.Infra.BancoDeDados.Mapeamentos
                 n.Property(no => no.Texto).IsRequired().HasMaxLength(PadroesTamanho.MaxNome).HasColumnName("Nome");
             });
 
-            builder.OwnsOne(m => m.Referencia, r =>
+            builder.OwnsOne(m => m.Letra, r =>
             {
-                r.Property(re => re.Url).HasMaxLength(PadroesTamanho.MaxUrl).HasColumnName("Referencia");
+                r.Property(re => re.Url).HasMaxLength(PadroesTamanho.MaxUrl).HasColumnName("Letra");
+            });
+
+            builder.OwnsOne(m => m.Cifra, r =>
+            {
+                r.Property(re => re.Url).HasMaxLength(PadroesTamanho.MaxUrl).HasColumnName("Cifra");
+            });
+
+            builder.OwnsOne(m => m.Video, r =>
+            {
+                r.Property(re => re.Url).HasMaxLength(PadroesTamanho.MaxUrl).HasColumnName("Video");
             });
 
             builder.OwnsOne(m => m.Artista, a =>
@@ -46,7 +56,9 @@ namespace LouveApp.Infra.BancoDeDados.Mapeamentos
         private static void IgnorarVos(EntityTypeBuilder<Musica> builder)
         {
             builder.Ignore(m => m.Nome);
-            builder.Ignore(m => m.Referencia);
+            builder.Ignore(m => m.Letra);
+            builder.Ignore(m => m.Cifra);
+            builder.Ignore(m => m.Video);
         }
     }
 }

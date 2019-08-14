@@ -13,7 +13,9 @@ namespace LouveApp.Dominio.Entidades
         #region Propriedades
 
         public Nome Nome { get; private set; }
-        public Link Referencia { get; private set; }
+        public Link Letra { get; private set; }
+        public Link Cifra { get; private set; }
+        public Link Video { get; private set; }
         public string MinisterioId { get; private set; }
         public Ministerio Ministerio { get; private set; }
         public ICollection<EscalaMusica> Escalas { get; private set; }
@@ -28,11 +30,13 @@ namespace LouveApp.Dominio.Entidades
 
         private Musica() { }
 
-        public Musica(Nome nome, Link referencia, Nome artista
+        public Musica(Nome nome, Link letra, Link cifra, Link video, Nome artista
             , string tom, int? bpm, string classificacao)
         {
             Nome = nome;
-            Referencia = referencia;
+            Letra = letra;
+            Cifra = cifra;
+            Video = video;
             Artista = artista?? new Nome(string.Empty);
             Tom = tom;
             Bpm = bpm;
@@ -41,9 +45,9 @@ namespace LouveApp.Dominio.Entidades
             Validar();
         }
 
-        public Musica(string id, Nome nome, Link referencia, Nome artista
+        public Musica(string id, Nome nome, Link letra, Link cifra, Link video, Nome artista
             , string tom, int? bpm, string classificacao)
-            : this(nome, referencia, artista, tom, bpm, classificacao)
+            : this(nome, letra, cifra, video, artista, tom, bpm, classificacao)
         {
             Id = id;
         }
@@ -64,8 +68,14 @@ namespace LouveApp.Dominio.Entidades
 
         protected override void Validar()
         {
-            if (Referencia != null)
-                AddNotifications(Referencia);
+            if (Letra != null)
+                AddNotifications(Letra);
+
+            if (Cifra != null)
+                AddNotifications(Cifra);
+
+            if (Video != null)
+                AddNotifications(Video);
 
             if (Nome != null)
                 AddNotifications(Nome);

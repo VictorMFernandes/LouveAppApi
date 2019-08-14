@@ -25,28 +25,50 @@ namespace LouveApp.Dominio.Testes.Entidades
         public void InvalidaMusicaQuandoNomeInvalido()
         {
             var nomeInvalido = new Nome(string.Empty);
-            var musica = new Musica(nomeInvalido, null
+            var musica = new Musica(nomeInvalido, null, null, null
                 , null, string.Empty, null, string.Empty);
 
             Assert.IsTrue(musica.Invalid);
         }
 
         [TestMethod]
-        public void InvalidaMusicaQuandoReferenciaInvalida()
+        public void InvalidaMusicaQuandoLetraInvalida()
         {
             var nome = new Nome("Nome Válido");
-            var referenciaInvalida = new Link(string.Empty);
-            var musica = new Musica(nome, referenciaInvalida, null, string.Empty
+            var letraInvalida = new Link(string.Empty);
+            var musica = new Musica(nome, letraInvalida, null, null, null, string.Empty
             , null, string.Empty);
 
             Assert.IsTrue(musica.Invalid);
         }
 
         [TestMethod]
-        public void ConstroiMusicaQuandoReferenciaNula()
+        public void InvalidaMusicaQuandoCifraInvalida()
         {
             var nome = new Nome("Nome Válido");
-            var musica = new Musica(nome, null, null, string.Empty
+            var cifraInvalida = new Link(string.Empty);
+            var musica = new Musica(nome, null, cifraInvalida, null, null, string.Empty
+                , null, string.Empty);
+
+            Assert.IsTrue(musica.Invalid);
+        }
+
+        [TestMethod]
+        public void InvalidaMusicaQuandoVideoInvalido()
+        {
+            var nome = new Nome("Nome Válido");
+            var videoInvalida = new Link(string.Empty);
+            var musica = new Musica(nome, null, null, videoInvalida, null, string.Empty
+                , null, string.Empty);
+
+            Assert.IsTrue(musica.Invalid);
+        }
+
+        [TestMethod]
+        public void ConstroiMusicaQuandoReferenciasNulas()
+        {
+            var nome = new Nome("Nome Válido");
+            var musica = new Musica(nome, null, null, null, null, string.Empty
             , null, string.Empty);
 
             Assert.IsTrue(musica.Valid);
@@ -55,7 +77,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void InvalidaMusicaQuandoNomeNull()
         {
-            var musica = new Musica(null, null, null, string.Empty
+            var musica = new Musica(null, null, null, null, null, string.Empty
                 , null, string.Empty);
 
             Assert.IsTrue(musica.Invalid);

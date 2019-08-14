@@ -22,7 +22,10 @@ namespace LouveApp.Dominio.Sistema.Exemplos
         public static RegistrarEscalaComando RegistrarEscala = new RegistrarEscalaComando(DateTime.Now.AddDays(5)
             , new List<string> { PadroesString.UsuarioId1 }
             , new List<string> { PadroesString.MusicaId1, PadroesString.MusicaId2});
-        public static RegistrarMusicaComando RegistrarMusica = new RegistrarMusicaComando("Chop Suey!", "https://www.youtube.com/watch?v=CSvFpBOe8eY"
+        public static RegistrarMusicaComando RegistrarMusica = new RegistrarMusicaComando("Chop Suey!"
+            , "https://www.letras.mus.br/system-of-a-down/39417/"
+            , "https://www.cifraclub.com.br/system-of-a-down/chop-suey/"
+            , "https://www.youtube.com/watch?v=CSvFpBOe8eY"
             , "System of a Down", "C#", 60, string.Empty);
     }
 }

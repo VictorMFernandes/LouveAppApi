@@ -12,7 +12,9 @@ namespace LouveApp.Dominio.Comandos.MusicaComandos.Entradas
         #region Propriedades Api
 
         public string Nome { get; set; }
-        public string Referencia { get; set; }
+        public string Letra { get; set; }
+        public string Cifra { get; set; }
+        public string Video { get; set; }
         internal string UsuarioLogadoId { get; private set; }
         internal string MinisterioId { get; private set; }
         public string Artista { get; set; }
@@ -24,11 +26,14 @@ namespace LouveApp.Dominio.Comandos.MusicaComandos.Entradas
 
         #region Construtores
 
-        public RegistrarMusicaComando(string nome, string referencia, string artista
+        public RegistrarMusicaComando(string nome, string letra
+            , string cifra, string video, string artista
             , string tom, int bpm, string classificacao)
         {
             Nome = nome;
-            Referencia = referencia;
+            Letra = letra;
+            Cifra = cifra;
+            Video = video;
             Artista = artista;
             Tom = tom;
             Bpm = bpm;
@@ -44,10 +49,12 @@ namespace LouveApp.Dominio.Comandos.MusicaComandos.Entradas
         public bool Validar()
         {
             var nome = new Nome(Nome);
-            var referencia = new Link(Referencia);
+            var letra = new Link(Letra);
+            var cifra = new Link(Cifra);
+            var video = new Link(Video);
             var artista = new Nome(Artista);
 
-            Musica = new Musica(nome, referencia, artista, Tom, Bpm, Classificacao);
+            Musica = new Musica(nome, letra, cifra, video, artista, Tom, Bpm, Classificacao);
             _notificacoes.AddRange(Musica.Notifications);
             FoiValidado = true;
 

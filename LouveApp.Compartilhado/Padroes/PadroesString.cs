@@ -53,11 +53,15 @@
 
         public const string MusicaId1 = "4efadb52-3226-47b6-94ac-5c0cecc2789b";
         public const string MusicaNome1 = "Somos Um";
-        public const string MusicaReferencia1 = "https://www.youtube.com/watch?v=8TgxAHsIS8k";
+        public const string MusicaLetraReferencia1 = "https://www.letras.mus.br/o-rei-leao/253579/";
+        public const string MusicaCifraReferencia1 = "https://www.cifraclub.com.br/rei-leao-2/somos-um/";
+        public const string MusicaVideoReferencia1 = "https://www.youtube.com/watch?v=8TgxAHsIS8k";
 
         public const string MusicaId2 = "4f2fb2cc-0918-4cf8-abec-b577780c857b";
         public const string MusicaNome2 = "The Opened Way";
-        public const string MusicaReferencia2 = "https://www.youtube.com/watch?v=sr2nK06zZkg";
+        public const string MusicaLetraReferencia2 = null;
+        public const string MusicaCifraReferencia2 = "https://www.cifraclub.com.br/shadow-of-the-colossus/the-opened-way/";
+        public const string MusicaVideoReferencia2 = "https://www.youtube.com/watch?v=sr2nK06zZkg";
 
         #endregion
 
