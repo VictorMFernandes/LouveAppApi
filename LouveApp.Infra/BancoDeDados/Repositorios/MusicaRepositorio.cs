@@ -13,7 +13,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
     {
         public async Task<IEnumerable<PegarMusicaComandoResultado>> PegarPorMinisterio(string ministerioId)
         {
-            var query = $"SELECT Id, Nome, Referencia FROM {MusicaMap.Tabela} " +
+            var query = $"SELECT Id, Nome, Letra, Cifra, Video FROM {MusicaMap.Tabela} " +
                         $"WHERE MinisterioId = @{nameof(ministerioId)}";
 
             using (var conn = new SqliteConnection(Configuracoes.ConnString))
