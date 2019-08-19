@@ -1,6 +1,5 @@
 ﻿using LouveApp.Dominio.Repositorios;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -14,9 +13,7 @@ using LouveApp.Infra.BancoDeDados.Mapeamentos.Juncao;
 using LouveApp.Dominio.Comandos.EscalaComandos.Saidas;
 using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
 using LouveApp.Dominio.Comandos.MusicaComandos.Saidas;
-using LouveApp.Dominio.Entidades;
 using LouveApp.Infra.BancoDeDados.Contexto;
-using Microsoft.EntityFrameworkCore;
 
 namespace LouveApp.Infra.BancoDeDados.Repositorios
 {
@@ -58,7 +55,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                 query = $"SELECT u.Id, u.Nome, u.Email, u.FotoUrl, u.DtCriacao FROM {UsuarioMap.Tabela} AS u " +
                         $"INNER JOIN {UsuarioEscalaMap.Tabela} AS ue ON ue.UsuarioId = u.Id " +
                         $"WHERE ue.EscalaId = '{escala.Id}'; " +
-                        $"SELECT m.Id, m.Nome, m.Referencia FROM {MusicaMap.Tabela} AS m " +
+                        $"SELECT m.Id, m.Nome, m.Artista, m.Letra, m.Cifra, m.Video FROM {MusicaMap.Tabela} AS m " +
                         $"INNER JOIN {EscalaMusicaMap.Tabela} AS em ON em.MusicaId = m.Id " +
                         $"WHERE em.EscalaId = '{escala.Id}'";
 

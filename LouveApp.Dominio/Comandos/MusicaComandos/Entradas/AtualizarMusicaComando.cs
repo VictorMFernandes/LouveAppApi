@@ -1,22 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using LouveApp.Compartilhado.Comandos;
 using FluentValidator;
-using LouveApp.Compartilhado.Comandos;
-using LouveApp.Dominio.Entidades;
+using System.Collections.Generic;
+using System.Linq;
 using LouveApp.Dominio.ValueObjects;
 
 namespace LouveApp.Dominio.Comandos.MusicaComandos.Entradas
 {
-    public class RegistrarMusicaComando : IComando
+    public class AtualizarMusicaComando : IComando
     {
         #region Propriedades Api
 
+        public string Id { get; set; }
         public string Nome { get; set; }
         public string Letra { get; set; }
         public string Cifra { get; set; }
         public string Video { get; set; }
         internal string UsuarioLogadoId { get; private set; }
-        internal string MinisterioId { get; private set; }
         public string Artista { get; set; }
         public string Tom { get; set; }
         public int? Bpm { get; set; }
@@ -26,10 +25,11 @@ namespace LouveApp.Dominio.Comandos.MusicaComandos.Entradas
 
         #region Construtores
 
-        public RegistrarMusicaComando(string nome, string letra
-            , string cifra, string video, string artista
-            , string tom, int bpm, string classificacao)
+        public AtualizarMusicaComando(string id, string nome, string letra
+            , string cifra, string video, string artista, string tom
+            , int? bpm, string classificacao)
         {
+            Id = id;
             Nome = nome;
             Letra = letra;
             Cifra = cifra;
@@ -44,20 +44,23 @@ namespace LouveApp.Dominio.Comandos.MusicaComandos.Entradas
 
         #region IComando
 
-        public bool FoiValidado { get; private set; }
+        public bool FoiValidado { get; set; }
 
         public bool Validar()
         {
             FoiValidado = true;
 
-            var nome = new Nome(Nome);
-            var letra = new Link(Letra);
-            var cifra = new Link(Cifra);
-            var video = new Link(Video);
-            var artista = new Nome(Artista);
+            NomeVo = new Nome(Nome);
+            LetraVo = new Link(Letra);
+            CifraVo = new Link(Cifra);
+            VideoVo = new Link(Video);
+            ArtistaVo = new Nome(Artista);
 
-            Musica = new Musica(nome, letra, cifra, video, artista, Tom, Bpm, Classificacao);
-            _notificacoes.AddRange(Musica.Notifications);
+            _notificacoes.AddRange(NomeVo.Notifications);
+            _notificacoes.AddRange(LetraVo.Notifications);
+            _notificacoes.AddRange(CifraVo.Notifications);
+            _notificacoes.AddRange(VideoVo.Notifications);
+            _notificacoes.AddRange(ArtistaVo.Notifications);
 
             return !_notificacoes.Any();
         }
@@ -68,16 +71,19 @@ namespace LouveApp.Dominio.Comandos.MusicaComandos.Entradas
 
         #endregion
 
-        #region Entidade
+        #region Value Objects
 
-        internal Musica Musica { get; private set; }
+        internal Nome NomeVo;
+        internal Link LetraVo;
+        internal Link CifraVo;
+        internal Link VideoVo;
+        internal Nome ArtistaVo;
 
         #endregion
 
-        public void PegarIds(string usuarioLogadoId, string ministerioId)
+        public void PegarUsuarioLogadoId(string usuarioLogadoId)
         {
             UsuarioLogadoId = usuarioLogadoId;
-            MinisterioId = ministerioId;
         }
     }
 }

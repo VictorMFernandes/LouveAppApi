@@ -12,6 +12,7 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
         public DbSet<Ministerio> Ministerios { get; set; }
         public DbSet<Instrumento> Instrumentos { get; set; }
         public DbSet<Escala> Escalas { get; set; }
+        public DbSet<Musica> Musicas { get; set; }
 
         public BancoContexto(DbContextOptions options) : base(options)
         {

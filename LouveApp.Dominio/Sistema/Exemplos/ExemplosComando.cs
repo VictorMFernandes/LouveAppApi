@@ -27,5 +27,11 @@ namespace LouveApp.Dominio.Sistema.Exemplos
             , "https://www.cifraclub.com.br/system-of-a-down/chop-suey/"
             , "https://www.youtube.com/watch?v=CSvFpBOe8eY"
             , "System of a Down", "C#", 60, string.Empty);
+        public static AtualizarMusicaComando AtualizarMusica = new AtualizarMusicaComando(PadroesString.MusicaId1
+            , PadroesString.MusicaNome1
+            , "https://www.vagalume.com.br/o-rei-leao/somos-um.html"
+            , "https://www.cifraclub.com.br/system-of-a-down/chop-suey/"
+            , "https://www.youtube.com/watch?v=CSvFpBOe8eY"
+            , "O Rei Leão", "F#", 60, "Adoração");
     }
 }

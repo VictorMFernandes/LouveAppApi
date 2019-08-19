@@ -11,12 +11,16 @@ namespace LouveApp.Dominio.Gerenciadores
     public class MusicaGerenciador : Gerenciador
         , IComandoGerenciador<RegistrarMusicaComando>
         , IComandoGerenciador<ExcluirMusicaComando>
+        , IComandoGerenciador<AtualizarMusicaComando>
     {
         private readonly IMinisterioRepositorio _ministerioRepo;
+        private readonly IMusicaRepositorio _musicaRepo;
 
-        public MusicaGerenciador(IMinisterioRepositorio ministerioRepo)
+        public MusicaGerenciador(IMinisterioRepositorio ministerioRepo
+            , IMusicaRepositorio musicaRepo)
         {
             _ministerioRepo = ministerioRepo;
+            _musicaRepo = musicaRepo;
         }
 
         public async Task<IComandoResultado> Executar(RegistrarMusicaComando comando)
@@ -64,6 +68,39 @@ namespace LouveApp.Dominio.Gerenciadores
             _ministerioRepo.Atualizar(ministerio);
 
             return null;
+        }
+
+        public async Task<IComandoResultado> Executar(AtualizarMusicaComando comando)
+        {
+            if (!ValidarComando(comando))
+                return null;
+
+            // Caso o usuário não tenha autorização
+            if (!await _musicaRepo.UsuarioEhAdministrador(comando.UsuarioLogadoId, comando.Id))
+                return new NaoAutorizadoResultado(PadroesMensagens.UsuarioSemPermissao);
+
+            var musica = await _musicaRepo.PegarPorId(comando.Id);
+
+            if (musica == null)
+            {
+                return new NaoEncontradoResultado(PadroesMensagens.MusicaNaoEncontrada);
+            }
+
+            // Atualiza a música
+            musica.Atualizar(comando.NomeVo, comando.LetraVo, comando.CifraVo
+                , comando.VideoVo, comando.ArtistaVo, comando.Tom, comando.Bpm
+                , comando.Classificacao);
+
+            // Valida
+            AddNotifications(musica);
+
+            if (Invalid)
+                return null;
+
+            // Persistir o usuário
+            _musicaRepo.Atualizar(musica);
+
+            return new AtualizarMusicaComandoResultado(musica);
         }
     }
 }

@@ -29,8 +29,7 @@ namespace LouveApp.Api.Controllers
         /// <param name="comando">Comando para registrar a música.</param>
         /// <response code="200">Retorna as principais propriedades da música que acabou de ser registrada.</response>
         [ProducesResponseType(typeof(RegistrarMusicaComandoResultado), 200)]
-        [HttpPost]
-        [Route("v1/Ministerios/{ministerioId}/[controller]")]
+        [HttpPost("v1/Ministerios/{ministerioId}/[controller]")]
         public async Task<IActionResult> RegistrarMusica(string ministerioId, [FromBody]RegistrarMusicaComando comando)
         {
             comando.PegarIds(UsuarioLogadoId, ministerioId);
@@ -44,8 +43,7 @@ namespace LouveApp.Api.Controllers
         /// </summary>
         /// <response code="200">Retorna lista de músicas do ministério.</response>
         [ProducesResponseType(typeof(IEnumerable<PegarMusicaComandoResultado>), 200)]
-        [HttpGet]
-        [Route("v1/Ministerios/{ministerioId}/[controller]")]
+        [HttpGet("v1/Ministerios/{ministerioId}/[controller]")]
         public async Task<IActionResult> PegarMusicas(string ministerioId)
         {
             return RespostaDeConsulta(await _musicaRepo.PegarPorMinisterio(ministerioId));
@@ -57,11 +55,25 @@ namespace LouveApp.Api.Controllers
         /// <param name="ministerioId">Id do ministério que terá uma música excluída.</param>
         /// <param name="musicaId">Id da música que será excluída.</param>
         /// <response code="200">Música excluída com sucesso.</response>
-        [HttpDelete]
-        [Route("v1/Ministerios/{ministerioId}/[controller]/{musicaId}")]
+        [HttpDelete("v1/Ministerios/{ministerioId}/[controller]/{musicaId}")]
         public async Task<IActionResult> ExcluirMusica(string ministerioId, string musicaId)
         {
             var comando = new ExcluirMusicaComando(UsuarioLogadoId, ministerioId, musicaId);
+
+            var resultado = await _gerenciador.Executar(comando);
+            return await Resposta(resultado, _gerenciador.Notifications);
+        }
+
+        /// <summary>
+        /// Atualiza uma música de um ministério.
+        /// </summary>
+        /// <param name="comando">Comando para atualizar música de um ministério</param>
+        /// <response code="200">Retorna as principais propriedades da música que acabou de ser atualizada.</response>
+        [ProducesResponseType(typeof(AtualizarMusicaComandoResultado), 200)]
+        [HttpPut("v1/[controller]")]
+        public async Task<IActionResult> AtualizarMusica([FromBody]AtualizarMusicaComando comando)
+        {
+            comando.PegarUsuarioLogadoId(UsuarioLogadoId);
 
             var resultado = await _gerenciador.Executar(comando);
             return await Resposta(resultado, _gerenciador.Notifications);

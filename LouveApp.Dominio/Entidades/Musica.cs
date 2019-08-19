@@ -109,5 +109,21 @@ namespace LouveApp.Dominio.Entidades
         }
 
         #endregion
+
+        public void Atualizar(Nome nome, Link letra, Link cifra
+            , Link video, Nome artista, string tom, int? bpm
+            , string classificacao)
+        {
+            Nome = nome ?? Nome;
+            Letra = letra ?? Letra;
+            Cifra = cifra ?? Cifra;
+            Video = video ?? Video;
+            Artista = artista ?? Artista;
+            Tom = tom ?? Tom;
+            Bpm = bpm ?? Bpm;
+            Classificacao = classificacao ?? Classificacao;
+
+            Validar();
+        }
     }
 }
