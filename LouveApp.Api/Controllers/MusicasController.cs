@@ -70,7 +70,7 @@ namespace LouveApp.Api.Controllers
         /// <param name="comando">Comando para atualizar música de um ministério</param>
         /// <response code="200">Retorna as principais propriedades da música que acabou de ser atualizada.</response>
         [ProducesResponseType(typeof(AtualizarMusicaComandoResultado), 200)]
-        [HttpPut("v1/[controller]")]
+        [HttpPut("v1/Ministerios/{ministerioId}/[controller]")]
         public async Task<IActionResult> AtualizarMusica([FromBody]AtualizarMusicaComando comando)
         {
             comando.PegarUsuarioLogadoId(UsuarioLogadoId);
