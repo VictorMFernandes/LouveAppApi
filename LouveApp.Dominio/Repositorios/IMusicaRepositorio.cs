@@ -11,5 +11,6 @@ namespace LouveApp.Dominio.Repositorios
         Task<bool> UsuarioEhAdministrador(string usuarioId, string musicaId);
         Task<Musica> PegarPorId(string musicaId);
         void Atualizar(Musica musica);
+        Task<IEnumerable<PegarMusicaComandoResultado>> PegarPorNomeEArtista(string ministerioId, string nome, string artista);
     }
 }

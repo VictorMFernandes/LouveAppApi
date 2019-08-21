@@ -78,5 +78,18 @@ namespace LouveApp.Api.Controllers
             var resultado = await _gerenciador.Executar(comando);
             return await Resposta(resultado, _gerenciador.Notifications);
         }
+
+        /// <summary>
+        /// Pega uma música pelo nome e pelo artista.
+        /// </summary>
+        /// <remarks>Os nomes devem ser exatamente os mesmos dos cadastrados em banco.</remarks>
+        /// <param name="ministerioId">Id do ministério que a música pertence.</param>
+        /// <param name="comando">Comando para fazer a busca da música.</param>
+        /// <response code="200">Retorna a música buscada.</response>
+        [HttpGet("v1/Ministerios/{ministerioId}/[controller]/PorNomeEArtista")]
+        public async Task<IActionResult> PegarMusicaPorNomeEArtista(string ministerioId, PegarMusicaPorNomeEArtistaComando comando)
+        {
+            return RespostaDeConsulta(await _musicaRepo.PegarPorNomeEArtista(ministerioId, comando.Nome, comando.Artista));
+        }
     }
 }

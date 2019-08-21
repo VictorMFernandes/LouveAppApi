@@ -61,5 +61,18 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                 return (await conn.QueryAsync<object>(query, new { usuarioId, musicaId })).Any();
             }
         }
+
+        public async Task<IEnumerable<PegarMusicaComandoResultado>> PegarPorNomeEArtista(string ministerioId, string nome, string artista)
+        {
+            var query = $"SELECT Id, Nome, Artista, Letra, Cifra, Video FROM {MusicaMap.Tabela} " +
+                        $"WHERE MinisterioId = @{nameof(ministerioId)} " +
+                        $"AND Nome = @{nameof(nome)} AND Artista = @{nameof(artista)}";
+
+            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            {
+                conn.Open();
+                return await conn.QueryAsync<PegarMusicaComandoResultado>(query, new { ministerioId, nome, artista });
+            }
+        }
     }
 }
