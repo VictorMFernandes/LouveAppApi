@@ -82,5 +82,23 @@ namespace LouveApp.Api.Controllers
             var resultado = await _gerenciador.Executar(comando);
             return await Resposta(resultado, _gerenciador.Notifications);
         }
+
+        /// <summary>
+        /// Adiciona um dispositivo a um usuário.
+        /// </summary>
+        /// <remarks>Dispositivos de mesmo token só serão adicionados uma vez.</remarks>
+        /// <param name="comando">Comando para adicionar dispositivo ao usuário.</param>
+        /// <response code="200">Retorna as principais propriedades do usuário que acabou de ser atualizado.</response>
+        [ProducesResponseType(typeof(AtualizarUsuarioComandoResultado), 200)]
+        [HttpPut]
+        [Route("v1/[controller]/AdicionarDispositivo")]
+        public async Task<IActionResult> AdicionarDispositivo([FromBody]AdicionarDispositivoComando comando)
+        {
+            comando.PegarUsuarioLogadoId(UsuarioLogadoId);
+
+            var resultado = await _gerenciador.Executar(comando);
+            return await Resposta(resultado, _gerenciador.Notifications);
+        }
+
     }
 }

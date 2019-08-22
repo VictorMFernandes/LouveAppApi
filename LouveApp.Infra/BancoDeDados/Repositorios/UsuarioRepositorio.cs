@@ -32,6 +32,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                         .Usuarios
                         .Include(u => u.Instrumentos)
                         .ThenInclude(ui => ui.Instrumento)
+                        .Include(u => u.Dispositivos)
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
 

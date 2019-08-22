@@ -15,6 +15,7 @@ namespace LouveApp.Dominio.Gerenciadores
         , IComandoGerenciador<RegistrarUsuarioComando>
         , IComandoGerenciador<AtualizarUsuarioComando>
         , IComandoGerenciador<EntrarMinisterioComando>
+        , IComandoGerenciador<AdicionarDispositivoComando>
     {
         private readonly IUsuarioRepositorio _usuarioRepo;
         private readonly IMinisterioRepositorio _ministerioRepo;
@@ -131,6 +132,31 @@ namespace LouveApp.Dominio.Gerenciadores
             await _pushNotificationServico.NotificarIngressoEmMinisterio(new[] { "" }, usuario.ToString(), "Nome do ministerio");
 
             return new EntrarMinisterioComandoResultado(ministerio.Id, ministerio.ToString());
+        }
+
+        public async Task<IComandoResultado> Executar(AdicionarDispositivoComando comando)
+        {
+            if (!ValidarComando(comando))
+                return null;
+
+            var usuario = await _usuarioRepo.PegarPorId(comando.UsuarioLogadoId);
+
+            // Caso o usuário não exista
+            if (usuario == null)
+            {
+                return new NaoEncontradoResultado(PadroesMensagens.UsuarioNaoEncontrado);
+            }
+
+            usuario.AdicionarDispositivo(new Dispositivo(comando.Token, comando.NomeVo));
+
+            // Validar entidade
+            AddNotifications(usuario);
+
+            if (Invalid) return null;
+
+            _usuarioRepo.Atualizar(usuario);
+
+            return null;
         }
 
         #endregion
