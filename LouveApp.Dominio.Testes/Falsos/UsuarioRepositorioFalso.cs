@@ -19,6 +19,6 @@ namespace LouveApp.Dominio.Testes.Falsos
         public Task<Usuario> PegarPorId(string id) => null;
         public Task<PegarUsuarioComandoResultado> PegarPorIdSemRastrear(string id) => null;
 
-        public Task<Usuario> PegarAutenticado(string login, string senhaEncriptada) => null;
+        public Task<AutenticarUsuarioComandoResultado> PegarAutenticado(string login, string senhaEncriptada) => null;
     }
 }

@@ -9,7 +9,7 @@ namespace LouveApp.Dominio.Repositorios
     {
         Task<Usuario> PegarPorId(string id);
         Task<PegarUsuarioComandoResultado> PegarPorIdSemRastrear(string id);
-        Task<Usuario> PegarAutenticado(string login, string senhaEncriptada);
+        Task<AutenticarUsuarioComandoResultado> PegarAutenticado(string login, string senhaEncriptada);
 
         void Criar(Usuario usuario);
         void Atualizar(Usuario usuario);

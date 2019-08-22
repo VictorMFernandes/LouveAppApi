@@ -16,27 +16,6 @@ namespace LouveApp.Infra.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
-            modelBuilder.Entity("LouveApp.Dominio.Entidades.Dispositivo", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Token")
-                        .IsRequired();
-
-                    b.Property<string>("UsuarioId")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Token")
-                        .IsUnique();
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("tb_dispositivo");
-                });
-
             modelBuilder.Entity("LouveApp.Dominio.Entidades.Escala", b =>
                 {
                     b.Property<string>("Id")
@@ -178,33 +157,6 @@ namespace LouveApp.Infra.Migrations
                     b.ToTable("tb_usuario");
                 });
 
-            modelBuilder.Entity("LouveApp.Dominio.Entidades.Dispositivo", b =>
-                {
-                    b.HasOne("LouveApp.Dominio.Entidades.Usuario", "Usuario")
-                        .WithMany("Dispositivos")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.OwnsOne("LouveApp.Dominio.ValueObjects.Nome", "Nome", b1 =>
-                        {
-                            b1.Property<string>("DispositivoId");
-
-                            b1.Property<string>("Texto")
-                                .IsRequired()
-                                .HasColumnName("Nome")
-                                .HasMaxLength(60);
-
-                            b1.HasKey("DispositivoId");
-
-                            b1.ToTable("tb_dispositivo");
-
-                            b1.HasOne("LouveApp.Dominio.Entidades.Dispositivo")
-                                .WithOne("Nome")
-                                .HasForeignKey("LouveApp.Dominio.ValueObjects.Nome", "DispositivoId")
-                                .OnDelete(DeleteBehavior.Cascade);
-                        });
-                });
-
             modelBuilder.Entity("LouveApp.Dominio.Entidades.Escala", b =>
                 {
                     b.HasOne("LouveApp.Dominio.Entidades.Ministerio", "Ministerio")
@@ -283,7 +235,7 @@ namespace LouveApp.Infra.Migrations
 
             modelBuilder.Entity("LouveApp.Dominio.Entidades.Juncao.UsuarioMinisterio", b =>
                 {
-                    b.HasOne("LouveApp.Dominio.Entidades.Ministerio", "Ministerio")
+                    b.HasOne("LouveApp.Dominio.Entidades.Ministerio")
                         .WithMany("Usuarios")
                         .HasForeignKey("MinisterioId")
                         .OnDelete(DeleteBehavior.Cascade);

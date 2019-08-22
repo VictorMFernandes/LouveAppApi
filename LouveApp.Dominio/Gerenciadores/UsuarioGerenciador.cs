@@ -20,18 +20,15 @@ namespace LouveApp.Dominio.Gerenciadores
         private readonly IMinisterioRepositorio _ministerioRepo;
         private readonly IInstrumentoRepositorio _instrumentoRepo;
         private readonly IEmailServico _emailServico;
-        private readonly IPushNotificationServico _pushNotificationServico;
 
         public UsuarioGerenciador(IUsuarioRepositorio usuarioRepo
             , IMinisterioRepositorio ministerioRepo
-            , IInstrumentoRepositorio instrumentoRepo, IEmailServico emailServico
-            , IPushNotificationServico pushNotificationServico)
+            , IInstrumentoRepositorio instrumentoRepo, IEmailServico emailServico)
         {
             _usuarioRepo = usuarioRepo;
             _ministerioRepo = ministerioRepo;
             _instrumentoRepo = instrumentoRepo;
             _emailServico = emailServico;
-            _pushNotificationServico = pushNotificationServico;
         }
 
         #region Comandos
@@ -126,9 +123,6 @@ namespace LouveApp.Dominio.Gerenciadores
             if (Invalid) return null;
 
             _ministerioRepo.Atualizar(ministerio);
-
-
-            await _pushNotificationServico.NotificarIngressoEmMinisterio(new[] { "" }, usuario.ToString(), "Nome do ministerio");
 
             return new EntrarMinisterioComandoResultado(ministerio.Id, ministerio.ToString());
         }

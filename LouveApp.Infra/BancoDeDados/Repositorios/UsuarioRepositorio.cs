@@ -64,43 +64,35 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
         /// <param name="login"></param>
         /// <param name="senhaEncriptada"></param>
         /// <returns></returns>
-        public async Task<Usuario> PegarAutenticado(string login, string senhaEncriptada)
+        public async Task<AutenticarUsuarioComandoResultado> PegarAutenticado(string login, string senhaEncriptada)
         {
-            return await _contexto.Usuarios
-                            .Include(u => u.Ministerios)
-                            .ThenInclude(um => um.Ministerio)
-                            .Include(u => u.Dispositivos)
-                            .Include(u => u.Foto)
-                            .FirstOrDefaultAsync(u => u.Autenticacao.Login == login
-                                                && u.Autenticacao.Senha == senhaEncriptada);
+            var query = $"SELECT Id, Nome, Email, FotoUrl, Senha FROM {UsuarioMap.Tabela} " +
+                        $"WHERE Login = @{nameof(login)} AND Senha = @{nameof(senhaEncriptada)}";
 
-            //var query = $"SELECT Id, Nome, Email, FotoUrl, Senha FROM {UsuarioMap.Tabela} " +
-            //            $"WHERE Login = @{nameof(login)} AND Senha = @{nameof(senhaEncriptada)}";
+            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            {
+                conn.Open();
+                var resultado = await conn.QueryFirstOrDefaultAsync<AutenticarUsuarioComandoResultado>(query, new
+                {
+                    login,
+                    senhaEncriptada
+                });
 
-            //using (var conn = new SqliteConnection(Configuracoes.ConnString))
-            //{
-            //    conn.Open();
-            //    var resultado = await conn.QueryFirstOrDefaultAsync<AutenticarUsuarioComandoResultado>(query, new
-            //    {
-            //        login,
-            //        senhaEncriptada
-            //    });
+                if (resultado == null) return null;
 
-            //    if (resultado == null) return null;
+                // Atualiza data da última atividade
+                query = $"UPDATE {UsuarioMap.Tabela} SET DtUltimaAtividade = '{DateTime.Now}' " +
+                        $"WHERE Id = '{resultado.Id}'";
+                await conn.ExecuteAsync(query);
 
-            //    // Atualiza data da última atividade
-            //    query = $"UPDATE {UsuarioMap.Tabela} SET DtUltimaAtividade = '{DateTime.Now}' " +
-            //            $"WHERE Id = '{resultado.Id}'";
-            //    await conn.ExecuteAsync(query);
+                query = $"SELECT m.Id, m.Nome, m.FotoUrl, um.Administrador FROM {MinisterioMap.Tabela} AS m " +
+                        $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON m.Id = um.MinisterioId " +
+                        $"WHERE um.UsuarioId = '{resultado.Id}'";
 
-            //    query = $"SELECT m.Id, m.Nome, m.FotoUrl, um.Administrador FROM {MinisterioMap.Tabela} AS m " +
-            //            $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON m.Id = um.MinisterioId " +
-            //            $"WHERE um.UsuarioId = '{resultado.Id}'";
+                resultado.Ministerios = await conn.QueryAsync<PegarMinisterioComandoResultado>(query);
 
-            //    resultado.Ministerios = await conn.QueryAsync<PegarMinisterioComandoResultado>(query);
-
-            //    return resultado;
-            //}
+                return resultado;
+            }
         }
 
         public void Criar(Usuario usuario)
