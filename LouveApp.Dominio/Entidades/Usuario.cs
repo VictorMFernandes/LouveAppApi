@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using FluentValidator;
 using LouveApp.Compartilhado.Padroes;
+using System.Linq;
+using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
 
 namespace LouveApp.Dominio.Entidades
 {
@@ -19,6 +21,7 @@ namespace LouveApp.Dominio.Entidades
         public ICollection<UsuarioMinisterio> Ministerios { get; private set; }
         public ICollection<UsuarioInstrumento> Instrumentos { get; private set; }
         public ICollection<UsuarioEscala> Escalas { get; private set; }
+        public ICollection<Dispositivo> Dispositivos { get; private set; }
         public DateTime DtCriacao { get; private set; }
         public DateTime DtUltimaAtividade { get; private set; }
 
@@ -100,6 +103,27 @@ namespace LouveApp.Dominio.Entidades
             foreach (var instrumentoId in instrumentosIds)
             {
                 Instrumentos.Add(new UsuarioInstrumento(instrumentoId));
+            }
+        }
+
+        public void AdicionarDispositivo(Dispositivo dispositivo)
+        {
+            DtUltimaAtividade = DateTime.Now;
+
+            if (Dispositivos.Any(d => d.Token == dispositivo.Token))
+                return;
+
+            Dispositivos.Add(dispositivo);
+
+            Validar();
+        }
+
+        public IEnumerable<PegarMinisterioComandoResultado> PegarMinisterios()
+        {
+            foreach (var um in Ministerios)
+            {
+                yield return new PegarMinisterioComandoResultado(um.MinisterioId
+                    , um.Ministerio.ToString(), um.Administrador);
             }
         }
     }

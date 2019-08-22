@@ -11,5 +11,12 @@ namespace LouveApp.Dominio.Comandos.MinisterioComandos.Saidas
         public bool Administrador { get; set; }
 
         #endregion
+
+        public PegarMinisterioComandoResultado(string id, string nome, bool administrador)
+        {
+            Id = id;
+            Nome = nome;
+            Administrador = administrador;
+        }
     }
 }

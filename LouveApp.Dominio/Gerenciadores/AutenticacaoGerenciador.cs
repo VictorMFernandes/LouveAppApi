@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using LouveApp.Compartilhado.Padroes;
 using LouveApp.Dominio.ValueObjects;
+using LouveApp.Dominio.Comandos.AutenticacaoComandos.Saidas;
+using LouveApp.Dominio.Entidades;
 
 namespace LouveApp.Dominio.Gerenciadores
 {
@@ -40,11 +42,21 @@ namespace LouveApp.Dominio.Gerenciadores
                 return null;
             }
 
-            usuario.Token = Autenticacao.GerarToken(usuario.Id, comando.Login
+            usuario.AdicionarDispositivo(new Dispositivo(comando.DispositivoToken, new Nome(comando.DispositivoNome)));
+
+            // Validar entidade
+            AddNotifications(usuario);
+
+            if (Invalid) return null;
+
+            _usuarioRepo.Atualizar(usuario);
+
+            var autenticacaoToken = Autenticacao.GerarToken(usuario.Id, comando.Login
                 , _config.GetSection(EConfigSecao.TokenSecreto.EnumTextos().Nome).Value
                 , double.Parse(_config.GetSection(EConfigSecao.PrescricaoTokenDias.EnumTextos().Nome).Value));
+            var comandoResultado = new AutenticarUsuarioComandoResultado(autenticacaoToken, usuario, usuario.PegarMinisterios());
 
-            return usuario;
+            return comandoResultado;
         }
         
         #endregion

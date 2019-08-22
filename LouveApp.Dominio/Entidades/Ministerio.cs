@@ -198,5 +198,10 @@ namespace LouveApp.Dominio.Entidades
             Musicas.Remove(musica);
             return true;
         }
+
+        public List<Usuario> PegarAdministradores()
+        {
+            return Usuarios.Where(um => um.Administrador).Select(um => um.Usuario).ToList();
+        }
     }
 }

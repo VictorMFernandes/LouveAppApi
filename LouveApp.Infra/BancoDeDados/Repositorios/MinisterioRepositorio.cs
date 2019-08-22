@@ -49,6 +49,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
             return await _contexto
                 .Ministerios
                 .Include(m => m.Usuarios)
+                .ThenInclude(um => um.Usuario)
                 .FirstOrDefaultAsync(x => x.LinkConvite == linkConvite || x.LinkConviteAtivado);
         }
 
