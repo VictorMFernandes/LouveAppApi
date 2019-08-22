@@ -113,7 +113,7 @@ namespace LouveApp.Dominio.Gerenciadores
 
             var ministerio = await _ministerioRepo.PegarPorLinkConvite(comando.LinkConvite);
 
-            // Caso o usuário não exista
+            // Caso o ministério não exista
             if (ministerio == null)
             {
                 return new NaoEncontradoResultado(PadroesMensagens.LinkInvalido);
@@ -129,7 +129,7 @@ namespace LouveApp.Dominio.Gerenciadores
             _ministerioRepo.Atualizar(ministerio);
 
 
-            await _pushNotificationServico.NotificarIngressoEmMinisterio(new[] { "" }, usuario.ToString(), "Nome do ministerio");
+            await _pushNotificationServico.NotificarIngressoEmMinisterio(new[] {usuario.Dispositivos.FirstOrDefault().Token}, usuario.ToString(), "Nome do ministerio");
 
             return new EntrarMinisterioComandoResultado(ministerio.Id, ministerio.ToString());
         }

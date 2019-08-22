@@ -22,7 +22,7 @@ namespace LouveApp.Infra.Servicos.PushNotification
 
         public async Task NotificarIngressoEmMinisterio(string[] aparelhosTokens, string nomeIngressante, string nomeMinisterio)
         {
-            await SendNotification("token", "Meu título", "Corpo da mensagem");
+            await SendNotification(aparelhosTokens[0], "Meu título", "Corpo da mensagem");
         }
 
         public async Task SendNotification(string token, string title, string body)
