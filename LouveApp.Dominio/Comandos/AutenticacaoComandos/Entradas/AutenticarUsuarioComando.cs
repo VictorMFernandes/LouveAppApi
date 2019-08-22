@@ -11,6 +11,8 @@ namespace LouveApp.Dominio.Comandos.AutenticacaoComandos.Entradas
 
         public string Login { get; set; }
         public string Senha { get; set; }
+        public string DispositivoNome { get; set; }
+        public string DispositivoToken { get; set; }
 
         #endregion
 
@@ -34,12 +36,17 @@ namespace LouveApp.Dominio.Comandos.AutenticacaoComandos.Entradas
 
             if (string.IsNullOrEmpty(Login))
             {
-                _notificacoes.Add(new Notification("Login", "O Login não pode ser vazio."));
+                _notificacoes.Add(new Notification(nameof(Login), "O Login não pode ser vazio."));
             }
 
             if (string.IsNullOrEmpty(Senha))
             {
-                _notificacoes.Add(new Notification("Senha", "A Senha não pode ser vazia."));
+                _notificacoes.Add(new Notification(nameof(Senha), "A Senha não pode ser vazia."));
+            }
+
+            if (string.IsNullOrEmpty(DispositivoToken))
+            {
+                _notificacoes.Add(new Notification(nameof(DispositivoToken), "O token do disopsitivo não pode ser vazio."));
             }
 
             return !_notificacoes.Any();

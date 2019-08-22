@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using LouveApp.Dominio.Sistema;
 using Newtonsoft.Json;
 using LouveApp.Infra.Servicos.Email.Extensoes;
+using LouveApp.Infra.Servicos.PushNotification.Extensoes;
 
 namespace LouveApp.Api
 {
@@ -64,6 +65,7 @@ namespace LouveApp.Api
 
             services.ConfigurarIoC();
             services.ConfigurarServicoEmail(Configuration);
+            services.ConfigurarPushNotification();
 
             services.ConfigurarSwagger(_nomeAplicacao, _versao);
         }
