@@ -117,14 +117,5 @@ namespace LouveApp.Dominio.Entidades
 
             Validar();
         }
-
-        public IEnumerable<PegarMinisterioComandoResultado> PegarMinisterios()
-        {
-            foreach (var um in Ministerios)
-            {
-                yield return new PegarMinisterioComandoResultado(um.MinisterioId
-                    , um.Ministerio.ToString(), um.Administrador);
-            }
-        }
     }
 }
