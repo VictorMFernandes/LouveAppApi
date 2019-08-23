@@ -21,7 +21,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
 
                 if (i + 1 < usuariosIds.Count)
                 {
-                    queryUsuariosIds += ", ";
+                    queryUsuariosIds += " OR ";
                 }
             }
 
