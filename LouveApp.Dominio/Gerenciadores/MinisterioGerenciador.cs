@@ -158,7 +158,7 @@ namespace LouveApp.Dominio.Gerenciadores
                 .Select(d => d.Token);
 
             _pushNotificationServico.NotificarChatMinisterio(destinatariosTokens.ToList()
-                , comando.Mensagem, remetente.Usuario, ministerio.ToString());
+                , comando.Mensagem, remetente.Usuario, ministerio);
 
             return null;
         }
