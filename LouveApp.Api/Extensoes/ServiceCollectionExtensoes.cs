@@ -44,6 +44,7 @@ namespace LouveApp.Api.Extensoes
             services.AddTransient<IInstrumentoRepositorio, InstrumentoRepositorio>();
             services.AddTransient<IEscalaRepositorio, EscalaRepositorio>();
             services.AddTransient<IMusicaRepositorio, MusicaRepositorio>();
+            services.AddTransient<IDispositivoRepositorio, DispositivoRepositorio>();
             // Serviços
             services.AddTransient<IFotoServico, FotoServico>();
         }

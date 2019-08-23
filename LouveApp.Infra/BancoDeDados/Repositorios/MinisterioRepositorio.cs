@@ -24,14 +24,14 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
             _contexto = contexto;
         }
 
-        public async Task<Ministerio> PegarPorId(string id)
+        public async Task<Ministerio> PegarPorId(string ministerioId)
         {
             return await _contexto
                         .Ministerios
                         .Include(m => m.Usuarios)
                         .ThenInclude(um => um.Usuario)
                         .Include(m => m.Escalas)
-                        .FirstOrDefaultAsync(x => x.Id == id);
+                        .FirstOrDefaultAsync(x => x.Id == ministerioId);
         }
 
         public async Task<Ministerio> PegarPorIdComMusicas(string ministerioId)
@@ -41,6 +41,16 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                         .Include(m => m.Usuarios)
                         .ThenInclude(um => um.Usuario)
                         .Include(m => m.Musicas)
+                        .FirstOrDefaultAsync(x => x.Id == ministerioId);
+        }
+
+        public async Task<Ministerio> PegarPorIdComUsuariosEDispositivos(string ministerioId)
+        {
+            return await _contexto
+                        .Ministerios
+                        .Include(m => m.Usuarios)
+                        .ThenInclude(um => um.Usuario)
+                        .ThenInclude(u => u.Dispositivos)
                         .FirstOrDefaultAsync(x => x.Id == ministerioId);
         }
 

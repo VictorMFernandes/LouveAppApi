@@ -107,6 +107,7 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
         {
             if (_usuario1 != null) return _usuario1;
 
+
             var nome = new Nome(PadroesString.UsuarioNome1);
             var email = new Email(PadroesString.UsuarioEmail1);
             var autenticacao = new Autenticacao(PadroesString.UsuarioLogin1

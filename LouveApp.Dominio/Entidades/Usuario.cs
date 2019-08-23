@@ -106,16 +106,17 @@ namespace LouveApp.Dominio.Entidades
             }
         }
 
-        public void AdicionarDispositivo(Dispositivo dispositivo)
+        public bool AdicionarDispositivo(Dispositivo dispositivo)
         {
             DtUltimaAtividade = DateTime.Now;
 
             if (Dispositivos.Any(d => d.Token == dispositivo.Token))
-                return;
+                return false;
 
             Dispositivos.Add(dispositivo);
 
             Validar();
+            return true;
         }
     }
 }

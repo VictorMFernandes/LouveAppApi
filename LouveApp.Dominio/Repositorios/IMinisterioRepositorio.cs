@@ -10,6 +10,7 @@ namespace LouveApp.Dominio.Repositorios
     {
         Task<Ministerio> PegarPorId(string ministerioId);
         Task<Ministerio> PegarPorIdComMusicas(string ministerioId);
+        Task<Ministerio> PegarPorIdComUsuariosEDispositivos(string ministerioId);
         Task<Ministerio> PegarPorLinkConvite(string linkConvite);
         Task<IEnumerable<PegarMinisterioComandoResultado>> PegarPorUsuario(string usuarioId);
         void Criar(Ministerio ministerio);

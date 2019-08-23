@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="Comandos\InstrumentoComandos\Entradas\" />
+    <Folder Include="Comandos\NotificacaoComandos\Saidas\" />
   </ItemGroup>
 
 </Project>

@@ -128,8 +128,7 @@ namespace LouveApp.Dominio.Gerenciadores
 
             _ministerioRepo.Atualizar(ministerio);
 
-
-            await _pushNotificationServico.NotificarIngressoEmMinisterio(new[] {usuario.Dispositivos.FirstOrDefault().Token}, usuario.ToString(), "Nome do ministerio");
+            await _pushNotificationServico.NotificarIngressoEmMinisterio(usuario.Dispositivos.FirstOrDefault().Token, usuario.ToString(), "Nome do ministerio");
 
             return new EntrarMinisterioComandoResultado(ministerio.Id, ministerio.ToString());
         }
@@ -147,7 +146,8 @@ namespace LouveApp.Dominio.Gerenciadores
                 return new NaoEncontradoResultado(PadroesMensagens.UsuarioNaoEncontrado);
             }
 
-            usuario.AdicionarDispositivo(new Dispositivo(comando.Token, comando.NomeVo));
+            if (!usuario.AdicionarDispositivo(new Dispositivo(comando.Token, comando.NomeVo)))
+                return null;
 
             // Validar entidade
             AddNotifications(usuario);

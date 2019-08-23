@@ -1,11 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using LouveApp.Compartilhado.Comandos;
 using LouveApp.Compartilhado.Comandos.Genericos;
 using LouveApp.Compartilhado.Padroes;
 using LouveApp.Dominio.Comandos.MinisterioComandos.Entradas;
 using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
+using LouveApp.Dominio.Comandos.NotificacaoComandos.Entradas;
 using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.Repositorios;
+using LouveApp.Dominio.Servicos;
 
 namespace LouveApp.Dominio.Gerenciadores
 {
@@ -14,14 +17,19 @@ namespace LouveApp.Dominio.Gerenciadores
         , IComandoGerenciador<AtivarLinkComando>
         , IComandoGerenciador<DesativarLinkComando>
         , IComandoGerenciador<ExcluirMinisterioComando>
+        , IComandoGerenciador<NotificarChatMinisterioComando>
     {
         private readonly IMinisterioRepositorio _ministerioRepo;
         private readonly IUsuarioRepositorio _usuarioRepo;
+        private readonly IPushNotificationServico _pushNotificationServico;
 
-        public MinisterioGerenciador(IMinisterioRepositorio ministerioRepo, IUsuarioRepositorio usuarioRepo)
+        public MinisterioGerenciador(IMinisterioRepositorio ministerioRepo
+            , IUsuarioRepositorio usuarioRepo
+            , IPushNotificationServico pushNotificationServico)
         {
             _ministerioRepo = ministerioRepo;
             _usuarioRepo = usuarioRepo;
+            _pushNotificationServico = pushNotificationServico;
         }
 
         public async Task<IComandoResultado> Executar(RegistrarMinisterioComando comando)
@@ -118,6 +126,39 @@ namespace LouveApp.Dominio.Gerenciadores
 
             // Realiza a ação
             _ministerioRepo.Remover(ministerio);
+
+            return null;
+        }
+
+        public async Task<IComandoResultado> Executar(NotificarChatMinisterioComando comando)
+        {
+            if (!ValidarComando(comando))
+                return null;
+
+            var ministerio = await _ministerioRepo.PegarPorIdComUsuariosEDispositivos(comando.MinisterioId);
+
+            // Caso o usuário não exista
+            if (ministerio == null)
+            {
+                return new NaoEncontradoResultado(PadroesMensagens.MinisterioNaoEncontrado);
+            }
+
+            var remetente = ministerio.Usuarios
+                .FirstOrDefault(um => um.UsuarioId == comando.UsuarioLogadoId);
+
+            if (remetente == null)
+            {
+                return new NaoAutorizadoResultado(string.Format(PadroesMensagens.UsuarioNaoVinculado, ministerio));
+            }
+
+            var destinatariosTokens = ministerio
+                .Usuarios
+                .Where(um => um.UsuarioId != remetente.UsuarioId)
+                .SelectMany(um => um.Usuario.Dispositivos)
+                .Select(d => d.Token);
+
+            _pushNotificationServico.NotificarChatMinisterio(destinatariosTokens.ToList()
+                , comando.Mensagem, remetente.Usuario, ministerio.ToString());
 
             return null;
         }

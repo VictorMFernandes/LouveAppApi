@@ -14,6 +14,7 @@ using LouveApp.Infra.BancoDeDados.Mapeamentos;
 using LouveApp.Infra.BancoDeDados.Mapeamentos.Juncao;
 using Microsoft.Data.Sqlite;
 using System;
+using System.Globalization;
 
 namespace LouveApp.Infra.BancoDeDados.Repositorios
 {
@@ -82,9 +83,9 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                 if (resultado == null) return null;
 
                 // Atualiza data da última atividade
-                query = $"UPDATE {UsuarioMap.Tabela} SET DtUltimaAtividade = '{DateTime.Now}' " +
+                query = $"UPDATE {UsuarioMap.Tabela} SET DtUltimaAtividade = @dtUltimaAtividade " +
                         $"WHERE Id = '{resultado.Id}'";
-                await conn.ExecuteAsync(query);
+                await conn.ExecuteAsync(query, new { dtUltimaAtividade = DateTime.Now });
 
                 query = $"SELECT m.Id, m.Nome, m.FotoUrl, um.Administrador FROM {MinisterioMap.Tabela} AS m " +
                         $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON m.Id = um.MinisterioId " +

@@ -63,5 +63,12 @@
         /// {0} Tamanho máximo das classificações
         /// </summary>
         public const string ClassificacaoMaxTamanho = "A classificação deve conter no máximo {0} caracteres";
+
+        public const string IngressoEmMinisterioTitulo = "Novo membro no seu ministério!";
+        /// <summary>
+        /// {0} Nome do ingressante
+        /// {1} Nome do ministério
+        /// </summary>
+        public const string IngressoEmMinisterioCorpo = "{0} acabou de ingressar no ministério {1}";
     }
 }

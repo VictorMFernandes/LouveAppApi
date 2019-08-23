@@ -1,10 +1,12 @@
-﻿using LouveApp.Compartilhado.Comandos;
+﻿using System.Linq;
+using LouveApp.Compartilhado.Comandos;
 using LouveApp.Compartilhado.Comandos.Genericos;
 using LouveApp.Compartilhado.Padroes;
 using LouveApp.Dominio.Comandos.EscalaComandos.Entradas;
 using LouveApp.Dominio.Comandos.EscalaComandos.Saidas;
 using LouveApp.Dominio.Repositorios;
 using System.Threading.Tasks;
+using LouveApp.Dominio.Servicos;
 
 namespace LouveApp.Dominio.Gerenciadores
 {
@@ -13,10 +15,16 @@ namespace LouveApp.Dominio.Gerenciadores
         , IComandoGerenciador<ExcluirEscalaComando>
     {
         private readonly IMinisterioRepositorio _ministerioRepo;
+        private readonly IDispositivoRepositorio _dispositivoRepo;
+        private readonly IPushNotificationServico _pushNotificationServico;
 
-        public EscalaGerenciador(IMinisterioRepositorio ministerioRepo)
+        public EscalaGerenciador(IMinisterioRepositorio ministerioRepo
+            , IDispositivoRepositorio dispositivoRepo
+            , IPushNotificationServico pushNotificationServico)
         {
             _ministerioRepo = ministerioRepo;
+            _dispositivoRepo = dispositivoRepo;
+            _pushNotificationServico = pushNotificationServico;
         }
 
         public async Task<IComandoResultado> Executar(RegistrarEscalaComando comando)
@@ -41,6 +49,13 @@ namespace LouveApp.Dominio.Gerenciadores
             }
 
             _ministerioRepo.Atualizar(ministerio);
+
+            var dispositivosTokens = await _dispositivoRepo
+                                            .PegarDispositivosTokensPorUsuarioId(escala
+                                                .Usuarios.Select(ue => ue.UsuarioId).ToList());
+
+            _pushNotificationServico.NotificarIngressoEmEscala(dispositivosTokens.ToList(), escala.Data.ToString(),
+                ministerio.ToString());
 
             return new RegistrarEscalaComandoResultado(escala.Id, escala.Data, escala.Usuarios.Count);
         }
