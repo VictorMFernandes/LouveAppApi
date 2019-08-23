@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20190802160226_V4.cs" />
-    <Compile Remove="Migrations\20190802160226_V4.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="CloudinaryDotNet" Version="1.8.0" />
     <PackageReference Include="Dapper" Version="1.60.6" />
     <PackageReference Include="FirebaseAdmin" Version="1.8.0" />

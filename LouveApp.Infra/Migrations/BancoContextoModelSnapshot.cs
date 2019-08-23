@@ -83,15 +83,22 @@ namespace LouveApp.Infra.Migrations
 
                     b.Property<string>("EscalaId");
 
-                    b.Property<string>("InstrumentoId");
-
                     b.HasKey("UsuarioId", "EscalaId");
 
                     b.HasIndex("EscalaId");
 
-                    b.HasIndex("InstrumentoId");
-
                     b.ToTable("tb_usuario_escala");
+                });
+
+            modelBuilder.Entity("LouveApp.Dominio.Entidades.Juncao.UsuarioEscalaInstrumento", b =>
+                {
+                    b.Property<string>("UsuarioEscalaId");
+
+                    b.Property<string>("InstrumentoId");
+
+                    b.HasKey("UsuarioEscalaId", "InstrumentoId");
+
+                    b.ToTable("tb_usuario_escala_instrumento");
                 });
 
             modelBuilder.Entity("LouveApp.Dominio.Entidades.Juncao.UsuarioInstrumento", b =>
@@ -257,10 +264,6 @@ namespace LouveApp.Infra.Migrations
                         .WithMany("Usuarios")
                         .HasForeignKey("EscalaId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("LouveApp.Dominio.Entidades.Instrumento", "Instrumento")
-                        .WithMany()
-                        .HasForeignKey("InstrumentoId");
 
                     b.HasOne("LouveApp.Dominio.Entidades.Usuario", "Usuario")
                         .WithMany("Escalas")

@@ -25,7 +25,7 @@ namespace LouveApp.Infra.BancoDeDados.Repositorios
                 }
             }
 
-            var query = $"SELECT Toke FROM {DispositivoMap.Tabela} " +
+            var query = $"SELECT Token FROM {DispositivoMap.Tabela} " +
                         $"WHERE UsuarioId = {queryUsuariosIds}";
 
             using (var conn = new SqliteConnection(Configuracoes.ConnString))

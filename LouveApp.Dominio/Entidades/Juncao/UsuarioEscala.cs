@@ -1,4 +1,6 @@
-﻿namespace LouveApp.Dominio.Entidades.Juncao
+﻿using System.Collections.Generic;
+
+namespace LouveApp.Dominio.Entidades.Juncao
 {
     public sealed class UsuarioEscala : EntidadeJuncaoComUsuario
     {
@@ -15,17 +17,8 @@
                 _escala = value;
             }
         }
-        public string InstrumentoId { get; private set; }
-        private Instrumento _instrumento;
-        public Instrumento Instrumento
-        {
-            get => _instrumento;
-            private set
-            {
-                if (value != null) InstrumentoId = value.Id;
-                _instrumento = value;
-            }
-        }
+
+        public ICollection<UsuarioEscalaInstrumento> Instrumentos;
 
         #endregion
 
@@ -33,9 +26,16 @@
 
         private UsuarioEscala() { }
 
-        public UsuarioEscala(string usuarioId)
+        public UsuarioEscala(string usuarioId, IEnumerable<string> instrumentosIds)
         {
             UsuarioId = usuarioId;
+
+            Instrumentos = new List<UsuarioEscalaInstrumento>();
+
+            foreach (var instrumentoId in instrumentosIds)
+            {
+                Instrumentos.Add(new UsuarioEscalaInstrumento(instrumentoId));
+            }
         }
 
         #endregion

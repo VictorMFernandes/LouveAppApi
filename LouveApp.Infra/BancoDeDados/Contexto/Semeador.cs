@@ -7,6 +7,8 @@ using LouveApp.Compartilhado.Padroes;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
+using LouveApp.Dominio.Comandos.UsuarioComandos.SubEntidade;
 
 namespace LouveApp.Infra.BancoDeDados.Contexto
 {
@@ -179,17 +181,41 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
             _ministerio1.AdicionarMusica(usuarioAdm.Id, CriarMusica1());
             _ministerio1.AdicionarMusica(usuarioAdm.Id, CriarMusica2());
 
+            var usuarioInstrumentos = new List<UsuarioInstrumentos>
+            {
+                new UsuarioInstrumentos(usuarioAdm.Id, new List<string>{ usuarioAdm.Instrumentos.FirstOrDefault().InstrumentoId }),
+                new UsuarioInstrumentos(usuarioAdm2.Id, new List<string>{ usuarioAdm.Instrumentos.FirstOrDefault().InstrumentoId }),
+            };
+
             _ministerio1.CriarEscala(usuarioAdm.Id
                 , DateTime.Now.AddDays(3)
-                , new[] { usuarioAdm.Id, usuarioAdm2.Id }
+                , usuarioInstrumentos
                 , new[] { _musica1.Id, _musica2.Id });
+
+            usuarioInstrumentos = new List<UsuarioInstrumentos>
+            {
+                new UsuarioInstrumentos(usuarioAdm.Id, new List<string>{ usuarioAdm.Instrumentos.LastOrDefault().InstrumentoId }),
+                new UsuarioInstrumentos(usuarioAdm2.Id, new List<string>{ usuarioAdm.Instrumentos.FirstOrDefault().InstrumentoId }),
+                new UsuarioInstrumentos(usuario.Id, new List<string>
+                {
+                    usuarioAdm.Instrumentos.FirstOrDefault().InstrumentoId,
+                    usuarioAdm.Instrumentos.LastOrDefault().InstrumentoId
+                }),
+            };
+
             _ministerio1.CriarEscala(usuarioAdm.Id
                 , DateTime.Now.AddDays(7)
-                , new[] { usuarioAdm.Id, usuarioAdm2.Id, usuario.Id }
+                , usuarioInstrumentos
                 , new[] { _musica2.Id });
+
+            usuarioInstrumentos = new List<UsuarioInstrumentos>
+            {
+                new UsuarioInstrumentos(usuarioAdm2.Id, new List<string>{ usuarioAdm.Instrumentos.FirstOrDefault().InstrumentoId })
+            };
+
             _ministerio1.CriarEscala(usuarioAdm2.Id
                 , DateTime.Now.AddDays(6)
-                , new[] { usuarioAdm2.Id }
+                , usuarioInstrumentos
                 , null);
 
             return _ministerio1;
@@ -204,8 +230,19 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
             var usuario = CriarUsuario3();
             _ministerio2.AdicionarUsuario(usuario);
 
+            var usuarioInstrumentos = new List<UsuarioInstrumentos>
+            {
+                new UsuarioInstrumentos(usuarioAdm.Id, new List<string>
+                {
+                    usuarioAdm.Instrumentos.FirstOrDefault().InstrumentoId,
+                    usuarioAdm.Instrumentos.LastOrDefault().InstrumentoId
+                })
+            };
+
             _ministerio2.CriarEscala(usuarioAdm.Id
-                , DateTime.Now.AddDays(3), new[] { usuarioAdm.Id, usuario.Id }, null);
+                , DateTime.Now.AddDays(3)
+                , usuarioInstrumentos
+                , null);
 
             return _ministerio2;
         }
@@ -219,8 +256,16 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
             var usuario = CriarUsuario1();
             _ministerio3.AdicionarUsuario(usuario);
 
+            var usuarioInstrumentos = new List<UsuarioInstrumentos>
+            {
+                new UsuarioInstrumentos(usuarioAdm.Id, new List<string>
+                {
+                    usuarioAdm.Instrumentos.LastOrDefault().InstrumentoId
+                })
+            };
+
             _ministerio3.CriarEscala(usuarioAdm.Id
-                , DateTime.Now.AddDays(10), new[] { usuario.Id }, null);
+                , DateTime.Now.AddDays(10), usuarioInstrumentos, null);
 
             return _ministerio3;
         }

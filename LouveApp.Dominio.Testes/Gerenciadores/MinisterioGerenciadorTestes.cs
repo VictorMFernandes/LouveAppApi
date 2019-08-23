@@ -16,7 +16,8 @@ namespace LouveApp.Dominio.Testes.Gerenciadores
 
         public MinisterioGerenciadorTestes()
         {
-            _gerenciador = new MinisterioGerenciador(new MinisterioRepositorioFalso(), new UsuarioRepositorioFalso());
+            _gerenciador = new MinisterioGerenciador(new MinisterioRepositorioFalso()
+                , new UsuarioRepositorioFalso(), new PushNotificationServicoFalso());
 
             _registrarMinisterioComandoValido = ExemplosComando.RegistrarMinisterio;
             _registrarMinisterioComandoInvalido = new RegistrarMinisterioComando(string.Empty);

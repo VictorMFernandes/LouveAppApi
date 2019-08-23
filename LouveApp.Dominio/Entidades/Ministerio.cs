@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentValidator;
 using LouveApp.Compartilhado.Padroes;
+using LouveApp.Dominio.Comandos.UsuarioComandos.SubEntidade;
 
 namespace LouveApp.Dominio.Entidades
 {
@@ -145,12 +146,12 @@ namespace LouveApp.Dominio.Entidades
             return !LinkConviteAtivado;
         }
 
-        public Escala CriarEscala(string usuarioId, DateTime data, IEnumerable<string> usuariosIds, IEnumerable<string> musicasIds)
+        public Escala CriarEscala(string usuarioId, DateTime data, IEnumerable<UsuarioInstrumentos> usuariosIds, IEnumerable<string> musicasIds)
         {
             if (!Administrador(usuarioId)) return null;
 
             if (usuariosIds != null 
-                && !usuariosIds.All(usuIds => Usuarios.Select(u => u.UsuarioId).Contains(usuIds)))
+                && !usuariosIds.All(usuIds => Usuarios.Select(u => u.UsuarioId).Contains(usuIds.UsuarioId)))
                 return null;
 
             if (musicasIds != null 

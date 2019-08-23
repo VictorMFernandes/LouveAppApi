@@ -41,7 +41,7 @@ namespace LouveApp.Dominio.Gerenciadores
 
             // Realiza a ação
             var escala = ministerio.CriarEscala(comando.UsuarioLogadoId
-                , comando.Data, comando.UsuariosIds, comando.MusicasIds);
+                , comando.Data, comando.UsuariosInstrumentos, comando.MusicasIds);
 
             if (escala == null)
             {
@@ -50,9 +50,10 @@ namespace LouveApp.Dominio.Gerenciadores
 
             _ministerioRepo.Atualizar(ministerio);
 
+            var algo = escala.Usuarios.Select(ue => ue.UsuarioId);
+
             var dispositivosTokens = await _dispositivoRepo
-                                            .PegarDispositivosTokensPorUsuarioId(escala
-                                                .Usuarios.Select(ue => ue.UsuarioId).ToList());
+                                            .PegarDispositivosTokensPorUsuarioId(algo.ToList());
 
             _pushNotificationServico.NotificarIngressoEmEscala(dispositivosTokens.ToList(), escala.Data.ToString(),
                 ministerio.ToString());

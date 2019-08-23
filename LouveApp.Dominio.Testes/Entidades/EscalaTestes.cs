@@ -1,7 +1,9 @@
 ﻿using LouveApp.Dominio.Entidades;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using LouveApp.Compartilhado.Extensoes;
+using LouveApp.Dominio.Comandos.UsuarioComandos.SubEntidade;
 
 namespace LouveApp.Dominio.Testes.Entidades
 {
@@ -27,21 +29,45 @@ namespace LouveApp.Dominio.Testes.Entidades
         [TestMethod]
         public void DefineUsuariosQuandoPassadoIdsValidos()
         {
-            var usuariosIds = new[] { "idvalido1", "idvalido2", "idvalido3" };
+            var usuarioInstrumentos = new List<UsuarioInstrumentos>
+            {
+                new UsuarioInstrumentos("idvalido1", new List<string>
+                {
+                    "InstrumentoIdValido1", "InstrumentoIdValido2"
+                }),
+                new UsuarioInstrumentos("idvalido2", new List<string>
+                {
+                    "InstrumentoIdValido3", "InstrumentoIdValido2"
+                })
+            };
 
-            var escala = new Escala(DateTime.Now, usuariosIds, null);
+            var escala = new Escala(DateTime.Now, usuarioInstrumentos, null);
 
-            Assert.AreEqual(usuariosIds.Length, escala.Usuarios.Count);
+            Assert.AreEqual(usuarioInstrumentos.Count, escala.Usuarios.Count);
         }
 
         [TestMethod]
         public void NaoAdicionaUsuariosDuplicados()
         {
-            var usuariosIds = new[] { "idvalidoIgual", "idvalidoIgual", "idvalido3" };
+            var usuarioInstrumentos = new List<UsuarioInstrumentos>
+            {
+                new UsuarioInstrumentos("idIgual", new List<string>
+                {
+                    "InstrumentoIdValido1", "InstrumentoIdValido2"
+                }),
+                new UsuarioInstrumentos("idIgual", new List<string>
+                {
+                    "InstrumentoIdValido3", "InstrumentoIdValido4"
+                }),
+                new UsuarioInstrumentos("idValido3", new List<string>
+                {
+                    "InstrumentoIdValido5", "InstrumentoIdValido1"
+                })
+            };
 
-            var escala = new Escala(DateTime.Now, usuariosIds, null);
+            var escala = new Escala(DateTime.Now, usuarioInstrumentos, null);
 
-            Assert.AreEqual(usuariosIds.Length - 1, escala.Usuarios.Count);
+            Assert.AreEqual(usuarioInstrumentos.Count - 1, escala.Usuarios.Count);
         }
 
         #endregion

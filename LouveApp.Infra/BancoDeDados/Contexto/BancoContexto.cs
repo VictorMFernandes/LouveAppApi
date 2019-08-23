@@ -26,6 +26,7 @@ namespace LouveApp.Infra.BancoDeDados.Contexto
             modelBuilder.ApplyConfiguration(new UsuarioMinisterioMap());
             modelBuilder.ApplyConfiguration(new UsuarioInstrumentoMap());
             modelBuilder.ApplyConfiguration(new UsuarioEscalaMap());
+            modelBuilder.ApplyConfiguration(new UsuarioEscalaInstrumentoMap());
 
             modelBuilder.ApplyConfiguration(new DispositivoMap());
 

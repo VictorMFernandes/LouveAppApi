@@ -58,6 +58,7 @@ namespace LouveApp.Dominio.Entidades
             Ministerios = new List<UsuarioMinisterio>();
             Instrumentos = new HashSet<UsuarioInstrumento>();
             Escalas = new HashSet<UsuarioEscala>();
+            Dispositivos = new HashSet<Dispositivo>();
         }
 
         protected override void Validar()

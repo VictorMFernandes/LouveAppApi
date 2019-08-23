@@ -21,6 +21,10 @@ namespace LouveApp.Dominio.Testes.Falsos
 
         public Task<Ministerio> PegarPorId(string ministerioId) => null;
         public Task<Ministerio> PegarPorIdComMusicas(string ministerioId) => null;
+        public Task<Ministerio> PegarPorIdComUsuariosEDispositivos(string ministerioId)
+        {
+            return null;
+        }
 
         public Task<Ministerio> PegarPorLinkConvite(string linkConvite) => null;
 

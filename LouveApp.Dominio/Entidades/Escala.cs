@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using LouveApp.Compartilhado.Extensoes;
+using LouveApp.Dominio.Comandos.UsuarioComandos.SubEntidade;
 
 namespace LouveApp.Dominio.Entidades
 {
@@ -23,7 +25,7 @@ namespace LouveApp.Dominio.Entidades
 
         private Escala() { }
 
-        public Escala(DateTime data, IEnumerable<string> usuariosIds, IEnumerable<string> musicasIds)
+        public Escala(DateTime data, IEnumerable<UsuarioInstrumentos> usuariosIds, IEnumerable<string> musicasIds)
         {
             Data = data;
 
@@ -52,15 +54,16 @@ namespace LouveApp.Dominio.Entidades
 
         #endregion
 
-        private void DefinirUsuarios(IEnumerable<string> usuariosIds)
+        private void DefinirUsuarios(IEnumerable<UsuarioInstrumentos> usuariosInstrumentos)
         {
-            if (usuariosIds == null) return;
+            if (usuariosInstrumentos == null) return;
 
             Usuarios.Clear();
 
-            foreach (var usuarioId in usuariosIds.Distinct())
+            foreach (var usuarioInstrumento in usuariosInstrumentos.DistinctBy(ui => ui.UsuarioId))
             {
-                Usuarios.Add(new UsuarioEscala(usuarioId));
+                Usuarios.Add(new UsuarioEscala(usuarioInstrumento.UsuarioId
+                    , usuarioInstrumento.InstrumentosIds));
             }
         }
 

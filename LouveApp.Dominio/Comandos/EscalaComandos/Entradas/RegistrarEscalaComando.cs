@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FluentValidator;
 using LouveApp.Compartilhado.Comandos;
+using LouveApp.Dominio.Comandos.UsuarioComandos.SubEntidade;
 
 namespace LouveApp.Dominio.Comandos.EscalaComandos.Entradas
 {
@@ -10,7 +11,7 @@ namespace LouveApp.Dominio.Comandos.EscalaComandos.Entradas
         #region Propriedades Api
 
         public DateTime Data { get; set; }
-        public IEnumerable<string> UsuariosIds { get; set; }
+        public IEnumerable<UsuarioInstrumentos> UsuariosInstrumentos { get; set; }
         public IEnumerable<string> MusicasIds { get; set; }
         internal string UsuarioLogadoId { get; private set; }
         internal string MinisterioId { get; private set; }
@@ -19,10 +20,10 @@ namespace LouveApp.Dominio.Comandos.EscalaComandos.Entradas
 
         #region Construtores
 
-        public RegistrarEscalaComando(DateTime data, IEnumerable<string> usuariosIds, IEnumerable<string> musicasIds)
+        public RegistrarEscalaComando(DateTime data, IEnumerable<UsuarioInstrumentos> usuariosIds, IEnumerable<string> musicasIds)
         {
             Data = data;
-            UsuariosIds = usuariosIds;
+            UsuariosInstrumentos = usuariosIds;
             MusicasIds = musicasIds;
         }
 
