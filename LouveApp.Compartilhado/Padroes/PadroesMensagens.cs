@@ -15,6 +15,10 @@
         public const string UsuarioNaoVinculado = "Usuário não vinculado ao ministério {0}";
 
         public const string UsuarioSemPermissao = "O Usuário não tem permissão para realizar essa ação";
+        /// <summary>
+        /// {0} Nome do usuário
+        /// </summary>
+        public const string UsuarioSemDispositivos = "O usuário {0} ainda não possui dispositivos cadastrados";
 
         public const string MinisterioNaoEncontrado = "Ministério não encontrado";
         public const string LinkInvalido = "Link convite inválido";
@@ -64,11 +68,9 @@
         /// </summary>
         public const string ClassificacaoMaxTamanho = "A classificação deve conter no máximo {0} caracteres";
 
-        public const string IngressoEmMinisterioTitulo = "Novo membro no seu ministério!";
         /// <summary>
         /// {0} Nome do ingressante
-        /// {1} Nome do ministério
         /// </summary>
-        public const string IngressoEmMinisterioCorpo = "{0} acabou de ingressar no ministério {1}";
+        public const string IngressoEmMinisterioCorpo = "Dê boas vindas a {0}";
     }
 }

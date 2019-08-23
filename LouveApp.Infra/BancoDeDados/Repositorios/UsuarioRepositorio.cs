@@ -14,7 +14,6 @@ using LouveApp.Infra.BancoDeDados.Mapeamentos;
 using LouveApp.Infra.BancoDeDados.Mapeamentos.Juncao;
 using Microsoft.Data.Sqlite;
 using System;
-using System.Globalization;
 
 namespace LouveApp.Infra.BancoDeDados.Repositorios
 {

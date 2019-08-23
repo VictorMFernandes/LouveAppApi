@@ -15,11 +15,19 @@ namespace LouveApp.Infra.Servicos.PushNotification
             _mensageiro = new MensageiroFirebase("firebaseAdminKey.json", "https://www.googleapis.com/auth/firebase.messaging");
         }
 
-        public async Task NotificarIngressoEmMinisterio(string aparelhoToken, string nomeIngressante, string nomeMinisterio)
+        public void NotificarIngressoEmMinisterio(List<string> administradoresTokens, string nomeIngressante, Ministerio ministerio)
         {
-            var corpo = string.Format(PadroesMensagens.IngressoEmMinisterioCorpo, nomeIngressante, nomeMinisterio);
+            var corpo = string.Format(PadroesMensagens.IngressoEmMinisterioCorpo, nomeIngressante);
+            var data = new Dictionary<string, string>
+            {
+                {"tipo", "novo_ingressante" } ,
+                {"ministerioId", ministerio.Id }
+            };
 
-            await _mensageiro.EnviarNotificacao(aparelhoToken, PadroesMensagens.IngressoEmMinisterioTitulo, corpo);
+            foreach (var aparelhoToken in administradoresTokens)
+            {
+                _mensageiro.EnviarNotificacao(aparelhoToken, ministerio.ToString(), corpo, data);
+            }
         }
 
         public Task NotificarIngressoEmEscala(List<string> aparelhosTokens, string dataEscala, string nomeMinisterio)
@@ -27,13 +35,18 @@ namespace LouveApp.Infra.Servicos.PushNotification
             return null;
         }
 
-        public void NotificarChatMinisterio(List<string> aparelhosTokens, string mensagem, Usuario rementente, string nomeMinisterio)
+        public void NotificarChatMinisterio(List<string> aparelhosTokens, string mensagem, Usuario rementente, Ministerio ministerio)
         {
             var corpo = $"{rementente}: {mensagem}";
+            var data = new Dictionary<string, string>
+            {
+                {"tipo", "nova_mensagem_ministerio" } ,
+                {"ministerioId", ministerio.Id }
+            };
 
             foreach (var aparelhoToken in aparelhosTokens)
             {
-                _mensageiro.EnviarNotificacao(aparelhoToken, nomeMinisterio, corpo);
+                _mensageiro.EnviarNotificacao(aparelhoToken, ministerio.ToString(), corpo, data);
             }
         }
     }

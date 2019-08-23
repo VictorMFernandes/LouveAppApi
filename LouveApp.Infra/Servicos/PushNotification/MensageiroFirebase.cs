@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using FirebaseAdmin;
 using FirebaseAdmin.Messaging;
 using Google.Apis.Auth.OAuth2;
@@ -19,12 +19,12 @@ namespace LouveApp.Infra.Servicos.PushNotification
             _mensageiro = FirebaseMessaging.GetMessaging(app);
         }
 
-        public async Task EnviarNotificacao(string aparelhoToken, string titulo, string corpo)
+        public void EnviarNotificacao(string aparelhoToken, string titulo, string corpo, Dictionary<string, string> data)
         {
-            var result = await _mensageiro.SendAsync(CriarNotificacao(titulo, corpo, aparelhoToken));
+            _mensageiro.SendAsync(CriarNotificacao(aparelhoToken, titulo, corpo, data));
         }
 
-        private static Message CriarNotificacao(string aparelhoToken, string titulo, string corpo)
+        private static Message CriarNotificacao(string aparelhoToken, string titulo, string corpo, Dictionary<string, string> data)
         {
             return new Message
             {
@@ -33,7 +33,8 @@ namespace LouveApp.Infra.Servicos.PushNotification
                 {
                     Body = corpo,
                     Title = titulo
-                }
+                },
+                Data = data
             };
         }
     }

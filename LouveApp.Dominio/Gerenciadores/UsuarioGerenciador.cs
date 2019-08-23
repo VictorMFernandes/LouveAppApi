@@ -128,7 +128,14 @@ namespace LouveApp.Dominio.Gerenciadores
 
             _ministerioRepo.Atualizar(ministerio);
 
-            await _pushNotificationServico.NotificarIngressoEmMinisterio(usuario.Dispositivos.FirstOrDefault().Token, usuario.ToString(), "Nome do ministerio");
+            // Notificando administradores
+            var administradoresTokens = ministerio
+                .PegarAdministradores()
+                .SelectMany(u => u.Dispositivos)
+                .Select(d => d.Token);
+
+            _pushNotificationServico.NotificarIngressoEmMinisterio(administradoresTokens.ToList()
+                , usuario.ToString(), ministerio);
 
             return new EntrarMinisterioComandoResultado(ministerio.Id, ministerio.ToString());
         }

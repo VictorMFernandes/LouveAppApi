@@ -6,8 +6,8 @@ namespace LouveApp.Dominio.Servicos
 {
     public interface IPushNotificationServico
     {
-        Task NotificarIngressoEmMinisterio(string aparelhoToken, string nomeIngressante, string nomeMinisterio);
+        void NotificarIngressoEmMinisterio(List<string> administradoresTokens, string nomeIngressante, Ministerio ministerio);
         Task NotificarIngressoEmEscala(List<string> aparelhosTokens, string dataEscala, string nomeMinisterio);
-        void NotificarChatMinisterio(List<string> aparelhosTokens, string mensagem, Usuario rementente, string nomeMinisterio);
+        void NotificarChatMinisterio(List<string> aparelhosTokens, string mensagem, Usuario rementente, Ministerio ministerio);
     }
 }

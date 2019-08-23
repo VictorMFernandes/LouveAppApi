@@ -39,7 +39,7 @@ namespace LouveApp.Dominio.Entidades
 
         public override string ToString()
         {
-            return Data.ToString();
+            return Data.ToString(CultureInfo.InvariantCulture);
         }
 
         protected override void InicializarColecoes()
