@@ -1,14 +1,15 @@
-﻿using LouveApp.Dominio.Comandos.AutenticacaoComandos.Entradas;
+﻿using LouveApp.Compartilhado.Entidades;
+using LouveApp.Compartilhado.Transacoes;
+using LouveApp.Dominio.Comandos.AutenticacaoComandos.Entradas;
 using LouveApp.Dominio.Comandos.AutenticacaoComandos.Saidas;
 using LouveApp.Dominio.Gerenciadores;
-using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace LouveApp.Api.Controllers
 {
-    public class AutenticacaoController : ControladorBase
+    public class AutenticacaoController : ControladorApi
     {
         private readonly AutenticacaoGerenciador _gerenciador;
 

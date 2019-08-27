@@ -1,6 +1,5 @@
 ﻿using LouveApp.Dominio.Comandos.MinisterioComandos.Entradas;
 using LouveApp.Dominio.Gerenciadores;
-using LouveApp.Dominio.Sistema.Exemplos;
 using LouveApp.Dominio.Testes.Falsos;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -19,7 +18,7 @@ namespace LouveApp.Dominio.Testes.Gerenciadores
             _gerenciador = new MinisterioGerenciador(new MinisterioRepositorioFalso()
                 , new UsuarioRepositorioFalso(), new PushNotificationServicoFalso());
 
-            _registrarMinisterioComandoValido = ExemplosComando.RegistrarMinisterio;
+            _registrarMinisterioComandoValido = new RegistrarMinisterioComando("Nome Válido");
             _registrarMinisterioComandoInvalido = new RegistrarMinisterioComando(string.Empty);
         }
 

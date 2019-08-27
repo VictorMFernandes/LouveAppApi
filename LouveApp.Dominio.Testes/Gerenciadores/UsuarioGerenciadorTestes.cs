@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-using LouveApp.Dominio.Comandos.UsuarioComandos.Entradas;
+﻿using LouveApp.Dominio.Comandos.UsuarioComandos.Entradas;
 using LouveApp.Dominio.Gerenciadores;
-using LouveApp.Dominio.Sistema.Exemplos;
 using LouveApp.Dominio.Testes.Falsos;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
 
 namespace LouveApp.Dominio.Testes.Gerenciadores
 {
@@ -20,7 +19,7 @@ namespace LouveApp.Dominio.Testes.Gerenciadores
             _gerenciador = new UsuarioGerenciador(new UsuarioRepositorioFalso()
                 , new MinisterioRepositorioFalso(), new InstrumentoRepositorioFalso(), new EmailServicoFalso(), new PushNotificationServicoFalso());
 
-            _registrarUsuarioComandoValido = ExemplosComando.RegistrarUsuario;
+            _registrarUsuarioComandoValido = new RegistrarUsuarioComando("Primeiro Sobrenome", "email@email.com", "senha", "senha");
             _registrarUsuarioComandoInvalido = new RegistrarUsuarioComando(
                 "Primeiro Sobrenome", "email", "senha", "senha");
         }

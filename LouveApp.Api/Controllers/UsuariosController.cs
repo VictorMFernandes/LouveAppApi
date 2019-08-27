@@ -1,20 +1,21 @@
 ﻿using LouveApp.Dominio.Comandos.UsuarioComandos.Entradas;
 using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
 using LouveApp.Dominio.Gerenciadores;
-using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using LouveApp.Dominio.Repositorios;
+using LouveApp.Compartilhado.Transacoes;
+using LouveApp.Compartilhado.Entidades;
 
 namespace LouveApp.Api.Controllers
 {
-    public class UsuariosController : ControladorBase
+    public class UsuariosController : ControladorApi
     {
         private readonly UsuarioGerenciador _gerenciador;
         private readonly IUsuarioRepositorio _usuarioRepo;
 
-        public UsuariosController(UsuarioGerenciador gerenciador, IUsuarioRepositorio usuarioRepo,IUow uow)
+        public UsuariosController(UsuarioGerenciador gerenciador, IUsuarioRepositorio usuarioRepo, IUow uow)
             : base(uow)
         {
             _gerenciador = gerenciador;

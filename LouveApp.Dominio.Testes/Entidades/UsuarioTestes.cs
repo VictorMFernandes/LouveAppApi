@@ -1,6 +1,6 @@
 ﻿using LouveApp.Dominio.Entidades.Juncao;
 using LouveApp.Dominio.ValueObjects;
-using LouveApp.Infra.BancoDeDados.Contexto;
+using LouveApp.Dal.Contexto;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using LouveApp.Compartilhado.Extensoes;

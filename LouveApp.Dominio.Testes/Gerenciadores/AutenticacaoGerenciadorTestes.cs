@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using LouveApp.Compartilhado.Padroes;
 using LouveApp.Dominio.Comandos.AutenticacaoComandos.Entradas;
 using LouveApp.Dominio.Gerenciadores;
-using LouveApp.Dominio.Sistema.Exemplos;
 using LouveApp.Dominio.Testes.Falsos;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
 
 namespace LouveApp.Dominio.Testes.Gerenciadores
 {
@@ -19,7 +19,7 @@ namespace LouveApp.Dominio.Testes.Gerenciadores
         {
             _gerenciador = new AutenticacaoGerenciador(new UsuarioRepositorioFalso(), new ConfigurationFalso());
 
-            _autenticarUsuarioComandoValido = ExemplosComando.AutenticarUsuario;
+            _autenticarUsuarioComandoValido = new AutenticarUsuarioComando(PadroesString.UsuarioEmail1, PadroesString.SenhaValida);
             _autenticarUsuarioComandoInvalido = new AutenticarUsuarioComando(string.Empty, "senha");
         }
 

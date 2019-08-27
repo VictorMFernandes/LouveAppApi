@@ -1,9 +1,6 @@
 ﻿using LouveApp.Api.Extensoes;
 using LouveApp.Api.Middlewares;
-using LouveApp.Compartilhado.Extensoes;
-using LouveApp.Dominio.Enums;
 using LouveApp.Dominio.Servicos;
-using LouveApp.Infra.BancoDeDados.Contexto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,8 +10,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using LouveApp.Dominio.Sistema;
 using Newtonsoft.Json;
-using LouveApp.Infra.Servicos.Email.Extensoes;
-using LouveApp.Infra.Servicos.PushNotification.Extensoes;
+using LouveApp.Dal.Servicos.PushNotification.Extensoes;
+using LouveApp.Documentacao.Integracao;
+using System.Reflection;
+using LouveApp.Servicos.Fotos.Integracao;
+using LouveApp.Dal.Contexto;
+using LouveApp.Servicos.Email.Integracao;
+using LouveApp.Dal.Integracao;
 
 namespace LouveApp.Api
 {
@@ -22,27 +24,15 @@ namespace LouveApp.Api
     {
         public IConfiguration Configuration { get; set; }
 
-        private readonly string _nomeAplicacao;
-        private readonly string _versao;
-
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
-
-            _nomeAplicacao = Configuration
-                            .GetSection(EConfigSecao.NomeAplicacao.EnumTextos().Nome)
-                            .Value;
-            _versao = Configuration
-                      .GetSection(EConfigSecao.Versao.EnumTextos().Nome)
-                      .Value;
+            Configuracoes.InicializarConfiguracoes(Configuration, env.IsDevelopment());
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            Configuracoes.ConnString = Configuration.GetConnectionString(EConfigSecao.ConexaoBd.EnumTextos().Nome);
-            services.AddDbContextPool<BancoContexto>(options =>
-                options.UseSqlite(Configuracoes.ConnString)
-            );
+            services.AdicionarBancoContexto();
 
             services.AddMvc(config =>
             {
@@ -62,25 +52,22 @@ namespace LouveApp.Api
             services.ConfigurarAutenticacao(Configuration);
 
             services.AddResponseCompression();
-
+            services.ConfigurarDal();
             services.ConfigurarIoC();
             services.ConfigurarServicoEmail(Configuration);
+            services.ConfigurarServicoFotos(Configuration);
             services.ConfigurarPushNotification();
+            services.ConfigurarComportamentosApi();
 
-            services.ConfigurarSwagger(_nomeAplicacao, _versao);
+            services.ConfigurarDocumentacao(Assembly.GetExecutingAssembly().GetName().Name);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ISemeadorBd semeadorBd)
+        public void Configure(IApplicationBuilder app, ISemeadorBd semeadorBd)
         {
-            if (env.IsDevelopment())
+            if (Configuracoes.EmDesenvolvimento)
                 app.UseDeveloperExceptionPage();
 
-            app.UseSwagger();
-            app.UseSwaggerUI(x =>
-            {
-                x.SwaggerEndpoint($"/swagger/{_versao}/swagger.json", $"{_nomeAplicacao} API {_versao}");
-                x.RoutePrefix = string.Empty;
-            });
+            app.UsarDocumentacao();
 
             app.UseCors(x =>
             {

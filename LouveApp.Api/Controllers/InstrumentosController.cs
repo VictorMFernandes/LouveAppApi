@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
-using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using LouveApp.Dominio.Repositorios;
 using LouveApp.Dominio.Comandos.InstrumentoComandos.Saidas;
+using LouveApp.Compartilhado.Transacoes;
+using LouveApp.Compartilhado.Entidades;
 
 namespace LouveApp.Api.Controllers
 {
-    public class InstrumentosController : ControladorBase
+    public class InstrumentosController : ControladorApi
     {
         private readonly IInstrumentoRepositorio _instrumentoRepo;
 

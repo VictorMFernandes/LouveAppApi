@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using LouveApp.Compartilhado.Entidades;
+using LouveApp.Compartilhado.Transacoes;
 using LouveApp.Dominio.Comandos.NotificacaoComandos.Entradas;
-using LouveApp.Dominio.Comandos.UsuarioComandos.Entradas;
 using LouveApp.Dominio.Gerenciadores;
-using LouveApp.Dominio.Servicos;
-using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LouveApp.Api.Controllers
 {
-    public class NotificacoesController : ControladorBase
+    public class NotificacoesController : ControladorApi
     {
         private readonly MinisterioGerenciador _ministerioGerenciador;
         private readonly EscalaGerenciador _escalaGerenciador;

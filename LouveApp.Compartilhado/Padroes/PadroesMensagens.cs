@@ -72,5 +72,7 @@
         /// {0} Nome do ingressante
         /// </summary>
         public const string IngressoEmMinisterioCorpo = "Dê boas vindas a {0}";
+
+        public const string ParametrosInvalidos = "Os parâmetros enviados não são válidos";
     }
 }

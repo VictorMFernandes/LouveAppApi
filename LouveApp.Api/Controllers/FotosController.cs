@@ -1,13 +1,14 @@
 ﻿using LouveApp.Dominio.Comandos.FotoComandos.Entradas;
 using LouveApp.Dominio.Comandos.FotoComandos.Saidas;
 using LouveApp.Dominio.Gerenciadores;
-using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using LouveApp.Compartilhado.Entidades;
+using LouveApp.Compartilhado.Transacoes;
 
 namespace LouveApp.Api.Controllers
 {
-    public class FotosController : ControladorBase
+    public class FotosController : ControladorApi
     {
         private readonly FotoGerenciador _gerenciador;
 

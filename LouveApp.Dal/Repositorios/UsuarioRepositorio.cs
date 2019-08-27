@@ -1,0 +1,125 @@
+﻿using System.Linq;
+using LouveApp.Dominio.Entidades;
+using LouveApp.Dominio.Repositorios;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using Dapper;
+using LouveApp.Dominio.Comandos.AutenticacaoComandos.Saidas;
+using LouveApp.Dominio.Comandos.InstrumentoComandos.Saidas;
+using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
+using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
+using LouveApp.Dominio.Sistema;
+using LouveApp.Dal.Mapeamentos;
+using LouveApp.Dal.Mapeamentos.Juncao;
+using System;
+using LouveApp.Dal.Contexto;
+
+namespace LouveApp.Dal.Repositorios
+{
+    public class UsuarioRepositorio : IUsuarioRepositorio
+    {
+        private readonly BancoContexto _contexto;
+
+        public UsuarioRepositorio(BancoContexto contexto)
+        {
+            _contexto = contexto;
+        }
+
+        public async Task<Usuario> PegarPorId(string id)
+        {
+            return await _contexto
+                        .Usuarios
+                        .Include(u => u.Instrumentos)
+                        .ThenInclude(ui => ui.Instrumento)
+                        .Include(u => u.Dispositivos)
+                        .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<PegarUsuarioComandoResultado> PegarPorIdSemRastrear(string id)
+        {
+            var query = $"SELECT Id, Nome, Email, FotoUrl, DtCriacao FROM {UsuarioMap.Tabela} " +
+                        $"WHERE Id = @{nameof(id)}";
+
+            using (var du = new DapperUtil())
+            {
+                var resultado = await du.Conexao.QueryFirstOrDefaultAsync<PegarUsuarioComandoResultado>(query, new { id });
+
+                if (resultado == null) return null;
+
+                query = $"SELECT i.Id, i.Nome FROM {InstrumentoMap.Tabela} AS i " +
+                        $"INNER JOIN {UsuarioInstrumentoMap.Tabela} AS ui ON ui.InstrumentoId = i.Id " +
+                        $"WHERE ui.UsuarioId = '{resultado.Id}'";
+
+                resultado.Instrumentos = await du.Conexao.QueryAsync<PegarInstrumentosComandoResultado>(query);
+
+                return resultado;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="senhaEncriptada"></param>
+        /// <returns></returns>
+        public async Task<AutenticarUsuarioComandoResultado> PegarAutenticado(string login, string senhaEncriptada)
+        {
+            var query = $"SELECT Id, Nome, Email, FotoUrl, Senha FROM {UsuarioMap.Tabela} " +
+                        $"WHERE Login = @{nameof(login)} AND Senha = @{nameof(senhaEncriptada)}";
+
+            using (var du = new DapperUtil())
+            {
+                var resultado = await du.Conexao.QueryFirstOrDefaultAsync<AutenticarUsuarioComandoResultado>(query, new
+                {
+                    login,
+                    senhaEncriptada
+                });
+
+                if (resultado == null) return null;
+
+                // Atualiza data da última atividade
+                query = $"UPDATE {UsuarioMap.Tabela} SET DtUltimaAtividade = @dtUltimaAtividade " +
+                        $"WHERE Id = '{resultado.Id}'";
+                await du.Conexao.ExecuteAsync(query, new { dtUltimaAtividade = DateTime.Now });
+
+                query = $"SELECT m.Id, m.Nome, m.FotoUrl, um.Administrador FROM {MinisterioMap.Tabela} AS m " +
+                        $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON m.Id = um.MinisterioId " +
+                        $"WHERE um.UsuarioId = '{resultado.Id}'";
+
+                resultado.Ministerios = await du.Conexao.QueryAsync<PegarMinisterioComandoResultado>(query);
+
+                return resultado;
+            }
+        }
+
+        public void Criar(Usuario usuario)
+        {
+            _contexto.Usuarios.Add(usuario);
+        }
+
+        public void Atualizar(Usuario usuario)
+        {
+            _contexto.Entry(usuario).State = EntityState.Modified;
+        }
+
+        public async Task<bool> IdExiste(string id)
+        {
+            var query = $"SELECT 1 FROM {UsuarioMap.Tabela} " +
+                        $"WHERE Id = @{nameof(id)}";
+
+            _contexto.Database.OpenConnection();
+            return (await _contexto.Database.Tran.GetDbConnection().QueryAsync<object>(query, new { id })).Any();
+        }
+
+        public async Task<bool> EmailExiste(string email)
+        {
+            var query = $"SELECT 1 FROM {UsuarioMap.Tabela} " +
+                        $"WHERE Email = @{nameof(email)}";
+
+            using (var du = new DapperUtil())
+            {
+                return (await du.Conexao.QueryAsync<object>(query, new { email })).Any();
+            }
+        }
+    }
+}

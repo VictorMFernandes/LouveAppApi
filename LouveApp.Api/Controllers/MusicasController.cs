@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using LouveApp.Dominio.Gerenciadores;
-using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using LouveApp.Dominio.Repositorios;
 using LouveApp.Dominio.Comandos.MusicaComandos.Entradas;
 using LouveApp.Dominio.Comandos.MusicaComandos.Saidas;
+using LouveApp.Compartilhado.Transacoes;
+using LouveApp.Compartilhado.Entidades;
 
 namespace LouveApp.Api.Controllers
 {
-    public class MusicasController : ControladorBase
+    public class MusicasController : ControladorApi
     {
         private readonly MusicaGerenciador _gerenciador;
         private readonly IMusicaRepositorio _musicaRepo;

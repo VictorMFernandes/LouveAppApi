@@ -1,11 +1,11 @@
-﻿using LouveApp.Compartilhado.Padroes;
+﻿using LouveApp.Compartilhado.Extensoes;
+using LouveApp.Compartilhado.Padroes;
+using LouveApp.Dal.Contexto;
 using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.ValueObjects;
-using LouveApp.Infra.BancoDeDados.Contexto;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using LouveApp.Compartilhado.Extensoes;
 
 namespace LouveApp.Dominio.Testes.Entidades
 {

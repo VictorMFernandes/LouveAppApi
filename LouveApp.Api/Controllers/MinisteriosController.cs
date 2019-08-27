@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using LouveApp.Dominio.Gerenciadores;
-using LouveApp.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using LouveApp.Dominio.Comandos.MinisterioComandos.Entradas;
 using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
 using LouveApp.Dominio.Repositorios;
 using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
+using LouveApp.Compartilhado.Transacoes;
+using LouveApp.Compartilhado.Entidades;
 
 namespace LouveApp.Api.Controllers
 {
-    public class MinisteriosController : ControladorBase
+    public class MinisteriosController : ControladorApi
     {
         private readonly MinisterioGerenciador _gerenciador;
         private readonly IMinisterioRepositorio _ministerioRepo;
