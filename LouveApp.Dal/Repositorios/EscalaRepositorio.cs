@@ -10,7 +10,6 @@ using LouveApp.Dominio.Comandos.MusicaComandos.Saidas;
 using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
 using LouveApp.Dominio.Repositorios;
 using LouveApp.Dominio.Sistema;
-using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using LouveApp.Dominio.Repositorios;
@@ -8,8 +10,15 @@ using Microsoft.Data.Sqlite;
 
 namespace LouveApp.Dal.Repositorios
 {
-    public class DispositivoRepositorio:IDispositivoRepositorio
+    public class DispositivoRepositorio : IDispositivoRepositorio
     {
+        private readonly IDbConnection _conexao;
+
+        public DispositivoRepositorio(IDbConnection conexao)
+        {
+            _conexao = conexao;
+        }
+
         public async Task<IEnumerable<string>> PegarDispositivosTokensPorUsuarioId(List<string> usuariosIds)
         {
             var queryUsuariosIds = string.Empty;
@@ -27,11 +36,7 @@ namespace LouveApp.Dal.Repositorios
             var query = $"SELECT Token FROM {DispositivoMap.Tabela} " +
                         $"WHERE UsuarioId = {queryUsuariosIds}";
 
-            using (var conn = new SqliteConnection(Configuracoes.ConnString))
-            {
-                conn.Open();
-                return await conn.QueryAsync<string>(query);
-            }
+            return await _conexao.QueryAsync<string>(query);
         }
     }
 }
