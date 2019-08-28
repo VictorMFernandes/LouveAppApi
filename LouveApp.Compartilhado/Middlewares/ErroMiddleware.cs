@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using LouveApp.Compartilhado.Entidades;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace LouveApp.Api.Middlewares
+namespace LouveApp.Compartilhado.Middlewares
 {
-    internal class ErroMiddleware
+    public class ErroMiddleware
     {
         private readonly RequestDelegate _next;
 
@@ -32,18 +33,14 @@ namespace LouveApp.Api.Middlewares
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            var resultado = JsonConvert.SerializeObject(new
+            var resultado = new RetornoApi(false, null, new
             {
-                sucesso = false,
-                erros = new
-                {
-                    mensagem = exception.Message,
-                    erroInterno = exception.InnerException?.Message,
-                    stackTrace = exception.StackTrace
-                }
+                mensagem = exception.Message,
+                erroInterno = exception.InnerException?.Message,
+                stackTrace = exception.StackTrace
             });
 
-            return context.Response.WriteAsync(resultado);
+            return context.Response.WriteAsync(resultado.ToString());
         }
     }
 }
