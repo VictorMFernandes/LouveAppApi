@@ -12,7 +12,6 @@ using System.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
-using System;
 
 namespace LouveApp.Dal.Integracao
 {
@@ -55,19 +54,12 @@ namespace LouveApp.Dal.Integracao
             {
                 var serviceProvider = scope.ServiceProvider;
 
-                try
+                Task.Run(async () =>
                 {
-                    Task.Run(async () =>
-                    {
-                        var contexto = serviceProvider.GetRequiredService<BancoContexto>();
-                        contexto.Database.Migrate();
-                        await serviceProvider.GetRequiredService<ISemeadorBd>().SemearBancoDeDados();
-                    }).Wait();
-                }
-                catch (Exception ex)
-                {
-                    var logarErro = ex;
-                }
+                    var contexto = serviceProvider.GetRequiredService<BancoContexto>();
+                    contexto.Database.Migrate();
+                    await serviceProvider.GetRequiredService<ISemeadorBd>().SemearBancoDeDados();
+                }).Wait();
             }
             return host;
         }
