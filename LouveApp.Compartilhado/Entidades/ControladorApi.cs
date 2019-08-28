@@ -37,11 +37,7 @@ namespace LouveApp.Compartilhado.Entidades
             {
                 return StatusCode(
                     (int)resultadoPadrao.CodigoHttp
-                    , new
-                    {
-                        resultadoPadrao.Sucesso,
-                        Resultado = (object)resultadoPadrao.Resultado
-                    });
+                    , new RetornoApi(resultadoPadrao.Sucesso, resultadoPadrao.Resultado, null));
             }
 
             var notificacoesEnumeradas = notificacoes as Notification[] ?? notificacoes.ToArray();
@@ -49,19 +45,11 @@ namespace LouveApp.Compartilhado.Entidades
             if (!notificacoesEnumeradas.Any())
             {
                 await _uow.Salvar();
-                return Ok(new
-                {
-                    Sucesso = true,
-                    Resultado = resultado
-                });
+                return Ok(new RetornoApi(true, resultado, null));
             }
             else
             {
-                return BadRequest(new
-                {
-                    Sucesso = false,
-                    Erros = notificacoesEnumeradas
-                });
+                return BadRequest(new RetornoApi(false, null, notificacoesEnumeradas));
             }
         }
     }

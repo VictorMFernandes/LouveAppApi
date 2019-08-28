@@ -1,19 +1,19 @@
 ﻿using LouveApp.Api.Extensoes;
-using LouveApp.Api.Middlewares;
+using LouveApp.Dal.Integracao;
+using LouveApp.Dal.Servicos.PushNotification.Extensoes;
+using LouveApp.Documentacao.Integracao;
+using LouveApp.Dominio.Sistema;
+using LouveApp.Servicos.Email.Integracao;
+using LouveApp.Servicos.Fotos.Integracao;
+using LouveApp.Compartilhado.Middlewares;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using LouveApp.Dominio.Sistema;
 using Newtonsoft.Json;
-using LouveApp.Dal.Servicos.PushNotification.Extensoes;
-using LouveApp.Documentacao.Integracao;
 using System.Reflection;
-using LouveApp.Servicos.Fotos.Integracao;
-using LouveApp.Servicos.Email.Integracao;
-using LouveApp.Dal.Integracao;
 
 namespace LouveApp.Api
 {
