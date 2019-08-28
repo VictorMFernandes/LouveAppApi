@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using LouveApp.Dal.Integracao;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace LouveApp.Api
@@ -7,7 +8,8 @@ namespace LouveApp.Api
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            CreateWebHostBuilder(args)
+                .Build().Seed().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

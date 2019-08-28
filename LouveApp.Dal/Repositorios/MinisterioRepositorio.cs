@@ -7,10 +7,9 @@ using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
 using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
 using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.Repositorios;
-using LouveApp.Dominio.Sistema;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace LouveApp.Dal.Repositorios
@@ -18,10 +17,12 @@ namespace LouveApp.Dal.Repositorios
     public class MinisterioRepositorio : IMinisterioRepositorio
     {
         private readonly BancoContexto _contexto;
+        private readonly IDbConnection _conexao;
 
-        public MinisterioRepositorio(BancoContexto contexto)
+        public MinisterioRepositorio(BancoContexto contexto, IDbConnection conexao)
         {
             _contexto = contexto;
+            _conexao = conexao;
         }
 
         public async Task<Ministerio> PegarPorId(string ministerioId)
@@ -69,11 +70,7 @@ namespace LouveApp.Dal.Repositorios
                         $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON m.Id = um.MinisterioId " +
                         $"WHERE um.UsuarioId = @{nameof(id)}";
 
-            using (var conn = new SqliteConnection(Configuracoes.ConnString))
-            {
-                conn.Open();
-                return await conn.QueryAsync<PegarMinisterioComandoResultado>(query, new { id });
-            }
+            return await _conexao.QueryAsync<PegarMinisterioComandoResultado>(query, new { id });
         }
 
         public void Criar(Ministerio ministerio)
@@ -96,30 +93,22 @@ namespace LouveApp.Dal.Repositorios
             var query = $"SELECT Administrador FROM {UsuarioMinisterioMap.Tabela} " +
                         $"WHERE UsuarioId = @{nameof(usuarioId)} AND MinisterioId = @{nameof(ministerioId)}";
 
-            using (var conn = new SqliteConnection(Configuracoes.ConnString))
-            {
-                conn.Open();
-                return await conn.ExecuteScalarAsync<bool>(query, new { usuarioId, ministerioId });
-            }
+            return await _conexao.ExecuteScalarAsync<bool>(query, new { usuarioId, ministerioId });
         }
 
         public async Task<int> Contar()
         {
-            using (var conn = new SqliteConnection(Configuracoes.ConnString))
-            {
-                conn.Open();
-                return await conn.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM {MinisterioMap.Tabela}");
-            }
+            return await _conexao.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM {MinisterioMap.Tabela}");
         }
 
         public async Task<IEnumerable<PegarUsuarioComandoResultado>> PegarUsuarios(string ministerioId)
         {
-            var query = $"SELECT u.Id, u.Nome, u.Email, u.FotoUrl, u.DtCriacao FROM {UsuarioMap.Tabela} AS u "+
+            var query = $"SELECT u.Id, u.Nome, u.Email, u.FotoUrl, u.DtCriacao FROM {UsuarioMap.Tabela} AS u " +
                         $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON um.UsuarioId = u.Id " +
                         $"INNER JOIN {MinisterioMap.Tabela} AS m ON um.MinisterioId = m.Id " +
                         $"WHERE m.Id = @{nameof(ministerioId)}";
 
-            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            using (var conn = _conexao)
             {
                 conn.Open();
 

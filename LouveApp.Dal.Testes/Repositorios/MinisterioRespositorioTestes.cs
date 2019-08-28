@@ -29,7 +29,7 @@ namespace LouveApp.Dal.Testes.Repositorios
         [TestMethod]
         public async Task RetornaMinisterioQuandoIdExiste()
         {
-            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
+            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.PegarPorId(PadroesString.MinisterioId1);
             Assert.IsNotNull(retorno);
@@ -38,7 +38,7 @@ namespace LouveApp.Dal.Testes.Repositorios
         [TestMethod]
         public async Task RetornaNullQuandoIdNaoExiste()
         {
-            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
+            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.PegarPorId(Guid.NewGuid().ToString());
             Assert.IsNull(retorno);
@@ -51,7 +51,7 @@ namespace LouveApp.Dal.Testes.Repositorios
         [TestMethod]
         public async Task RetornaMinisterioQuandoLinkValido()
         {
-            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
+            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             // Ativa o link para testar
             var ministerio = await repositorio.PegarPorId(PadroesString.MinisterioId1);
@@ -72,7 +72,7 @@ namespace LouveApp.Dal.Testes.Repositorios
         [TestMethod]
         public async Task RetornaMinisterioComUsuariosQuandoLinkValido()
         {
-            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
+            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             // Ativa o link para testar
             var ministerio = await repositorio.PegarPorId(PadroesString.MinisterioId1);
@@ -94,7 +94,7 @@ namespace LouveApp.Dal.Testes.Repositorios
         [TestMethod]
         public async Task RetornaNullQuandoLinkInvalido()
         {
-            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
+            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.PegarPorLinkConvite(Guid.NewGuid().ToString("N"));
             Assert.IsNull(retorno);
@@ -107,7 +107,7 @@ namespace LouveApp.Dal.Testes.Repositorios
         [TestMethod]
         public async Task RetornaMinisterioQuandoIdUsuarioValido()
         {
-            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
+            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.PegarPorUsuario(PadroesString.UsuarioId1);
             Assert.AreNotEqual(0, retorno.Count());
@@ -116,7 +116,7 @@ namespace LouveApp.Dal.Testes.Repositorios
         [TestMethod]
         public async Task RetornaNullQuandoIdUsuarioInvalido()
         {
-            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
+            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.PegarPorUsuario(Guid.NewGuid().ToString("N"));
             Assert.AreEqual(0, retorno.Count());
@@ -129,11 +129,12 @@ namespace LouveApp.Dal.Testes.Repositorios
         [TestMethod]
         public async Task RemoveMinisterioQuandoMinisterioValido()
         {
-            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
+            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var ministerio = await repositorio.PegarPorId(PadroesString.MinisterioId1);
 
             repositorio.Remover(ministerio);
+
             await BancoContextoFalso.St().SaveChangesAsync();
 
             var ministerioDeletado = await repositorio.PegarPorId(PadroesString.MinisterioId1);
@@ -150,7 +151,7 @@ namespace LouveApp.Dal.Testes.Repositorios
         [TestMethod]
         public async Task RetornaTrueQuandoUsuarioAdministrador()
         {
-            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
+            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var eAdministrador = await repositorio.EAdministrador(PadroesString.UsuarioId1, PadroesString.MinisterioId1);
 
@@ -160,7 +161,7 @@ namespace LouveApp.Dal.Testes.Repositorios
         [TestMethod]
         public async Task RetornaFalseQuandoUsuarioNaoEAdministrador()
         {
-            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
+            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var ministerio = await repositorio.PegarPorId(PadroesString.MinisterioId1);
             ministerio.AdicionarUsuario(_usuarioNovo);
@@ -177,7 +178,7 @@ namespace LouveApp.Dal.Testes.Repositorios
         [TestMethod]
         public async Task RetornaFalseQuandoIdInvalidoEAdministrador()
         {
-            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
+            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var eAdministrador = await repositorio.EAdministrador(Guid.NewGuid().ToString("N"), PadroesString.MinisterioId1);
 
@@ -191,7 +192,7 @@ namespace LouveApp.Dal.Testes.Repositorios
         [TestMethod]
         public async Task Retornar3QuandoContarMinisterios()
         {
-            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St());
+            var repositorio = new MinisterioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             Assert.AreEqual(3, await repositorio.Contar());
         }

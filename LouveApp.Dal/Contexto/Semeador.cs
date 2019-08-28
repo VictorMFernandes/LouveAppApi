@@ -51,7 +51,7 @@ namespace LouveApp.Dal.Contexto
             _uow = uow;
         }
 
-        public async void SemearBancoDeDados()
+        public async Task SemearBancoDeDados()
         {
             if (await _usuarioRepo.IdExiste(PadroesString.UsuarioId1))
                 return;

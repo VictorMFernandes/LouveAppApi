@@ -1,7 +1,9 @@
-﻿namespace LouveApp.Dominio.Servicos
+﻿using System.Threading.Tasks;
+
+namespace LouveApp.Dominio.Servicos
 {
     public interface ISemeadorBd
     {
-        void SemearBancoDeDados();
+        Task SemearBancoDeDados();
     }
 }

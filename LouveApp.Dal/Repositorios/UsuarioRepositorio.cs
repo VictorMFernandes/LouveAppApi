@@ -8,21 +8,23 @@ using LouveApp.Dominio.Comandos.AutenticacaoComandos.Saidas;
 using LouveApp.Dominio.Comandos.InstrumentoComandos.Saidas;
 using LouveApp.Dominio.Comandos.MinisterioComandos.Saidas;
 using LouveApp.Dominio.Comandos.UsuarioComandos.Saidas;
-using LouveApp.Dominio.Sistema;
 using LouveApp.Dal.Mapeamentos;
 using LouveApp.Dal.Mapeamentos.Juncao;
 using System;
 using LouveApp.Dal.Contexto;
+using System.Data;
 
 namespace LouveApp.Dal.Repositorios
 {
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
         private readonly BancoContexto _contexto;
+        private readonly IDbConnection _conexao;
 
-        public UsuarioRepositorio(BancoContexto contexto)
+        public UsuarioRepositorio(BancoContexto contexto, IDbConnection conexao)
         {
             _contexto = contexto;
+            _conexao = conexao;
         }
 
         public async Task<Usuario> PegarPorId(string id)
@@ -40,9 +42,11 @@ namespace LouveApp.Dal.Repositorios
             var query = $"SELECT Id, Nome, Email, FotoUrl, DtCriacao FROM {UsuarioMap.Tabela} " +
                         $"WHERE Id = @{nameof(id)}";
 
-            using (var du = new DapperUtil())
+            using (var conn = _conexao)
             {
-                var resultado = await du.Conexao.QueryFirstOrDefaultAsync<PegarUsuarioComandoResultado>(query, new { id });
+                _conexao.Open();
+
+                var resultado = await _conexao.QueryFirstOrDefaultAsync<PegarUsuarioComandoResultado>(query, new { id });
 
                 if (resultado == null) return null;
 
@@ -50,7 +54,7 @@ namespace LouveApp.Dal.Repositorios
                         $"INNER JOIN {UsuarioInstrumentoMap.Tabela} AS ui ON ui.InstrumentoId = i.Id " +
                         $"WHERE ui.UsuarioId = '{resultado.Id}'";
 
-                resultado.Instrumentos = await du.Conexao.QueryAsync<PegarInstrumentosComandoResultado>(query);
+                resultado.Instrumentos = await _conexao.QueryAsync<PegarInstrumentosComandoResultado>(query);
 
                 return resultado;
             }
@@ -67,9 +71,11 @@ namespace LouveApp.Dal.Repositorios
             var query = $"SELECT Id, Nome, Email, FotoUrl, Senha FROM {UsuarioMap.Tabela} " +
                         $"WHERE Login = @{nameof(login)} AND Senha = @{nameof(senhaEncriptada)}";
 
-            using (var du = new DapperUtil())
+            using (var conn = _conexao)
             {
-                var resultado = await du.Conexao.QueryFirstOrDefaultAsync<AutenticarUsuarioComandoResultado>(query, new
+                _conexao.Open();
+
+                var resultado = await _conexao.QueryFirstOrDefaultAsync<AutenticarUsuarioComandoResultado>(query, new
                 {
                     login,
                     senhaEncriptada
@@ -80,13 +86,13 @@ namespace LouveApp.Dal.Repositorios
                 // Atualiza data da última atividade
                 query = $"UPDATE {UsuarioMap.Tabela} SET DtUltimaAtividade = @dtUltimaAtividade " +
                         $"WHERE Id = '{resultado.Id}'";
-                await du.Conexao.ExecuteAsync(query, new { dtUltimaAtividade = DateTime.Now });
+                await _conexao.ExecuteAsync(query, new { dtUltimaAtividade = DateTime.Now });
 
                 query = $"SELECT m.Id, m.Nome, m.FotoUrl, um.Administrador FROM {MinisterioMap.Tabela} AS m " +
                         $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON m.Id = um.MinisterioId " +
                         $"WHERE um.UsuarioId = '{resultado.Id}'";
 
-                resultado.Ministerios = await du.Conexao.QueryAsync<PegarMinisterioComandoResultado>(query);
+                resultado.Ministerios = await _conexao.QueryAsync<PegarMinisterioComandoResultado>(query);
 
                 return resultado;
             }
@@ -107,8 +113,7 @@ namespace LouveApp.Dal.Repositorios
             var query = $"SELECT 1 FROM {UsuarioMap.Tabela} " +
                         $"WHERE Id = @{nameof(id)}";
 
-            _contexto.Database.OpenConnection();
-            return (await _contexto.Database.Tran.GetDbConnection().QueryAsync<object>(query, new { id })).Any();
+            return (await _conexao.QueryAsync<object>(query, new { id })).Any();
         }
 
         public async Task<bool> EmailExiste(string email)
@@ -116,10 +121,7 @@ namespace LouveApp.Dal.Repositorios
             var query = $"SELECT 1 FROM {UsuarioMap.Tabela} " +
                         $"WHERE Email = @{nameof(email)}";
 
-            using (var du = new DapperUtil())
-            {
-                return (await du.Conexao.QueryAsync<object>(query, new { email })).Any();
-            }
+            return (await _conexao.QueryAsync<object>(query, new { email })).Any();
         }
     }
 }

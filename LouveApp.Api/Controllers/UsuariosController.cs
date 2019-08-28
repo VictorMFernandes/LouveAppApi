@@ -29,8 +29,7 @@ namespace LouveApp.Api.Controllers
         /// <remarks>E-mail deve ser único.</remarks>
         /// <response code="200">Retorna as principais propriedades do usuário que acabou de ser registrado.</response>
         [ProducesResponseType(typeof(RegistrarUsuarioComandoResultado), 200)]
-        [HttpPost]
-        [Route("v1/[controller]")]
+        [HttpPost("v1/[controller]")]
         [AllowAnonymous]
         public async Task<IActionResult> RegistrarUsuario([FromBody]RegistrarUsuarioComando comando)
         {
@@ -45,8 +44,7 @@ namespace LouveApp.Api.Controllers
         /// <remarks>Ids de instrumentos devem ser únicos.</remarks>
         /// <response code="200">Retorna as principais propriedades do usuário que acabou de ser atualizado.</response>
         [ProducesResponseType(typeof(AtualizarUsuarioComandoResultado), 200)]
-        [HttpPut]
-        [Route("v1/[controller]")]
+        [HttpPut("v1/[controller]")]
         public async Task<IActionResult> AtualizarUsuario([FromBody]AtualizarUsuarioComando comando)
         {
             comando.PegarUsuarioLogadoId(UsuarioLogadoId);
@@ -60,8 +58,7 @@ namespace LouveApp.Api.Controllers
         /// </summary>
         /// <response code="200">Retorna as principais propriedades do usuário logado no sistema.</response>
         [ProducesResponseType(typeof(AtualizarUsuarioComandoResultado), 200)]
-        [HttpGet]
-        [Route("v1/[controller]")]
+        [HttpGet("v1/[controller]")]
         public async Task<IActionResult> PegarUsuario()
         {
             return RespostaDeConsulta(await _usuarioRepo.PegarPorIdSemRastrear(UsuarioLogadoId));
@@ -73,8 +70,7 @@ namespace LouveApp.Api.Controllers
         /// <param name="linkConvite">Link convite para entrar em um ministério.</param>
         /// <response code="200">Retorna as principais propriedades do ministério que o usuário entrou.</response>
         [ProducesResponseType(typeof(EntrarMinisterioComandoResultado), 200)]
-        [HttpPost]
-        [Route("v1/[controller]/EntrarMinisterio/{linkConvite}")]
+        [HttpPost("v1/[controller]/EntrarMinisterio/{linkConvite}")]
         [AllowAnonymous]
         public async Task<IActionResult> EntrarMinisterio(string linkConvite)
         {
@@ -91,8 +87,7 @@ namespace LouveApp.Api.Controllers
         /// <param name="comando">Comando para adicionar dispositivo ao usuário.</param>
         /// <response code="200">Retorna as principais propriedades do usuário que acabou de ser atualizado.</response>
         [ProducesResponseType(typeof(AtualizarUsuarioComandoResultado), 200)]
-        [HttpPut]
-        [Route("v1/[controller]/AdicionarDispositivo")]
+        [HttpPut("v1/[controller]/AdicionarDispositivo")]
         public async Task<IActionResult> AdicionarDispositivo([FromBody]AdicionarDispositivoComando comando)
         {
             comando.PegarUsuarioLogadoId(UsuarioLogadoId);
@@ -100,6 +95,5 @@ namespace LouveApp.Api.Controllers
             var resultado = await _gerenciador.Executar(comando);
             return await Resposta(resultado, _gerenciador.Notifications);
         }
-
     }
 }

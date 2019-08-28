@@ -1,11 +1,9 @@
 ﻿using LouveApp.Api.Extensoes;
 using LouveApp.Api.Middlewares;
-using LouveApp.Dominio.Servicos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using LouveApp.Dominio.Sistema;
@@ -14,7 +12,6 @@ using LouveApp.Dal.Servicos.PushNotification.Extensoes;
 using LouveApp.Documentacao.Integracao;
 using System.Reflection;
 using LouveApp.Servicos.Fotos.Integracao;
-using LouveApp.Dal.Contexto;
 using LouveApp.Servicos.Email.Integracao;
 using LouveApp.Dal.Integracao;
 
@@ -62,7 +59,7 @@ namespace LouveApp.Api
             services.ConfigurarDocumentacao(Assembly.GetExecutingAssembly().GetName().Name);
         }
 
-        public void Configure(IApplicationBuilder app, ISemeadorBd semeadorBd)
+        public void Configure(IApplicationBuilder app)
         {
             if (Configuracoes.EmDesenvolvimento)
                 app.UseDeveloperExceptionPage();
@@ -80,15 +77,6 @@ namespace LouveApp.Api
             app.UseMiddleware<ErroMiddleware>();
             app.UseResponseCompression();
             app.UseMvc();
-
-            var serviceScopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
-            using (var serviceScope = serviceScopeFactory.CreateScope())
-            {
-                var dbContext = serviceScope.ServiceProvider.GetService<BancoContexto>();
-                dbContext.Database.EnsureCreated();
-            }
-
-            semeadorBd.SemearBancoDeDados();
         }
     }
 }

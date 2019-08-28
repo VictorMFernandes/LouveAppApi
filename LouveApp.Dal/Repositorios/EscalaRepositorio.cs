@@ -12,6 +12,7 @@ using LouveApp.Dominio.Repositorios;
 using LouveApp.Dominio.Sistema;
 using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,10 +21,12 @@ namespace LouveApp.Dal.Repositorios
     public class EscalaRepositorio : IEscalaRepositorio
     {
         private readonly BancoContexto _contexto;
+        private readonly IDbConnection _conexao;
 
-        public EscalaRepositorio(BancoContexto contexto)
+        public EscalaRepositorio(BancoContexto contexto, IDbConnection conexao)
         {
             _contexto = contexto;
+            _conexao = conexao;
         }
 
         public async Task<PegarEscalaComMusicasComandoResultado> PegarPorId(string escalaId, string usuarioId)
@@ -35,7 +38,7 @@ namespace LouveApp.Dal.Repositorios
                         $"WHERE ue.UsuarioId = @{nameof(usuarioId)} AND ue.EscalaId = @{nameof(escalaId)} " +
                         "ORDER BY e.Data";
 
-            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            using (var conn = _conexao)
             {
                 conn.Open();
                 var escala = (await conn.QueryAsync<PegarEscalaComMusicasComandoResultado
@@ -78,7 +81,7 @@ namespace LouveApp.Dal.Repositorios
                         $"WHERE e.MinisterioId = @{nameof(ministerioId)} " +
                         "ORDER BY Data";
 
-            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            using (var conn = _conexao)
             {
                 conn.Open();
 
@@ -132,7 +135,7 @@ namespace LouveApp.Dal.Repositorios
                         $"WHERE ue.UsuarioId = @{nameof(usuarioId)} " +
                         "ORDER BY e.Data";
 
-            using (var conn = new SqliteConnection(Configuracoes.ConnString))
+            using (var conn = _conexao)
             {
                 conn.Open();
                 var resultado = (await conn.QueryAsync<PegarEscalaComandoResultado
@@ -159,7 +162,9 @@ namespace LouveApp.Dal.Repositorios
                     using (var res = await conn.QueryMultipleAsync(query))
                     {
                         escala.Usuarios = await res.ReadAsync<PegarUsuarioComandoResultado>();
-                        escala.QtdMusicas = (await res.ReadAsync<long>()).FirstOrDefault();
+
+                        escala.QtdMusicas = Configuracoes.EmDesenvolvimento ? (await res.ReadAsync<long>()).FirstOrDefault()
+                                                                            : (await res.ReadAsync<int>()).FirstOrDefault();
                     }
                 }
 

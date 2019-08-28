@@ -17,7 +17,7 @@ namespace LouveApp.Dal.Testes.BancoDeDados.Repositorios
         [TestMethod]
         public async Task RetornaUsuarioQuandoIdExiste()
         {
-            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
+            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.PegarPorId(PadroesString.UsuarioId1);
             Assert.IsNotNull(retorno);
@@ -26,7 +26,7 @@ namespace LouveApp.Dal.Testes.BancoDeDados.Repositorios
         [TestMethod]
         public async Task RetornaNullQuandoIdNaoExiste()
         {
-            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
+            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.PegarPorId(Guid.NewGuid().ToString());
             Assert.IsNull(retorno);
@@ -39,7 +39,7 @@ namespace LouveApp.Dal.Testes.BancoDeDados.Repositorios
         [TestMethod]
         public async Task RetornaUsuarioSemRastrearQuandoIdExiste()
         {
-            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
+            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.PegarPorIdSemRastrear(PadroesString.UsuarioId1);
             Assert.IsNotNull(retorno);
@@ -48,7 +48,7 @@ namespace LouveApp.Dal.Testes.BancoDeDados.Repositorios
         [TestMethod]
         public async Task RetornaNullSemRastrearQuandoIdNaoExiste()
         {
-            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
+            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.PegarPorIdSemRastrear(Guid.NewGuid().ToString());
             Assert.IsNull(retorno);
@@ -57,7 +57,7 @@ namespace LouveApp.Dal.Testes.BancoDeDados.Repositorios
         [TestMethod]
         public async Task RetornaUsuarioSemRastrearComInstrumentosQuandoIdExiste()
         {
-            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
+            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.PegarPorIdSemRastrear(PadroesString.UsuarioId1);
 
@@ -71,7 +71,7 @@ namespace LouveApp.Dal.Testes.BancoDeDados.Repositorios
         [TestMethod]
         public async Task RetornaUsuarioAutenticadoQuandoLoginSenhaCorretos()
         {
-            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
+            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.PegarAutenticado(PadroesString.UsuarioLogin1, Autenticacao.EncriptarSenha(PadroesString.SenhaValida));
             Assert.IsNotNull(retorno);
@@ -80,7 +80,7 @@ namespace LouveApp.Dal.Testes.BancoDeDados.Repositorios
         [TestMethod]
         public async Task RetornaNullQuandoLoginIncorreto()
         {
-            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
+            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.PegarAutenticado("loginincorreto", Autenticacao.EncriptarSenha(PadroesString.SenhaValida));
             Assert.IsNull(retorno);
@@ -89,7 +89,7 @@ namespace LouveApp.Dal.Testes.BancoDeDados.Repositorios
         [TestMethod]
         public async Task RetornaNullQuandoSenhaIncorreta()
         {
-            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
+            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.PegarAutenticado(PadroesString.UsuarioLogin1, "senhaincorreta");
             Assert.IsNull(retorno);
@@ -98,7 +98,7 @@ namespace LouveApp.Dal.Testes.BancoDeDados.Repositorios
         [TestMethod]
         public async Task RetornaUsuarioAutenticadoComMinisteriosQuandoLoginSenhaCorretos()
         {
-            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
+            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.PegarAutenticado(PadroesString.UsuarioLogin1, Autenticacao.EncriptarSenha(PadroesString.SenhaValida));
 
@@ -112,7 +112,7 @@ namespace LouveApp.Dal.Testes.BancoDeDados.Repositorios
         [TestMethod]
         public async Task RetornaTrueQuandoIdExiste()
         {
-            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
+            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.IdExiste(PadroesString.UsuarioId1);
             Assert.IsTrue(retorno);
@@ -121,7 +121,7 @@ namespace LouveApp.Dal.Testes.BancoDeDados.Repositorios
         [TestMethod]
         public async Task RetornaFalseQuandoIdNaoExiste()
         {
-            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
+            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.IdExiste(Guid.NewGuid().ToString());
             Assert.IsFalse(retorno);
@@ -134,7 +134,7 @@ namespace LouveApp.Dal.Testes.BancoDeDados.Repositorios
         [TestMethod]
         public async Task RetornaTrueQuandoEmailExiste()
         {
-            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
+            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.EmailExiste(PadroesString.UsuarioEmail1);
             Assert.IsTrue(retorno);
@@ -143,7 +143,7 @@ namespace LouveApp.Dal.Testes.BancoDeDados.Repositorios
         [TestMethod]
         public async Task RetornaFalseQuandoEmailNaoExiste()
         {
-            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St());
+            var repositorio = new UsuarioRepositorio(BancoContextoFalso.St(), BancoContextoFalso.St().Conexao);
 
             var retorno = await repositorio.EmailExiste("emailquenaoexiste@email.com");
             Assert.IsFalse(retorno);

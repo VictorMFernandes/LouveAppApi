@@ -73,7 +73,7 @@ namespace LouveApp.Dal.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     Data = table.Column<DateTime>(nullable: false),
-                    MinisterioId = table.Column<string>(nullable: true)
+                    MinisterioId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,7 +83,7 @@ namespace LouveApp.Dal.Migrations
                         column: x => x.MinisterioId,
                         principalTable: "tb_ministerio",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,7 +95,7 @@ namespace LouveApp.Dal.Migrations
                     Letra = table.Column<string>(maxLength: 200, nullable: true),
                     Cifra = table.Column<string>(maxLength: 200, nullable: true),
                     Video = table.Column<string>(maxLength: 200, nullable: true),
-                    MinisterioId = table.Column<string>(nullable: true),
+                    MinisterioId = table.Column<string>(nullable: false),
                     Artista = table.Column<string>(maxLength: 60, nullable: false),
                     Tom = table.Column<string>(maxLength: 10, nullable: true),
                     Bpm = table.Column<int>(maxLength: 3, nullable: true),
@@ -109,7 +109,7 @@ namespace LouveApp.Dal.Migrations
                         column: x => x.MinisterioId,
                         principalTable: "tb_ministerio",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -215,8 +215,7 @@ namespace LouveApp.Dal.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_escala_musica", x => new { x.EscalaId, x.MusicaId })
-                        .Annotation("SqlServer:Clustered", false);
+                    table.PrimaryKey("PK_tb_escala_musica", x => new { x.EscalaId, x.MusicaId });
                     table.ForeignKey(
                         name: "FK_tb_escala_musica_tb_escala_EscalaId",
                         column: x => x.EscalaId,
@@ -228,7 +227,7 @@ namespace LouveApp.Dal.Migrations
                         column: x => x.MusicaId,
                         principalTable: "tb_musica",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

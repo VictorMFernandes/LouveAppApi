@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LouveApp.Dal.Migrations
 {
     [DbContext(typeof(BancoContexto))]
-    [Migration("20190827023422_V1")]
+    [Migration("20190828034017_V1")]
     partial class V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,7 +49,8 @@ namespace LouveApp.Dal.Migrations
 
                     b.Property<DateTime>("Data");
 
-                    b.Property<string>("MinisterioId");
+                    b.Property<string>("MinisterioId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -74,8 +75,7 @@ namespace LouveApp.Dal.Migrations
 
                     b.Property<string>("MusicaId");
 
-                    b.HasKey("EscalaId", "MusicaId")
-                        .HasAnnotation("SqlServer:Clustered", false);
+                    b.HasKey("EscalaId", "MusicaId");
 
                     b.HasIndex("MusicaId");
 
@@ -163,7 +163,8 @@ namespace LouveApp.Dal.Migrations
                     b.Property<string>("Classificacao")
                         .HasMaxLength(60);
 
-                    b.Property<string>("MinisterioId");
+                    b.Property<string>("MinisterioId")
+                        .IsRequired();
 
                     b.Property<string>("Tom")
                         .HasMaxLength(10);
@@ -220,7 +221,8 @@ namespace LouveApp.Dal.Migrations
                 {
                     b.HasOne("LouveApp.Dominio.Entidades.Ministerio", "Ministerio")
                         .WithMany("Escalas")
-                        .HasForeignKey("MinisterioId");
+                        .HasForeignKey("MinisterioId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("LouveApp.Dominio.Entidades.Instrumento", b =>
@@ -258,7 +260,7 @@ namespace LouveApp.Dal.Migrations
                     b.HasOne("LouveApp.Dominio.Entidades.Musica", "Musica")
                         .WithMany("Escalas")
                         .HasForeignKey("MusicaId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("LouveApp.Dominio.Entidades.Juncao.UsuarioEscala", b =>
@@ -348,7 +350,8 @@ namespace LouveApp.Dal.Migrations
                 {
                     b.HasOne("LouveApp.Dominio.Entidades.Ministerio", "Ministerio")
                         .WithMany("Musicas")
-                        .HasForeignKey("MinisterioId");
+                        .HasForeignKey("MinisterioId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.OwnsOne("LouveApp.Dominio.ValueObjects.Link", "Cifra", b1 =>
                         {

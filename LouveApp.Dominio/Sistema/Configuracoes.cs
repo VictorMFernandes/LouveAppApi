@@ -19,7 +19,7 @@ namespace LouveApp.Dominio.Sistema
         {
             EmDesenvolvimento = emDesenvolvimento;
             ConnString = config.GetConnectionString(
-                emDesenvolvimento? EConfigSecao.ConexaoBdDev.EnumTextos().Nome 
+                EmDesenvolvimento ? EConfigSecao.ConexaoBdDev.EnumTextos().Nome 
                                     : EConfigSecao.ConexaoBd.EnumTextos().Nome);
             NomeAplicacao = config
                 .GetSection(EConfigSecao.NomeAplicacao.EnumTextos().Nome)

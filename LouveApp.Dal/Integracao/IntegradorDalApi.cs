@@ -7,6 +7,12 @@ using LouveApp.Dal.Transacoes;
 using LouveApp.Dal.Repositorios;
 using LouveApp.Dominio.Sistema;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Data.SqlClient;
+using Microsoft.Data.Sqlite;
+using Microsoft.AspNetCore.Hosting;
+using System.Threading.Tasks;
+using System;
 
 namespace LouveApp.Dal.Integracao
 {
@@ -15,14 +21,19 @@ namespace LouveApp.Dal.Integracao
         public static void AdicionarBancoContexto(this IServiceCollection services)
         {
             if (Configuracoes.EmDesenvolvimento)
+            {
                 services.AddDbContextPool<BancoContexto>(options =>
                         options.UseSqlite(Configuracoes.ConnString)
-                    );
+                );
+                services.AddTransient<IDbConnection>((sp) => new SqliteConnection(Configuracoes.ConnString));
+            }
             else
+            {
                 services.AddDbContextPool<BancoContexto>(options =>
                         options.UseSqlServer(Configuracoes.ConnString)
-            );
-
+                );
+                services.AddTransient<IDbConnection>((sp) => new SqlConnection(Configuracoes.ConnString));
+            }
         }
 
         public static void ConfigurarDal(this IServiceCollection services)
@@ -36,6 +47,29 @@ namespace LouveApp.Dal.Integracao
             services.AddTransient<IEscalaRepositorio, EscalaRepositorio>();
             services.AddTransient<IMusicaRepositorio, MusicaRepositorio>();
             services.AddTransient<IDispositivoRepositorio, DispositivoRepositorio>();
+        }
+
+        public static IWebHost Seed(this IWebHost host)
+        {
+            using (var scope = host.Services.CreateScope())
+            {
+                var serviceProvider = scope.ServiceProvider;
+
+                try
+                {
+                    Task.Run(async () =>
+                    {
+                        var contexto = serviceProvider.GetRequiredService<BancoContexto>();
+                        contexto.Database.Migrate();
+                        await serviceProvider.GetRequiredService<ISemeadorBd>().SemearBancoDeDados();
+                    }).Wait();
+                }
+                catch (Exception ex)
+                {
+                    var logarErro = ex;
+                }
+            }
+            return host;
         }
     }
 }

@@ -28,6 +28,16 @@ namespace LouveApp.Dal.Mapeamentos
                 f.Property(fo => fo.IdPublico).HasMaxLength(PadroesTamanho.MaxFotoIdPublico).HasColumnName("FotoIdPublico");
                 f.Property(fo => fo.Url).HasMaxLength(PadroesTamanho.MaxFotoUrl).HasColumnName("FotoUrl");
             });
+
+            builder.HasMany(m => m.Escalas)
+                .WithOne(e => e.Ministerio)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+
+            builder.HasMany(m => m.Musicas)
+                .WithOne(e => e.Ministerio)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
         }
 
         /// <summary>

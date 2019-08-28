@@ -11,10 +11,10 @@ namespace LouveApp.Dal.Mapeamentos.Juncao
         {
             builder.ToTable(Tabela);
 
-            builder.HasKey(u => new { u.EscalaId, u.MusicaId }).ForSqlServerIsClustered(false);
+            builder.HasKey(u => new { u.EscalaId, u.MusicaId });
 
             builder.HasOne(em => em.Escala).WithMany(e => e.Musicas);
-            builder.HasOne(em => em.Musica).WithMany(e => e.Escalas);
+            builder.HasOne(em => em.Musica).WithMany(e => e.Escalas).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
