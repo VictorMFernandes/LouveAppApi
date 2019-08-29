@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using LouveApp.Dominio.Repositorios;
-using LouveApp.Dominio.Sistema;
 using LouveApp.Dal.Mapeamentos;
-using Microsoft.Data.Sqlite;
+using System.Linq;
 
 namespace LouveApp.Dal.Repositorios
 {
@@ -21,6 +19,9 @@ namespace LouveApp.Dal.Repositorios
 
         public async Task<IEnumerable<string>> PegarDispositivosTokensPorUsuarioId(List<string> usuariosIds)
         {
+            if (!usuariosIds.Any())
+                return Enumerable.Empty<string>();
+
             var queryUsuariosIds = string.Empty;
 
             for (var i = 0; i < usuariosIds.Count; i++)
@@ -29,7 +30,7 @@ namespace LouveApp.Dal.Repositorios
 
                 if (i + 1 < usuariosIds.Count)
                 {
-                    queryUsuariosIds += " OR ";
+                    queryUsuariosIds += " OR UsuarioId = ";
                 }
             }
 

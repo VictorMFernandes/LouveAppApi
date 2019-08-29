@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using LouveApp.Compartilhado.Comandos;
+﻿using LouveApp.Compartilhado.Comandos;
 using LouveApp.Compartilhado.Comandos.Genericos;
-using LouveApp.Compartilhado.Padroes;
 using LouveApp.Dominio.Comandos.EscalaComandos.Entradas;
 using LouveApp.Dominio.Comandos.EscalaComandos.Saidas;
 using LouveApp.Dominio.Repositorios;
-using System.Threading.Tasks;
 using LouveApp.Dominio.Servicos;
+using LouveApp.Dominio.Sistema.Padroes;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LouveApp.Dominio.Gerenciadores
 {
@@ -50,13 +50,13 @@ namespace LouveApp.Dominio.Gerenciadores
 
             _ministerioRepo.Atualizar(ministerio);
 
-            var algo = escala.Usuarios.Select(ue => ue.UsuarioId);
+            var usuariosIds = escala.Usuarios.Select(ue => ue.UsuarioId);
 
             var dispositivosTokens = await _dispositivoRepo
-                                            .PegarDispositivosTokensPorUsuarioId(algo.ToList());
+                                            .PegarDispositivosTokensPorUsuarioId(usuariosIds.ToList());
 
-            _pushNotificationServico.NotificarIngressoEmEscala(dispositivosTokens.ToList(), escala.Data.ToString(),
-                ministerio.ToString());
+            _pushNotificationServico.NotificarIngressoEmEscala(dispositivosTokens.ToList()
+                , escala.Data.ToString(), ministerio);
 
             return new RegistrarEscalaComandoResultado(escala.Id, escala.Data, escala.Usuarios.Count);
         }

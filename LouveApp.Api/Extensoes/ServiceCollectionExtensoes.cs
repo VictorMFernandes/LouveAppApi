@@ -1,14 +1,14 @@
-﻿using System;
-using System.Text;
-using LouveApp.Compartilhado.Extensoes;
-using LouveApp.Compartilhado.Padroes;
+﻿using LouveApp.Compartilhado.Extensoes;
 using LouveApp.Dominio.Enums;
 using LouveApp.Dominio.Gerenciadores;
+using LouveApp.Dominio.Sistema.Padroes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Text;
 
 namespace LouveApp.Api.Extensoes
 {

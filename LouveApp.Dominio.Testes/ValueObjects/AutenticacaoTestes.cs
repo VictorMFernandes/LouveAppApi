@@ -1,4 +1,4 @@
-﻿using LouveApp.Compartilhado.Padroes;
+﻿using LouveApp.Dominio.Sistema.Padroes;
 using LouveApp.Dominio.ValueObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

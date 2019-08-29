@@ -3,10 +3,10 @@ using LouveApp.Compartilhado.Extensoes;
 using LouveApp.Dominio.Comandos.AutenticacaoComandos.Entradas;
 using LouveApp.Dominio.Enums;
 using LouveApp.Dominio.Repositorios;
+using LouveApp.Dominio.Sistema.Padroes;
+using LouveApp.Dominio.ValueObjects;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
-using LouveApp.Compartilhado.Padroes;
-using LouveApp.Dominio.ValueObjects;
 
 namespace LouveApp.Dominio.Gerenciadores
 {

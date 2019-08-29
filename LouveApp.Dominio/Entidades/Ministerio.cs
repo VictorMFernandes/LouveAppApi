@@ -1,12 +1,12 @@
-﻿using LouveApp.Compartilhado.Entidades;
+﻿using FluentValidator;
+using LouveApp.Compartilhado.Entidades;
+using LouveApp.Dominio.Comandos.UsuarioComandos.SubEntidade;
 using LouveApp.Dominio.Entidades.Juncao;
+using LouveApp.Dominio.Sistema.Padroes;
 using LouveApp.Dominio.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentValidator;
-using LouveApp.Compartilhado.Padroes;
-using LouveApp.Dominio.Comandos.UsuarioComandos.SubEntidade;
 
 namespace LouveApp.Dominio.Entidades
 {

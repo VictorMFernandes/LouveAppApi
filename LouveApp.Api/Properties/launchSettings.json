@@ -15,17 +15,17 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "ApiPadrao.Api": {
+    "LouveApp.Api": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "https://localhost:5001"
     },
-    "LouveApp.Api": {
+    "LouveApp.Api.Prod": {
       "commandName": "Project",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       },
       "applicationUrl": "https://localhost:5001"
     }

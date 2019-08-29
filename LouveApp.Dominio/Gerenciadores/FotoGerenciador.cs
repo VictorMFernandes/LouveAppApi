@@ -1,11 +1,11 @@
 ﻿using LouveApp.Compartilhado.Comandos;
+using LouveApp.Compartilhado.Comandos.Genericos;
 using LouveApp.Dominio.Comandos.FotoComandos.Entradas;
 using LouveApp.Dominio.Comandos.FotoComandos.Saidas;
 using LouveApp.Dominio.Repositorios;
 using LouveApp.Dominio.Servicos;
+using LouveApp.Dominio.Sistema.Padroes;
 using System.Threading.Tasks;
-using LouveApp.Compartilhado.Comandos.Genericos;
-using LouveApp.Compartilhado.Padroes;
 
 namespace LouveApp.Dominio.Gerenciadores
 {

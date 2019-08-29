@@ -1,7 +1,7 @@
 ﻿using LouveApp.Compartilhado.Extensoes;
-using LouveApp.Compartilhado.Padroes;
 using LouveApp.Dal.Contexto;
 using LouveApp.Dominio.Entidades;
+using LouveApp.Dominio.Sistema.Padroes;
 using LouveApp.Dominio.ValueObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

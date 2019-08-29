@@ -1,6 +1,6 @@
-﻿using LouveApp.Compartilhado.Padroes;
-using LouveApp.Dominio.Comandos.EscalaComandos.Entradas;
+﻿using LouveApp.Dominio.Comandos.EscalaComandos.Entradas;
 using LouveApp.Dominio.Comandos.UsuarioComandos.SubEntidade;
+using LouveApp.Dominio.Sistema.Padroes;
 using Swashbuckle.AspNetCore.Filters;
 using System;
 using System.Collections.Generic;

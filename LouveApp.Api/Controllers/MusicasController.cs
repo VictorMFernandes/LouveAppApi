@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using LouveApp.Dominio.Gerenciadores;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using LouveApp.Dominio.Repositorios;
+﻿using LouveApp.Compartilhado.Entidades;
+using LouveApp.Compartilhado.Transacoes;
 using LouveApp.Dominio.Comandos.MusicaComandos.Entradas;
 using LouveApp.Dominio.Comandos.MusicaComandos.Saidas;
-using LouveApp.Compartilhado.Transacoes;
-using LouveApp.Compartilhado.Entidades;
+using LouveApp.Dominio.Gerenciadores;
+using LouveApp.Dominio.Repositorios;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LouveApp.Api.Controllers
 {
@@ -68,13 +68,15 @@ namespace LouveApp.Api.Controllers
         /// <summary>
         /// Atualiza uma música de um ministério.
         /// </summary>
+        /// <param name="ministerioId">Id do ministério que terá uma música alterada.</param>
+        /// <param name="musicaId">Id da música será alterada.</param>
         /// <param name="comando">Comando para atualizar música de um ministério</param>
         /// <response code="200">Retorna as principais propriedades da música que acabou de ser atualizada.</response>
         [ProducesResponseType(typeof(AtualizarMusicaComandoResultado), 200)]
-        [HttpPut("v1/Ministerios/{ministerioId}/[controller]")]
-        public async Task<IActionResult> AtualizarMusica([FromBody]AtualizarMusicaComando comando)
+        [HttpPut("v1/Ministerios/{ministerioId}/[controller]/{musicaId}")]
+        public async Task<IActionResult> AtualizarMusica(string ministerioId, string musicaId, [FromBody]AtualizarMusicaComando comando)
         {
-            comando.PegarUsuarioLogadoId(UsuarioLogadoId);
+            comando.PegarUsuarioLogadoId(UsuarioLogadoId, musicaId);
 
             var resultado = await _gerenciador.Executar(comando);
             return await Resposta(resultado, _gerenciador.Notifications);

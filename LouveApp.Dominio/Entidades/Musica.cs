@@ -1,10 +1,12 @@
-﻿using LouveApp.Compartilhado.Entidades;
+﻿using FluentValidator;
+using FluentValidator.Validation;
+using LouveApp.Compartilhado.Entidades;
+using LouveApp.Compartilhado.Padroes;
 using LouveApp.Dominio.Entidades.Juncao;
+using LouveApp.Dominio.Sistema.Padroes;
 using LouveApp.Dominio.ValueObjects;
 using System.Collections.Generic;
-using FluentValidator;
-using FluentValidator.Validation;
-using LouveApp.Compartilhado.Padroes;
+using System.Linq;
 
 namespace LouveApp.Dominio.Entidades
 {
@@ -124,6 +126,14 @@ namespace LouveApp.Dominio.Entidades
             Classificacao = classificacao ?? Classificacao;
 
             Validar();
+        }
+
+        public bool EhAdministrador(string usuarioId)
+        {
+            return Ministerio
+                .Usuarios
+                .FirstOrDefault(um => um.UsuarioId == usuarioId)?
+                .Administrador == true;
         }
     }
 }
