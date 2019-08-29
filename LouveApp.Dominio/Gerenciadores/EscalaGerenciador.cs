@@ -55,8 +55,8 @@ namespace LouveApp.Dominio.Gerenciadores
             var dispositivosTokens = await _dispositivoRepo
                                             .PegarDispositivosTokensPorUsuarioId(usuariosIds.ToList());
 
-            _pushNotificationServico.NotificarIngressoEmEscala(dispositivosTokens.ToList(), escala.Data.ToString(),
-                ministerio.ToString());
+            _pushNotificationServico.NotificarIngressoEmEscala(dispositivosTokens.ToList()
+                , escala.Data.ToString(), ministerio);
 
             return new RegistrarEscalaComandoResultado(escala.Id, escala.Data, escala.Usuarios.Count);
         }

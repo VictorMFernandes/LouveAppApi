@@ -74,5 +74,10 @@
         public const string IngressoEmMinisterioCorpo = "Dê boas vindas a {0}";
 
         public const string ParametrosInvalidos = "Os parâmetros enviados não são válidos";
+
+        /// <summary>
+        /// {0} Data da escala
+        /// </summary>
+        public const string IngressoEmEscalaCorpo = "Você foi condidado para uma escala no dia {0}";
     }
 }

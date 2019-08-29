@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Dapper;
 using LouveApp.Dominio.Repositorios;
 using LouveApp.Dal.Mapeamentos;
+using System.Linq;
 
 namespace LouveApp.Dal.Repositorios
 {
@@ -18,6 +19,9 @@ namespace LouveApp.Dal.Repositorios
 
         public async Task<IEnumerable<string>> PegarDispositivosTokensPorUsuarioId(List<string> usuariosIds)
         {
+            if (!usuariosIds.Any())
+                return Enumerable.Empty<string>();
+
             var queryUsuariosIds = string.Empty;
 
             for (var i = 0; i < usuariosIds.Count; i++)

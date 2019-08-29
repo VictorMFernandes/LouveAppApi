@@ -3,7 +3,6 @@ using LouveApp.Dominio.Servicos;
 using LouveApp.Dominio.Sistema.Padroes;
 using LouveApp.Servicos.PushNotification.Entidades;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace LouveApp.Servicos.PushNotification
 {
@@ -31,9 +30,19 @@ namespace LouveApp.Servicos.PushNotification
             }
         }
 
-        public Task NotificarIngressoEmEscala(List<string> aparelhosTokens, string dataEscala, string nomeMinisterio)
+        public void NotificarIngressoEmEscala(List<string> aparelhosTokens, string dataEscala, Ministerio ministerio)
         {
-            return null;
+            var corpo = string.Format(PadroesMensagens.IngressoEmEscalaCorpo, dataEscala);
+            var data = new Dictionary<string, string>
+            {
+                {"tipo", "novo_ingressante" } ,
+                {"ministerioId", ministerio.Id }
+            };
+
+            foreach (var aparelhoToken in aparelhosTokens)
+            {
+                _mensageiro.EnviarNotificacao(aparelhoToken, ministerio.ToString(), corpo, data);
+            }
         }
 
         public void NotificarChatMinisterio(List<string> aparelhosTokens, string mensagem, Usuario rementente, Ministerio ministerio)
