@@ -50,10 +50,10 @@ namespace LouveApp.Dominio.Gerenciadores
 
             _ministerioRepo.Atualizar(ministerio);
 
-            var algo = escala.Usuarios.Select(ue => ue.UsuarioId);
+            var usuariosIds = escala.Usuarios.Select(ue => ue.UsuarioId);
 
             var dispositivosTokens = await _dispositivoRepo
-                                            .PegarDispositivosTokensPorUsuarioId(algo.ToList());
+                                            .PegarDispositivosTokensPorUsuarioId(usuariosIds.ToList());
 
             _pushNotificationServico.NotificarIngressoEmEscala(dispositivosTokens.ToList(), escala.Data.ToString(),
                 ministerio.ToString());
