@@ -1,5 +1,5 @@
-﻿using System;
-using LouveApp.Compartilhado.PaginacaoFiltragem;
+﻿using LouveApp.Compartilhado.PaginacaoFiltragem;
+using System;
 
 namespace LouveApp.Dominio.Comandos.EscalaComandos.Entradas
 {
