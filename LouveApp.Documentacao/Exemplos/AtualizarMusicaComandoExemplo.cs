@@ -8,8 +8,7 @@ namespace LouveApp.Documentacao.Exemplos
     {
         public AtualizarMusicaComando GetExamples()
         {
-            return new AtualizarMusicaComando(PadroesString.MusicaId1
-            , PadroesString.MusicaNome1
+            return new AtualizarMusicaComando(PadroesString.MusicaNome1
             , "https://www.vagalume.com.br/o-rei-leao/somos-um.html"
             , "https://www.cifraclub.com.br/system-of-a-down/chop-suey/"
             , "https://www.youtube.com/watch?v=CSvFpBOe8eY"

@@ -10,26 +10,25 @@ namespace LouveApp.Dominio.Comandos.MusicaComandos.Entradas
     {
         #region Propriedades Api
 
-        public string Id { get; set; }
         public string Nome { get; set; }
         public string Letra { get; set; }
         public string Cifra { get; set; }
         public string Video { get; set; }
-        internal string UsuarioLogadoId { get; private set; }
         public string Artista { get; set; }
         public string Tom { get; set; }
         public int? Bpm { get; set; }
         public string Classificacao { get; set; }
+        internal string UsuarioLogadoId { get; private set; }
+        internal string MusicaId { get; private set; }
 
         #endregion
 
         #region Construtores
 
-        public AtualizarMusicaComando(string id, string nome, string letra
+        public AtualizarMusicaComando(string nome, string letra
             , string cifra, string video, string artista, string tom
             , int? bpm, string classificacao)
         {
-            Id = id;
             Nome = nome;
             Letra = letra;
             Cifra = cifra;
@@ -81,9 +80,10 @@ namespace LouveApp.Dominio.Comandos.MusicaComandos.Entradas
 
         #endregion
 
-        public void PegarUsuarioLogadoId(string usuarioLogadoId)
+        public void PegarUsuarioLogadoId(string usuarioLogadoId, string musicaId)
         {
             UsuarioLogadoId = usuarioLogadoId;
+            MusicaId = musicaId;
         }
     }
 }

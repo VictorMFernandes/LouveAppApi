@@ -8,8 +8,7 @@ namespace LouveApp.Dominio.Repositorios
     public interface IMusicaRepositorio
     {
         Task<IEnumerable<PegarMusicaComandoResultado>> PegarPorMinisterio(string ministerioId);
-        Task<bool> UsuarioEhAdministrador(string usuarioId, string musicaId);
-        Task<Musica> PegarPorId(string musicaId);
+        Task<Musica> PegarPorIdComUsuariosDoMinisterio(string musicaId);
         void Atualizar(Musica musica);
         Task<IEnumerable<PegarMusicaComandoResultado>> PegarPorNomeEArtista(string ministerioId, string nome, string artista);
     }

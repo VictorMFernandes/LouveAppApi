@@ -76,14 +76,14 @@ namespace LouveApp.Dominio.Gerenciadores
                 return null;
 
             // Caso o usuário não tenha autorização
-            if (!await _musicaRepo.UsuarioEhAdministrador(comando.UsuarioLogadoId, comando.Id))
-                return new NaoAutorizadoResultado(PadroesMensagens.UsuarioSemPermissao);
-
-            var musica = await _musicaRepo.PegarPorId(comando.Id);
+            var musica = await _musicaRepo.PegarPorIdComUsuariosDoMinisterio(comando.MusicaId);
 
             if (musica == null)
-            {
                 return new NaoEncontradoResultado(PadroesMensagens.MusicaNaoEncontrada);
+
+            if (!musica.EhAdministrador(comando.UsuarioLogadoId))
+            {
+                return new NaoAutorizadoResultado(PadroesMensagens.UsuarioSemPermissao);
             }
 
             // Atualiza a música
