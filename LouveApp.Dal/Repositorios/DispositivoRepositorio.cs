@@ -29,7 +29,7 @@ namespace LouveApp.Dal.Repositorios
 
                 if (i + 1 < usuariosIds.Count)
                 {
-                    queryUsuariosIds += " OR ";
+                    queryUsuariosIds += " OR UsuarioId = ";
                 }
             }
 
