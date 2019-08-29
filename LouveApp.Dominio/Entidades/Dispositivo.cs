@@ -26,6 +26,8 @@ namespace LouveApp.Dominio.Entidades
         {
             Token = token;
             Nome = nome;
+
+            Validar();
         }
 
         #endregion

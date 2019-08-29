@@ -153,9 +153,12 @@ namespace LouveApp.Dominio.Gerenciadores
                 return new NaoEncontradoResultado(PadroesMensagens.UsuarioNaoEncontrado);
             }
 
-            if (!usuario.AdicionarDispositivo(new Dispositivo(comando.Token, comando.NomeVo)))
+            var dispositivo = new Dispositivo(comando.Token, comando.NomeVo);
+
+            if (!usuario.AdicionarDispositivo(dispositivo))
                 return null;
 
+            // TODO adicionar notificações do dispositivo, quando nome se tornar obrigatório
             // Validar entidade
             AddNotifications(usuario);
 
