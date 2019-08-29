@@ -1,6 +1,7 @@
 ﻿using FluentValidator.Validation;
 using LouveApp.Compartilhado.Entidades;
 using LouveApp.Compartilhado.Padroes;
+using LouveApp.Dominio.Sistema.Padroes;
 
 namespace LouveApp.Dominio.ValueObjects
 {

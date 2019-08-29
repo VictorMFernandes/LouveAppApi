@@ -1,14 +1,14 @@
-﻿using LouveApp.Dominio.Entidades;
+﻿using LouveApp.Compartilhado.Transacoes;
+using LouveApp.Dominio.Comandos.UsuarioComandos.SubEntidade;
+using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.Repositorios;
 using LouveApp.Dominio.Servicos;
+using LouveApp.Dominio.Sistema.Padroes;
 using LouveApp.Dominio.ValueObjects;
-using LouveApp.Compartilhado.Padroes;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using LouveApp.Dominio.Comandos.UsuarioComandos.SubEntidade;
-using LouveApp.Compartilhado.Transacoes;
+using System.Threading.Tasks;
 
 namespace LouveApp.Dal.Contexto
 {

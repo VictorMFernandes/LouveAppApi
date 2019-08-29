@@ -1,5 +1,5 @@
-﻿using LouveApp.Compartilhado.Padroes;
-using LouveApp.Dominio.Comandos.AutenticacaoComandos.Entradas;
+﻿using LouveApp.Dominio.Comandos.AutenticacaoComandos.Entradas;
+using LouveApp.Dominio.Sistema.Padroes;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace LouveApp.Documentacao.Exemplos

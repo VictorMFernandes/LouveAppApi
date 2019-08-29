@@ -1,6 +1,6 @@
-﻿using LouveApp.Compartilhado.Padroes;
-using LouveApp.Dominio.Entidades;
+﻿using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.Servicos;
+using LouveApp.Dominio.Sistema.Padroes;
 using LouveApp.Servicos.PushNotification.Entidades;
 using System.Collections.Generic;
 using System.Threading.Tasks;

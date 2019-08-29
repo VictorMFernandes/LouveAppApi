@@ -1,9 +1,9 @@
 ﻿using LouveApp.Compartilhado.Comandos;
 using LouveApp.Compartilhado.Comandos.Genericos;
-using LouveApp.Compartilhado.Padroes;
 using LouveApp.Dominio.Comandos.MusicaComandos.Entradas;
 using LouveApp.Dominio.Comandos.MusicaComandos.Saidas;
 using LouveApp.Dominio.Repositorios;
+using LouveApp.Dominio.Sistema.Padroes;
 using System.Threading.Tasks;
 
 namespace LouveApp.Dominio.Gerenciadores

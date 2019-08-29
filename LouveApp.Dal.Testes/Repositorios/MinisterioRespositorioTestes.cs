@@ -1,8 +1,8 @@
-﻿using LouveApp.Compartilhado.Padroes;
-using LouveApp.Dominio.Entidades;
-using LouveApp.Dominio.ValueObjects;
-using LouveApp.Dal.Repositorios;
+﻿using LouveApp.Dal.Repositorios;
 using LouveApp.Dal.Testes.Falsos;
+using LouveApp.Dominio.Entidades;
+using LouveApp.Dominio.Sistema.Padroes;
+using LouveApp.Dominio.ValueObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;

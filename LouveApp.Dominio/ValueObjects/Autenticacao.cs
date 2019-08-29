@@ -1,12 +1,13 @@
-﻿using System;
+﻿using FluentValidator.Validation;
+using LouveApp.Compartilhado.Entidades;
+using LouveApp.Compartilhado.Padroes;
+using LouveApp.Dominio.Sistema.Padroes;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using LouveApp.Compartilhado.Entidades;
-using FluentValidator.Validation;
 using System.Text;
-using LouveApp.Compartilhado.Padroes;
-using Microsoft.IdentityModel.Tokens;
 
 namespace LouveApp.Dominio.ValueObjects
 {

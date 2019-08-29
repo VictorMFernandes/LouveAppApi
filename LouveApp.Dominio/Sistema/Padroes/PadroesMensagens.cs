@@ -1,4 +1,4 @@
-﻿namespace LouveApp.Compartilhado.Padroes
+﻿namespace LouveApp.Dominio.Sistema.Padroes
 {
     public class PadroesMensagens
     {

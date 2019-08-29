@@ -1,10 +1,10 @@
 ﻿using LouveApp.Compartilhado.Comandos;
 using LouveApp.Compartilhado.Comandos.Genericos;
-using LouveApp.Compartilhado.Padroes;
 using LouveApp.Dominio.Comandos.EscalaComandos.Entradas;
 using LouveApp.Dominio.Comandos.EscalaComandos.Saidas;
 using LouveApp.Dominio.Repositorios;
 using LouveApp.Dominio.Servicos;
+using LouveApp.Dominio.Sistema.Padroes;
 using System.Linq;
 using System.Threading.Tasks;
 

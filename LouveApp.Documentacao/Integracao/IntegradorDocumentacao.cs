@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using LouveApp.Compartilhado.Padroes;
+﻿using LouveApp.Documentacao.Exemplos;
 using LouveApp.Documentacao.Filtros;
 using LouveApp.Dominio.Sistema;
+using LouveApp.Dominio.Sistema.Padroes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.Swagger;
-using LouveApp.Documentacao.Exemplos;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace LouveApp.Documentacao.Integracao
 {
