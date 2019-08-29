@@ -3,7 +3,7 @@
     public abstract class FiltroBase
     {
         public int Pagina { get; set; }
-        public int TamanhoPagina { get; protected set; }
+        public int TamanhoPagina { get; set; }
 
         protected FiltroBase()
         {
