@@ -1,6 +1,5 @@
 ﻿using LouveApp.Compartilhado.Entidades;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -35,7 +34,7 @@ namespace LouveApp.Compartilhado.Middlewares
 
             var resultado = new RetornoApi(false, null, new
             {
-                mensagem = exception.Message,
+                message = exception.Message,
                 erroInterno = exception.InnerException?.Message,
                 stackTrace = exception.StackTrace
             });

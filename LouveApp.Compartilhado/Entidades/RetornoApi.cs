@@ -6,8 +6,11 @@ namespace LouveApp.Compartilhado.Entidades
     {
         #region Propriedades
 
+        [JsonProperty("sucesso")]
         public bool Sucesso { get; private set; }
+        [JsonProperty("resultado")]
         public object Resultado { get; private set; }
+        [JsonProperty("erros")]
         public object[] Erros { get; private set; }
 
         #endregion
