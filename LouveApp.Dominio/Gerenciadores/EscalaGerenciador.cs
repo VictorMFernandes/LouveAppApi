@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using LouveApp.Compartilhado.Comandos;
+﻿using LouveApp.Compartilhado.Comandos;
 using LouveApp.Compartilhado.Comandos.Genericos;
 using LouveApp.Compartilhado.Padroes;
 using LouveApp.Dominio.Comandos.EscalaComandos.Entradas;
 using LouveApp.Dominio.Comandos.EscalaComandos.Saidas;
 using LouveApp.Dominio.Repositorios;
-using System.Threading.Tasks;
 using LouveApp.Dominio.Servicos;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LouveApp.Dominio.Gerenciadores
 {
