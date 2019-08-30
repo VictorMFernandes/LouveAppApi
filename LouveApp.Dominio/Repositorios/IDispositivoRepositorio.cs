@@ -6,5 +6,6 @@ namespace LouveApp.Dominio.Repositorios
     public interface IDispositivoRepositorio
     {
         Task<IEnumerable<string>> PegarDispositivosTokensPorUsuarioId(List<string> usuariosIds);
+        Task RemoverDispositivosPorToken(string token);
     }
 }

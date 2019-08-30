@@ -83,7 +83,7 @@ namespace LouveApp.Api.Controllers
         /// <summary>
         /// Adiciona um dispositivo a um usuário.
         /// </summary>
-        /// <remarks>Dispositivos de mesmo token só serão adicionados uma vez.</remarks>
+        /// <remarks>Tokens do dispositivo são únicos. Ao adicionar um dispositivo, todos os dispositivos de mesmo token são apagados do sistema.</remarks>
         /// <param name="comando">Comando para adicionar dispositivo ao usuário.</param>
         /// <response code="200">Retorna as principais propriedades do usuário que acabou de ser atualizado.</response>
         [ProducesResponseType(typeof(AtualizarUsuarioComandoResultado), 200)]

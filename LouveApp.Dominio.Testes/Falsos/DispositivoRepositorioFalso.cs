@@ -10,5 +10,10 @@ namespace LouveApp.Dominio.Testes.Falsos
         {
             return null;
         }
+
+        public Task RemoverDispositivosPorToken(string token)
+        {
+            return null;
+        }
     }
 }

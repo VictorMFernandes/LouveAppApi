@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using LouveApp.Dominio.Entidades;
 using LouveApp.Dominio.Servicos;
 
@@ -11,12 +10,11 @@ namespace LouveApp.Dominio.Testes.Falsos
         {
         }
 
-        public Task NotificarIngressoEmEscala(List<string> aparelhosTokens, string dataEscala, string nomeMinisterio)
+        public void NotificarChatMinisterio(List<string> aparelhosTokens, string mensagem, Usuario rementente, Ministerio ministerio)
         {
-            return null;
         }
 
-        public void NotificarChatMinisterio(List<string> aparelhosTokens, string mensagem, Usuario rementente, Ministerio ministerio)
+        public void NotificarIngressoEmEscala(List<string> aparelhosTokens, string dataEscala, Ministerio ministerio)
         {
         }
     }

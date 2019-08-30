@@ -5,6 +5,7 @@ using Dapper;
 using LouveApp.Dominio.Repositorios;
 using LouveApp.Dal.Mapeamentos;
 using System.Linq;
+using LouveApp.Dominio.Entidades;
 
 namespace LouveApp.Dal.Repositorios
 {
@@ -38,6 +39,14 @@ namespace LouveApp.Dal.Repositorios
                         $"WHERE UsuarioId = {queryUsuariosIds}";
 
             return await _conexao.QueryAsync<string>(query);
+        }
+
+        public async Task RemoverDispositivosPorToken(string token)
+        {
+            var query = $"DELETE FROM {DispositivoMap.Tabela} " +
+                        $"WHERE {nameof(Dispositivo.Token)} = {nameof(token)}";
+
+            await _conexao.ExecuteAsync(query, new { token });
         }
     }
 }

@@ -20,17 +20,19 @@ namespace LouveApp.Dominio.Gerenciadores
         private readonly IUsuarioRepositorio _usuarioRepo;
         private readonly IMinisterioRepositorio _ministerioRepo;
         private readonly IInstrumentoRepositorio _instrumentoRepo;
+        private readonly IDispositivoRepositorio _dispositivoRepo;
         private readonly IEmailServico _emailServico;
         private readonly IPushNotificationServico _pushNotificationServico;
 
         public UsuarioGerenciador(IUsuarioRepositorio usuarioRepo
-            , IMinisterioRepositorio ministerioRepo
+            , IMinisterioRepositorio ministerioRepo, IDispositivoRepositorio dispositivoRepo
             , IInstrumentoRepositorio instrumentoRepo, IEmailServico emailServico
             , IPushNotificationServico pushNotificationServico)
         {
             _usuarioRepo = usuarioRepo;
             _ministerioRepo = ministerioRepo;
             _instrumentoRepo = instrumentoRepo;
+            _dispositivoRepo = dispositivoRepo;
             _emailServico = emailServico;
             _pushNotificationServico = pushNotificationServico;
         }
@@ -164,6 +166,7 @@ namespace LouveApp.Dominio.Gerenciadores
 
             if (Invalid) return null;
 
+            await _dispositivoRepo.RemoverDispositivosPorToken(comando.Token);
             _usuarioRepo.Atualizar(usuario);
 
             return null;
