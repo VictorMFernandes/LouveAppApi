@@ -97,7 +97,7 @@ namespace LouveApp.Dal.Repositorios
                     {
                         ministerioId,
                         usuarioId,
-                        dataMinima = filtro.DataMinima
+                        dataMinima = filtro.DataMinima.Date
                     });
 
                 var escalasQ = escalas.AsQueryable();
