@@ -30,7 +30,7 @@ namespace LouveApp.Compartilhado.PaginacaoFiltragem
 
         public bool EstaNaUltimaPagina()
         {
-            return PaginaAtual == QtdPaginas;
+            return PaginaAtual >= QtdPaginas;
         }
 
         public bool EstaNaPrimeiraPagina()
