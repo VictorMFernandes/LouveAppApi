@@ -44,7 +44,7 @@ namespace LouveApp.Dal.Repositorios
         public async Task RemoverDispositivosPorToken(string token)
         {
             var query = $"DELETE FROM {DispositivoMap.Tabela} " +
-                        $"WHERE {nameof(Dispositivo.Token)} = {nameof(token)}";
+                        $"WHERE Token = @{nameof(token)}";
 
             await _conexao.ExecuteAsync(query, new { token });
         }
