@@ -50,7 +50,7 @@ namespace LouveApp.Dominio.Gerenciadores
 
             _ministerioRepo.Atualizar(ministerio);
 
-            var usuariosIds = escala.Usuarios.Select(ue => ue.UsuarioId);
+            var usuariosIds = escala.Usuarios.Where(ue => ue.UsuarioId != comando.UsuarioLogadoId).Select(ue => ue.UsuarioId);
 
             var dispositivosTokens = await _dispositivoRepo
                                             .PegarDispositivosTokensPorUsuarioId(usuariosIds.ToList());
