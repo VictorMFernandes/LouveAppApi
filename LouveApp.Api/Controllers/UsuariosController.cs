@@ -85,10 +85,28 @@ namespace LouveApp.Api.Controllers
         /// </summary>
         /// <remarks>Tokens do dispositivo são únicos. Ao adicionar um dispositivo, todos os dispositivos de mesmo token são apagados do sistema.</remarks>
         /// <param name="comando">Comando para adicionar dispositivo ao usuário.</param>
-        /// <response code="200">Retorna as principais propriedades do usuário que acabou de ser atualizado.</response>
+        /// <response code="200">Caso a adição tenha ocorrido com sucesso.</response>
         [ProducesResponseType(typeof(AtualizarUsuarioComandoResultado), 200)]
+        // TODO transformar em post
         [HttpPut("v1/[controller]/AdicionarDispositivo")]
         public async Task<IActionResult> AdicionarDispositivo([FromBody]AdicionarDispositivoComando comando)
+        {
+            comando.PegarUsuarioLogadoId(UsuarioLogadoId);
+
+            var resultado = await _gerenciador.Executar(comando);
+            return await Resposta(resultado, _gerenciador.Notifications);
+        }
+
+        /// <summary>
+        /// Remove um dispositivo de um usuário.
+        /// </summary>
+        /// <remarks>Um usuário só pode remover um dispositivo que pertença a ele.</remarks>
+        /// <param name="comando">Comando para remover um dispositivo do usuário.</param>
+        /// <response code="200">Caso a remoção tenha ocorrido com sucesso.</response>
+        [ProducesResponseType(typeof(AtualizarUsuarioComandoResultado), 200)]
+        // TODO transformar em delete
+        [HttpPut("v1/[controller]/RemoverDispositivo")]
+        public async Task<IActionResult> RemoverDispositivo([FromBody]RemoverDispositivoComando comando)
         {
             comando.PegarUsuarioLogadoId(UsuarioLogadoId);
 

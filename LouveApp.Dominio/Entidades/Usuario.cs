@@ -118,5 +118,20 @@ namespace LouveApp.Dominio.Entidades
             Validar();
             return true;
         }
+
+        public bool RemoverDispositivo(string token)
+        {
+            DtUltimaAtividade = DateTime.Now;
+
+            var dispositivo = Dispositivos.FirstOrDefault(d => d.Token == token);
+
+            if (dispositivo == null)
+                return false;
+
+            Dispositivos.Remove(dispositivo);
+
+            Validar();
+            return true;
+        }
     }
 }
