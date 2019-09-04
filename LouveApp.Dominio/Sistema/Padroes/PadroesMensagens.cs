@@ -78,6 +78,6 @@
         /// <summary>
         /// {0} Data da escala
         /// </summary>
-        public const string IngressoEmEscalaCorpo = "Você foi condidado para uma escala no dia {0}";
+        public const string IngressoEmEscalaCorpo = "Você foi convidado para uma escala no dia {0}";
     }
 }
