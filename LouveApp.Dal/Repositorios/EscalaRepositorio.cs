@@ -77,7 +77,7 @@ namespace LouveApp.Dal.Repositorios
             var query = $"SELECT e.Id, e.Data, m.Id, m.Nome, um.Administrador FROM {EscalaMap.Tabela} AS e " +
                         $"INNER JOIN {MinisterioMap.Tabela} AS m ON m.Id = e.MinisterioId " +
                         $"INNER JOIN {UsuarioMinisterioMap.Tabela} AS um ON(um.MinisterioId = m.Id and um.UsuarioId = @{nameof(usuarioId)}) " +
-                        $"WHERE e.MinisterioId = @{nameof(ministerioId)} " +
+                        $"WHERE e.MinisterioId = @{nameof(ministerioId)} AND e.Data >= @{nameof(filtro.DataMinima)} " +
                         "ORDER BY Data";
 
             using (var conn = _conexao)
@@ -97,7 +97,7 @@ namespace LouveApp.Dal.Repositorios
                     {
                         ministerioId,
                         usuarioId,
-                        dataMinima = filtro.DataMinima
+                        dataMinima = filtro.DataMinima.Date
                     });
 
                 var escalasQ = escalas.AsQueryable();

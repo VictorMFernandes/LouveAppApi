@@ -1,6 +1,7 @@
 ﻿using LouveApp.Compartilhado.Extensoes;
 using LouveApp.Dominio.Enums;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace LouveApp.Dominio.Sistema
 {
@@ -14,6 +15,7 @@ namespace LouveApp.Dominio.Sistema
         public static string ConnStringTestes = $"Data Source={BancoTestesCaminho}";
         public static string TokenSecreto;
         public static double PrescricaoTokenDias;
+        public static DateTime DataMinima = new DateTime(1900, 01, 01);
 
         public static void InicializarConfiguracoes(IConfiguration config, bool emDesenvolvimento)
         {

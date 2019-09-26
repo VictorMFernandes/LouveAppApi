@@ -16,6 +16,7 @@ namespace LouveApp.Dominio.Gerenciadores
         , IComandoGerenciador<AtualizarUsuarioComando>
         , IComandoGerenciador<EntrarMinisterioComando>
         , IComandoGerenciador<AdicionarDispositivoComando>
+        , IComandoGerenciador<RemoverDispositivoComando>
     {
         private readonly IUsuarioRepositorio _usuarioRepo;
         private readonly IMinisterioRepositorio _ministerioRepo;
@@ -160,13 +161,38 @@ namespace LouveApp.Dominio.Gerenciadores
             if (!usuario.AdicionarDispositivo(dispositivo))
                 return null;
 
-            // TODO adicionar notificações do dispositivo, quando nome se tornar obrigatório
+            // Validar entidade
+            AddNotifications(usuario, dispositivo);
+
+            if (Invalid) return null;
+
+            await _dispositivoRepo.RemoverDispositivosPorToken(comando.Token);
+            _usuarioRepo.Atualizar(usuario);
+
+            return null;
+        }
+
+        public async Task<IComandoResultado> Executar(RemoverDispositivoComando comando)
+        {
+            if (!ValidarComando(comando))
+                return null;
+
+            var usuario = await _usuarioRepo.PegarPorId(comando.UsuarioLogadoId);
+
+            // Caso o usuário não exista
+            if (usuario == null)
+            {
+                return new NaoEncontradoResultado(PadroesMensagens.UsuarioNaoEncontrado);
+            }
+
+            if (!usuario.RemoverDispositivo(comando.Token))
+                return new NaoAutorizadoResultado(PadroesMensagens.UsuarioSemPermissao);
+
             // Validar entidade
             AddNotifications(usuario);
 
             if (Invalid) return null;
 
-            await _dispositivoRepo.RemoverDispositivosPorToken(comando.Token);
             _usuarioRepo.Atualizar(usuario);
 
             return null;
