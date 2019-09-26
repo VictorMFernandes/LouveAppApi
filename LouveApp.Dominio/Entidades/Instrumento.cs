@@ -12,6 +12,7 @@ namespace LouveApp.Dominio.Entidades
         #region Propriedades
 
         public Nome Nome { get; private set; }
+        public string Foto { get; private set; }
         public ICollection<UsuarioInstrumento> Usuarios { get; private set; }
 
         #endregion
@@ -20,15 +21,16 @@ namespace LouveApp.Dominio.Entidades
 
         private Instrumento() { }
 
-        public Instrumento(Nome nome)
+        public Instrumento(Nome nome, string foto)
         {
             Nome = nome;
+            Foto = foto;
 
             Validar();
         }
 
-        public Instrumento(string id, Nome nome)
-            : this(nome)
+        public Instrumento(string id, Nome nome, string foto)
+            : this(nome, foto)
         {
             Id = id;
         }

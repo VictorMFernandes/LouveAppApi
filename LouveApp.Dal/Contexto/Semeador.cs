@@ -69,21 +69,72 @@ namespace LouveApp.Dal.Contexto
 
         private async Task SemearInstrumentos()
         {
-            _instrumento1 = new Instrumento(PadroesString.InstrumentoId1, new Nome(PadroesString.InstrumentoNome1));
-            _instrumento2 = new Instrumento(PadroesString.InstrumentoId2, new Nome(PadroesString.InstrumentoNome2));
-            _instrumento3 = new Instrumento(PadroesString.InstrumentoId3, new Nome(PadroesString.InstrumentoNome3));
-            _instrumento4 = new Instrumento(PadroesString.InstrumentoId4, new Nome(PadroesString.InstrumentoNome4));
-            _instrumento5 = new Instrumento(PadroesString.InstrumentoId5, new Nome(PadroesString.InstrumentoNome5));
-            _instrumento6 = new Instrumento(PadroesString.InstrumentoId6, new Nome(PadroesString.InstrumentoNome6));
+            const string url = "https://res.cloudinary.com/appinova/image/upload/v1569513723/louveapp/instrumentos/{0}.png";
+
+            _instrumento1 = new Instrumento(PadroesString.InstrumentoId1
+                , new Nome(PadroesString.InstrumentoNome1)
+                , string.Format(url, "violao"));
+            _instrumento2 = new Instrumento(PadroesString.InstrumentoId2
+                , new Nome(PadroesString.InstrumentoNome2)
+                , string.Format(url, "guitarra"));
+            _instrumento3 = new Instrumento(PadroesString.InstrumentoId3
+                , new Nome(PadroesString.InstrumentoNome3),
+                string.Format(url, "baixo"));
+            _instrumento4 = new Instrumento(PadroesString.InstrumentoId4
+                , new Nome(PadroesString.InstrumentoNome4)
+                , string.Format(url, "teclado"));
+            _instrumento5 = new Instrumento(PadroesString.InstrumentoId5
+                , new Nome(PadroesString.InstrumentoNome5),
+                "https://res.cloudinary.com/appinova/image/upload/v1569513721/louveapp/instrumentos/bateria.png");
+            _instrumento6 = new Instrumento(PadroesString.InstrumentoId6
+                , new Nome(PadroesString.InstrumentoNome6)
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513721/louveapp/instrumentos/backing-vocal.png");
+            var instrumento7 = new Instrumento(new Nome("Ministro")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513722/louveapp/instrumentos/ministro.png");
+            var instrumento8 = new Instrumento(new Nome("Banjo")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513722/louveapp/instrumentos/banjo.png");
+            var instrumento9 = new Instrumento(new Nome("Piano")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513722/louveapp/instrumentos/piano.png");
+            var instrumento10 = new Instrumento(new Nome("Acordeão")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513722/louveapp/instrumentos/acordeao.png");
+            var instrumento11 = new Instrumento(new Nome("Percussão")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513722/louveapp/instrumentos/percurssao.png");
+            var instrumento12 = new Instrumento(new Nome("Violino")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513722/louveapp/instrumentos/violino.png");
+            var instrumento13 = new Instrumento(new Nome("Clarinete")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513722/louveapp/instrumentos/clarinete.png");
+            var instrumento14 = new Instrumento(new Nome("Harpa")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513722/louveapp/instrumentos/harpa.png");
+            var instrumento15 = new Instrumento(new Nome("Saxofone")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513722/louveapp/instrumentos/saxofone.png");
+            var instrumento16 = new Instrumento(new Nome("Trompete")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513722/louveapp/instrumentos/trompete.png");
+            var instrumento17 = new Instrumento(new Nome("Flauta")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513722/louveapp/instrumentos/flauta.png");
+            var instrumento18 = new Instrumento(new Nome("Pandeiro")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513722/louveapp/instrumentos/pandeiro.png");
+            var instrumento19 = new Instrumento(new Nome("Dj")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513721/louveapp/instrumentos/dj.png");
+            var instrumento20 = new Instrumento(new Nome("Mesa de Som")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513721/louveapp/instrumentos/mesa-som.png");
+            var instrumento21 = new Instrumento(new Nome("Gaita")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513721/louveapp/instrumentos/gaita.png");
+            var instrumento22 = new Instrumento(new Nome("Chocalho")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513721/louveapp/instrumentos/chocalho.png");
+            var instrumento23 = new Instrumento(new Nome("Oboe")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513722/louveapp/instrumentos/oboe.png");
+            var instrumento24 = new Instrumento(new Nome("Triângulo")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513722/louveapp/instrumentos/triangulo.png");
+            var instrumento25 = new Instrumento(new Nome("Tuba")
+                , "https://res.cloudinary.com/appinova/image/upload/v1569513723/louveapp/instrumentos/tuba.png");
+
 
             Instrumento[] instrumentos =
             {
-                _instrumento1,
-                _instrumento2,
-                _instrumento3,
-                _instrumento4,
-                _instrumento5,
-                _instrumento6,
+                _instrumento1, _instrumento2, _instrumento3, _instrumento4, _instrumento5, _instrumento6,
+                instrumento7, instrumento8, instrumento9, instrumento10, instrumento11, instrumento12, instrumento13,
+                instrumento14, instrumento15, instrumento16, instrumento17, instrumento18, instrumento19,
+                instrumento20, instrumento21, instrumento22, instrumento23, instrumento24, instrumento25
             };
 
             if (instrumentos.Length == await _instrumentoRepo.Contar()) return;

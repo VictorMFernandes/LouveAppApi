@@ -17,7 +17,7 @@ namespace LouveApp.Dominio.Testes.Gerenciadores
         public UsuarioGerenciadorTestes()
         {
             _gerenciador = new UsuarioGerenciador(new UsuarioRepositorioFalso()
-                , new MinisterioRepositorioFalso(), new InstrumentoRepositorioFalso(), new EmailServicoFalso(), new PushNotificationServicoFalso());
+                , new MinisterioRepositorioFalso(), new DispositivoRepositorioFalso(), new InstrumentoRepositorioFalso(), new EmailServicoFalso(), new PushNotificationServicoFalso());
 
             _registrarUsuarioComandoValido = new RegistrarUsuarioComando("Primeiro Sobrenome", "email@email.com", "senha", "senha");
             _registrarUsuarioComandoInvalido = new RegistrarUsuarioComando(

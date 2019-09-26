@@ -14,7 +14,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         public void InvalidaInstrumentoQuandoNomeInvalido()
         {
             var nomeInvalido = new Nome(string.Empty);
-            var instrumento = new Instrumento(nomeInvalido);
+            var instrumento = new Instrumento(nomeInvalido, "foto");
 
             Assert.IsTrue(instrumento.Invalid);
         }
@@ -23,7 +23,7 @@ namespace LouveApp.Dominio.Testes.Entidades
         public void InicializaColecoesAoConstruir()
         {
             var nome = new Nome("Nome Válido");
-            var instrumento = new Instrumento(nome);
+            var instrumento = new Instrumento(nome, "fotovalida");
 
             foreach (var prop in instrumento.PegarColecoes())
             {

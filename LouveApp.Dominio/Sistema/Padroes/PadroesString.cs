@@ -45,7 +45,7 @@
         public const string InstrumentoId5 = "3cece1c7-44a0-459d-9310-222e448a6a01";
         public const string InstrumentoNome5 = "Bateria";
         public const string InstrumentoId6 = "1dca0945-075b-495f-aeba-fea18b54d4f4";
-        public const string InstrumentoNome6 = "Vocal";
+        public const string InstrumentoNome6 = "Backing Vocal";
 
         #endregion
 
