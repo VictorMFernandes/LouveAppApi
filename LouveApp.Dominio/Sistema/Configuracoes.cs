@@ -19,7 +19,7 @@ namespace LouveApp.Dominio.Sistema
 
         public static void InicializarConfiguracoes(IConfiguration config, bool emDesenvolvimento)
         {
-            EmDesenvolvimento = emDesenvolvimento;
+            EmDesenvolvimento = true; // emDesenvolvimento;
             ConnString = config.GetConnectionString(
                 EmDesenvolvimento ? EConfigSecao.ConexaoBdDev.EnumTextos().Nome 
                                     : EConfigSecao.ConexaoBd.EnumTextos().Nome);

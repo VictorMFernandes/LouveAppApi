@@ -32,7 +32,7 @@ namespace LouveApp.Dal.Repositorios
 
         public async Task<IEnumerable<PegarInstrumentosComandoResultado>> PegarTodos()
         {
-            var query = $"SELECT Id, Nome FROM {InstrumentoMap.Tabela}";
+            var query = $"SELECT Id, Nome, Foto FROM {InstrumentoMap.Tabela}";
 
             return await _conexao.QueryAsync<PegarInstrumentosComandoResultado>(query);
         }
