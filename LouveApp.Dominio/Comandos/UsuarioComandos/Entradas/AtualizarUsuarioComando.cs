@@ -3,6 +3,7 @@ using FluentValidator;
 using System.Collections.Generic;
 using System.Linq;
 using LouveApp.Dominio.ValueObjects;
+using LouveApp.Dominio.Sistema.Padroes;
 
 namespace LouveApp.Dominio.Comandos.UsuarioComandos.Entradas
 {
@@ -12,6 +13,9 @@ namespace LouveApp.Dominio.Comandos.UsuarioComandos.Entradas
 
         internal string UsuarioLogadoId { get; private set; }
         public string Nome { get; set; }
+        public string Email { get; set; }
+        public string Senha { get; set; }
+        public string ConfirmacaoSenha { get; set; }
         public IEnumerable<string> InstrumentosIds { get; set; }
 
         #endregion
@@ -38,6 +42,20 @@ namespace LouveApp.Dominio.Comandos.UsuarioComandos.Entradas
                 resultado &= NomeVo.Valid;
             }
 
+            if (Email != null)
+            {
+                EmailVo = new Email(Email);
+                _notificacoes.AddRange(EmailVo.Notifications);
+                resultado &= EmailVo.Valid;
+            }
+
+            if (Senha != null)
+            {
+                AutenticacaoVo = new Autenticacao(PadroesString.UsuarioLogin1, Senha, ConfirmacaoSenha);
+                _notificacoes.AddRange(AutenticacaoVo.Notifications);
+                resultado &= AutenticacaoVo.Valid;
+            }
+
             return resultado;
         }
 
@@ -50,6 +68,8 @@ namespace LouveApp.Dominio.Comandos.UsuarioComandos.Entradas
         #region Value Objects
 
         internal Nome NomeVo { get; private set; }
+        internal Email EmailVo { get; set; }
+        internal Autenticacao AutenticacaoVo { get; set; }
 
         #endregion
 

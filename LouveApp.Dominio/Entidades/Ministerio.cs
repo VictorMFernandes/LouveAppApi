@@ -123,6 +123,9 @@ namespace LouveApp.Dominio.Entidades
             if (!Administrador(usuarioId))
                 return false;
 
+            if (LinkConviteAtivado && !string.IsNullOrEmpty(LinkConvite))
+                return LinkConviteAtivado;
+
             LinkConvite = Guid.NewGuid().ToString("N");
             LinkConviteAtivado = true;
 
