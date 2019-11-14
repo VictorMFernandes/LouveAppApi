@@ -4,6 +4,7 @@ using LouveApp.Dominio.Gerenciadores;
 using LouveApp.Dominio.Testes.Falsos;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
+using LouveApp.Dominio.Sistema.Padroes;
 
 namespace LouveApp.Dominio.Testes.Gerenciadores
 {

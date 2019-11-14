@@ -21,8 +21,11 @@ namespace LouveApp.Dal.Integracao
         {
             if (Configuracoes.EmDesenvolvimento)
             {
+                //services.AddDbContextPool<BancoContexto>(options =>
+                //        options.UseSqlite(Configuracoes.ConnString)
+                //);
                 services.AddDbContextPool<BancoContexto>(options =>
-                        options.UseSqlite(Configuracoes.ConnString)
+                    options.UseMySql(Configuracoes.ConnString)
                 );
                 services.AddTransient<IDbConnection>((sp) => new SqliteConnection(Configuracoes.ConnString));
             }

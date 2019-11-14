@@ -11,6 +11,10 @@ namespace LouveApp.Dominio.Testes.Falsos
         {
         }
 
+        public void NotificarIngressoEmEscala(List<string> aparelhosTokens, string dataEscala, Ministerio ministerio)
+        {
+        }
+
         public Task NotificarIngressoEmEscala(List<string> aparelhosTokens, string dataEscala, string nomeMinisterio)
         {
             return null;
